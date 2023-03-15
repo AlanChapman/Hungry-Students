@@ -1,0 +1,34 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="42dp"
+    android:height="41dp"
+    android:viewportWidth="42"
+    android:viewportHeight="41">
+  <path
+      android:pathData="M39.071,14.531C37.714,10.541 34.948,7.124 31.247,4.862C27.545,2.6 23.136,1.633 18.77,2.125C14.405,2.617 10.354,4.539 7.306,7.562C4.259,10.585 2.405,14.522 2.059,18.704C1.713,22.885 2.898,27.052 5.41,30.493C7.923,33.935 11.609,36.439 15.839,37.578C20.07,38.717 24.583,38.422 28.611,36.741C32.639,35.061 35.931,32.1 37.928,28.364L21,20.13L39.071,14.531Z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startX="21"
+          android:startY="2"
+          android:endX="21"
+          android:endY="38.26"
+          android:type="linear">
+        <item android:offset="0" android:color="#FFFAFAFA"/>
+        <item android:offset="1" android:color="#FFBABABA"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <group>
+    <clip-path
+        android:pathData="M0,0h42v41h-42zM39.071,14.531C37.714,10.541 34.948,7.124 31.247,4.862C27.545,2.6 23.136,1.633 18.77,2.125C14.405,2.617 10.354,4.539 7.306,7.562C4.259,10.585 2.405,14.522 2.059,18.704C1.713,22.885 2.898,27.052 5.41,30.493C7.923,33.935 11.609,36.439 15.839,37.578C20.07,38.717 24.583,38.422 28.611,36.741C32.639,35.061 35.931,32.1 37.928,28.364L21,20.13L39.071,14.531Z"/>
+    <path
+        android:pathData="M39.071,14.531C37.714,10.541 34.948,7.124 31.247,4.862C27.545,2.6 23.136,1.633 18.77,2.125C14.405,2.617 10.354,4.539 7.306,7.562C4.259,10.585 2.405,14.522 2.059,18.704C1.713,22.885 2.898,27.052 5.41,30.493C7.923,33.935 11.609,36.439 15.839,37.578C20.07,38.717 24.583,38.422 28.611,36.741C32.639,35.061 35.931,32.1 37.928,28.364L21,20.13L39.071,14.531Z"
+        android:strokeWidth="4"
+        android:fillColor="#00000000"
+        android:strokeColor="#000000"
+        android:strokeLineCap="round"/>
+  </group>
+  <path
+      android:pathData="M30,10m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"
+      android:fillColor="#000000"/>
+</vector>
