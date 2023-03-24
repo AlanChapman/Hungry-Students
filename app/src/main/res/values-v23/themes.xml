@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="HungryStudents" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+                <item name="colorPrimary">@color/primary_blue</item>
+        <!--        <item name="colorPrimaryDark">@color/dark_black</item>-->
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+    </style>
+</resources>

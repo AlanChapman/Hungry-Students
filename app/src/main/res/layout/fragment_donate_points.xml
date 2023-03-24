@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="22dp"
+    tools:context=".DonatePointsFragment">
+
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:id="@+id/pointsBalanceCard"
+        android:gravity="center"
+        android:background="@drawable/blue_home_rectangle_background"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+
+            android:fontFamily="@font/poppins_semibold"
+            android:text="You currently have"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-8dp"
+            android:textSize="26sp"
+            android:textColor="@color/white"
+
+            android:fontFamily="@font/poppins_semibold"
+            android:text="2800 points"/>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:paddingRight="25dp"
+            android:paddingLeft="25dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/pointsHistoryBtn"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/PrimaryBtnStyle"
+                android:layout_marginEnd="20dp"
+                android:stateListAnimator="@null"
+                android:text="Points history"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/buyPointsBtn"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                style="@style/SecondaryBtnStyle"
+                android:stateListAnimator="@null"
+                android:text="Buy points" />
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/donatePointsHeader"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/pointsBalanceCard"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:textSize="22sp"
+            android:textColor="@color/dark_black"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Donate points"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="-10dp"
+            android:layout_below="@+id/pointsBalanceCard"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/input_text"
+            android:fontFamily="@font/poppins"
+            android:text="Enter a friends email to donate points"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/donatePointsEmailAddressEditText"
+                style="@style/EditTextStyleOutline"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter email address" />
+
+            <Button
+                android:id="@+id/donatePointsSearchUserBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".6"
+                style="@style/PrimaryBtnStyle"
+                android:fontFamily="@font/poppins_semibold"
+                android:drawableRight="@drawable/ic_baseline_search"
+                />
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:id="@+id/donatePointsUserNotFoundContainer"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:textSize="28sp"
+                android:textColor="@color/dark_black"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="User not found"/>
+
+            <TextView
+                android:layout_marginTop="-10dp"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/input_text"
+                android:fontFamily="@font/poppins"
+                android:text="User with this username does not exist"/>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:src="@drawable/ic_empty_illustration"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/donatePointsCardView"
+        android:layout_below="@+id/donatePointsHeader"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="11dp"
+        android:layout_marginTop="20dp"
+        app:cardUseCompatPadding="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+
+            android:background="@drawable/objective_item_card_background"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/donateUserEmailAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textFontWeight="600"
+                    android:letterSpacing="-0.01"
+                    android:maxLines="1"
+                    android:text="myfriend@gmail.com"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/dark_black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-7dp"
+                    android:layout_marginEnd="20dp"
+                    android:ellipsize="end"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins"
+                    android:letterSpacing="-0.03"
+                    android:maxLines="2"
+                    android:text="Enter amount of points to donate"
+                    android:textColor="@color/input_text"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:padding="10dp"
+                    style="@style/EditTextStyleOutline"
+                    android:inputType="number"
+                    android:hint="1500 pts"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_height="70dp"
+        >
+
+
+        <Button
+            android:id="@+id/donatePointsBtn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            style="@style/PrimaryBtnStyle"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Donate points"
+            />
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>
