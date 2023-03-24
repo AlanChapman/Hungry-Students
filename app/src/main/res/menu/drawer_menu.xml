@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="Points">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/viewPointsNavMenu"
+                    android:icon="@drawable/ic_points_balance"
+                    android:title="View points balance" />
+
+                <item
+                    android:id="@+id/viewPointHistoryNavMenu"
+                    android:icon="@drawable/ic_points_history"
+                    android:title="View points history" />
+
+                <item
+                    android:id="@+id/donatePointsNavMenu"
+                    android:icon="@drawable/ic_donate_points"
+                    android:title="Donate points" />
+            </group>
+        </menu>
+    </item>
+
+
+    <item android:title="Account">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:checkable="true"
+                    android:id="@+id/viewAccountDetailsNavMenu"
+                    android:icon="@drawable/ic_user_account"
+                    android:title="View account details" />
+
+                <item
+                    android:checkable="true"
+                    android:id="@+id/logoutNavMenu"
+                    android:icon="@drawable/ic_logout"
+                    android:title="Logout" />
+
+            </group>
+        </menu>
+    </item>
+
+
+
+
+</menu>

@@ -9,13 +9,16 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-
     <color name="primary_blue">#3461D4</color>
     <color name="dark_blue">#141A2E</color>
     <color name="dark_black">#111111</color>
+    <color name="border_dark_blue_gradient_start">#3542BA</color>
+    <color name="border_light_blue_gradient_end">#3A77EE</color>
+    <color name="card_dark_blue_gradient_start">#3542BA</color>
+    <color name="card_light_blue_gradient_end">#0E1040</color>
     <color name="input_text">#AEAEAE</color>
     <color name="gray_background">#FAFAFA</color>
-    <color name="input_border">#E6E6E6</color>
+    <color name="input_border">#F8F8F8</color>
 
 
 </resources>
