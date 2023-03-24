@@ -19,13 +19,13 @@ public class StudentRepository extends SQLiteOpenHelper implements IStudentRepos
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.i("Warn", "Creating db");
-        db.execSQL(DBUtils.CREATE_USER_TABLE_QUERY);
+        db.execSQL(DBUtils.CREATE_STUDENT_TABLE_QUERY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         Log.i("Warn", "Updating db");
-        db.execSQL(DBUtils.CREATE_USER_TABLE_QUERY);
+        db.execSQL(DBUtils.DROP_STUDENT_TABLE_QUERY);
         onCreate(db);
     }
 
