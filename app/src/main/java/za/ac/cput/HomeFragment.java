@@ -1,8 +1,10 @@
 package za.ac.cput;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -50,6 +52,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         buyPointsBtn = view.findViewById(R.id.buyPointsBtn);
         pointsHistoryBtn = view.findViewById(R.id.pointsHistoryBtn);
 
+        pointsHistoryBtn.setOnClickListener(this);
         buyPointsBtn.setOnClickListener(this);
 
         buildRecyclerView(view);
@@ -65,10 +68,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         objectiveRecyclerView.setAdapter(objectivesRecyclerAdapter);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View view) {
         if(view == buyPointsBtn) {
            replaceFragment(new DonatePointsFragment());
+        } else if(view == pointsHistoryBtn) {
+            replaceFragment(new PointsHistoryFragment());
         }
     }
 
@@ -78,4 +84,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         transaction.replace(R.id.frameLayout, fragment);
         transaction.commit();
     }
+
+
 }

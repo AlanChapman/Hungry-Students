@@ -2,84 +2,89 @@
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import za.ac.cput.domain.Objective;
+import za.ac.cput.domain.Transaction;
 
-public class PointsHistoryRecyclerAdapter extends RecyclerView.Adapter<PointsHistoryRecyclerAdapter.MyViewHolder>  {
+ public class PointsHistoryRecyclerAdapter extends RecyclerView.Adapter<PointsHistoryRecyclerAdapter.MyViewHolder>  {
 
-    private List<Objective> objectiveList;
-    private OnProjectClickListener onProjectClickListener;
+    private List<Transaction> transactionList;
     private Context context;
 
-    public PointsHistoryRecyclerAdapter(Context context, List<Objective> objectiveList, OnProjectClickListener onProjectClickListener) {
-        this.objectiveList = objectiveList;
+    public PointsHistoryRecyclerAdapter(Context context, List<Transaction> transactionList) {
+        this.transactionList = transactionList;
         this.context = context;
-        this.onProjectClickListener = onProjectClickListener;
     }
 
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.objective_item_card, parent, false));
+        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.transaction_item_card, parent, false));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Objective objective = objectiveList.get(position);
+        Transaction transaction = transactionList.get(position);
 
-        holder.objectiveTitleTextView.setText(objective.getTitle());
-        holder.objectiveDescriptionTextView.setText(objective.getDescription());
-        holder.objectivePointsTextView.setText(new StringBuilder().append("+ ").append(String.valueOf(objective.getPoints())).append(" points"));
+        holder.transactionTitleTextView.setText(transaction.getTitle());
+        holder.transactionDateTextView.setText(transaction.getCreatedAt().toLocalDate().toString());
+
+        if(transaction.getPoints() < 0) {
+            holder.transactionPointsTextView.setText(new StringBuilder().append(String.valueOf(transaction.getPoints())).append(" pts"));
+        } else {
+            holder.transactionPointsTextView.setText(new StringBuilder().append("+ ").append(String.valueOf(transaction.getPoints())).append(" pts"));
+        }
+
+        if(transaction.isSuccessful()) {
+            holder.transactionStatusTextView.setText("success");
+            holder.transactionStatusTextView.setTextColor(Color.GREEN);
+        } else {
+            holder.transactionStatusTextView.setText("failure");
+            holder.transactionStatusTextView.setTextColor(Color.RED);
+        }
+
     }
 
 
     @Override
     public int getItemCount() {
-        return objectiveList.size();
+        return transactionList.size();
     }
 
-    public void refreshList(List<Objective> objectiveList) {
-        this.objectiveList = objectiveList;
+    public void refreshList(List<Transaction> transactionList) {
+        this.transactionList = transactionList;
         notifyDataSetChanged();
     }
 
 
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView objectiveTitleTextView, objectiveDescriptionTextView, objectivePointsTextView;
-        OnProjectClickListener onProjectClickListener;
+        TextView transactionTitleTextView, transactionDateTextView, transactionPointsTextView, transactionStatusTextView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            objectiveTitleTextView = itemView.findViewById(R.id.objectiveTitleTextView);
-            objectiveDescriptionTextView = itemView.findViewById(R.id.objectiveDescriptionTextView);
-            objectivePointsTextView = itemView.findViewById(R.id.objectivePointsTextView);
-        }
-
-        @Override
-        public void onClick(View view) {
-            onProjectClickListener.onProjectClick(view, getLayoutPosition());
-        }
-
-
-        @Override
-        public boolean onLongClick(View view) {
-            onProjectClickListener.onProjectLongClick(view, getAdapterPosition());
-            return true;
+            transactionTitleTextView = itemView.findViewById(R.id.transactionTitleTextView);
+            transactionDateTextView = itemView.findViewById(R.id.transactionDateTextView);
+            transactionPointsTextView = itemView.findViewById(R.id.transactionPointsTextView);
+            transactionStatusTextView = itemView.findViewById(R.id.transactionStatusTextView);
         }
     }
 

@@ -1,6 +1,7 @@
 package za.ac.cput;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         // handle item click in navigation view
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
@@ -59,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 switch (id) {
                     case R.id.logoutNavMenu:
-                        //replaceFragment(new SignUpFragment());
                         startActivity(new Intent(MainActivity.this, SignUpActivity.class));
                         break;
 
@@ -68,7 +70,11 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.viewPointsNavMenu:
-                        replaceFragment(new HomeFragment());
+                        //replaceFragment(new ViewPointsFragment());
+                        break;
+
+                    case R.id.viewPointHistoryNavMenu:
+                        replaceFragment(new PointsHistoryFragment());
                         break;
 
                     default:

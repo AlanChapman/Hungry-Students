@@ -52,7 +52,7 @@ public class ObjectivesRecyclerAdapter extends RecyclerView.Adapter<ObjectivesRe
 
         holder.objectiveTitleTextView.setText(objective.getTitle());
         holder.objectiveDescriptionTextView.setText(objective.getDescription());
-        holder.objectivePointsTextView.setText(new StringBuilder().append("+ ").append(String.valueOf(objective.getPoints())).append(" points"));
+        holder.objectivePointsTextView.setText(new StringBuilder().append("+ ").append(String.valueOf(objective.getPoints())).append(" pts"));
     }
 
 

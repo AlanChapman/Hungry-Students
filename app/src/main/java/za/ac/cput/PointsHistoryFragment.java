@@ -1,7 +1,9 @@
 package za.ac.cput;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,25 +14,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import za.ac.cput.ObjectivesRecyclerAdapter;
 import za.ac.cput.R;
 import za.ac.cput.domain.Objective;
+import za.ac.cput.domain.Transaction;
 
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class PointsHistoryFragment extends Fragment {
 
     private RecyclerView pointsHistoryRecyclerView;
-    private ObjectivesRecyclerAdapter pointsHistoryRecyclerAdapter;
+    private PointsHistoryRecyclerAdapter pointsHistoryRecyclerAdapter;
 
-    private List<Objective> objectiveList = List.of(
-            new Objective("Donation", "Donate points to a friend", 250, false),
-            new Objective("Withdrawal", "Add a bank card to your account", 250, false),
-            new Objective("Destinction", "Spend you r first 5000 points", 250, true),
-            new Objective("Class Attendence", "Spend your first 10 000 points", 250, false),
-            new Objective("Donation", "Spend your first 10 000 points", 250, true),
-            new Objective("Food/Voucher", "Spend your first 10 000 points", 250, false)
+    private List<Transaction> transactionList = List.of(
+            new Transaction("Food/Voucher", -350, LocalDateTime.now(),true),
+            new Transaction("Deposit points",2250, LocalDateTime.now(),true),
+            new Transaction("Donate points", -350, LocalDateTime.now(),false),
+            new Transaction("Deposit points", 1000, LocalDateTime.now(),true),
+            new Transaction("Donate points", -350, LocalDateTime.now(),true),
+            new Transaction("Food/Voucher",-350, LocalDateTime.now(),false)
     );
 
     @Override
@@ -53,7 +58,7 @@ public class PointsHistoryFragment extends Fragment {
         pointsHistoryRecyclerView = v.findViewById(R.id.objectiveRecyclerView);
         pointsHistoryRecyclerView.setHasFixedSize(true);
         pointsHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(PointsHistoryFragment.this.getActivity()));
-        pointsHistoryRecyclerAdapter = new ObjectivesRecyclerAdapter(PointsHistoryFragment.this.getActivity(), objectiveList, null);
+        pointsHistoryRecyclerAdapter = new PointsHistoryRecyclerAdapter(PointsHistoryFragment.this.getActivity(), transactionList);
         pointsHistoryRecyclerView.setAdapter(pointsHistoryRecyclerAdapter);
     }
 
