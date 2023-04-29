@@ -7,12 +7,14 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.util.List;
+
 import za.ac.cput.domain.Student;
 import za.ac.cput.utils.DBUtils;
 
-public class StudentRepository extends SQLiteOpenHelper implements IStudentRepository {
+public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentRepository {
 
-    public StudentRepository(@Nullable Context context) {
+    public StudentRepositoryImpl(@Nullable Context context) {
         super(context, DBUtils.DATABASE_NAME, null, DBUtils.DATABASE_VERSION);
     }
 
@@ -29,15 +31,37 @@ public class StudentRepository extends SQLiteOpenHelper implements IStudentRepos
         onCreate(db);
     }
 
+
+    @Override
+    public Student create(Student type) {
+        return null;
+    }
+
+    @Override
+    public Student read(String s) {
+        return null;
+    }
+
+    @Override
+    public Student update(Student type) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(String s) {
+        return false;
+    }
+
+    @Override
+    public List<Student> getAll() {
+        return null;
+    }
+
     @Override
     public Boolean login(Student student) {
         return null;
     }
 
-    @Override
-    public Boolean signUp(Student student) {
-        return null;
-    }
 
     @Override
     public Student updateStudentDetails(Student student) {
@@ -58,4 +82,5 @@ public class StudentRepository extends SQLiteOpenHelper implements IStudentRepos
     public String getCurrentStudentEmailAddress(long userId) {
         return null;
     }
+
 }
