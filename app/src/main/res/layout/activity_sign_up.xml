@@ -47,14 +47,12 @@
 
     </LinearLayout>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:padding="50dp"
         android:layout_below="@+id/logoHeader"
         android:orientation="vertical"
         android:layout_height="wrap_content" >
-
 
         <TextView
             android:textAlignment="center"
@@ -64,7 +62,7 @@
             android:textSize="36sp"
             android:textColor="@color/dark_black"
             android:fontFamily="@font/poppins_semibold"
-            android:text="Sign Up"/>
+            android:text="Sign Up" />
 
         <TextView
             android:textAlignment="center"
@@ -75,8 +73,7 @@
             android:textColor="@color/input_text"
             android:fontFamily="@font/poppins"
             android:text="To join the hungry students community"
-            android:layout_marginBottom="15dp"
-            />
+            android:layout_marginBottom="15dp" />
 
         <EditText
             android:id="@+id/fullNameEditText"
@@ -91,8 +88,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/EditTextStyleOutline"
-            android:hint="EmailAddress"
+            android:hint="Email Address"
             android:layout_marginBottom="10dp" />
+
+        <EditText
+            android:id="@+id/DOBEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/EditTextStyleOutline"
+            android:hint="Date of birth"
+            android:layout_marginBottom="10dp"/>
 
         <EditText
             android:id="@+id/passwordEditText"
@@ -119,11 +124,7 @@
             android:textFontWeight="600"
             android:stateListAnimator="@null"
             android:text="Sign up" />
-
-
-
     </LinearLayout>
-
 
     <RelativeLayout
         android:orientation="horizontal"
@@ -133,18 +134,14 @@
         android:layout_height="70dp"
         android:background="@drawable/blue_gradient_border_bottom">
 
-        <TextView
+        <Button
+            android:id="@+id/existingUserBtn"
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:textSize="14sp"
+            android:textSize="15sp"
             android:textColor="@color/white"
-            android:fontFamily="@font/poppins"
-            android:text="I'm already registered"
-
-            />
-
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:text="I'm already registered" />
     </RelativeLayout>
-
 </RelativeLayout>
