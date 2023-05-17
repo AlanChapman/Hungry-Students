@@ -1,6 +1,8 @@
 package za.ac.cput.repository;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -31,6 +33,36 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
         onCreate(db);
     }
 
+    public Boolean insertData(String fullName, String emailAddress, String dateOfBirth, String password){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues= new ContentValues();
+        contentValues.put("full_name", fullName);
+        contentValues.put("email_address", emailAddress);
+        contentValues.put("date_of_birth", dateOfBirth);
+        contentValues.put("password", password);
+        long result = MyDB.insert("student", null, contentValues);
+        if(result==-1) return false;
+        else
+            return true;
+    }
+
+    public Boolean checkEmail(String emailAddress) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        Cursor cursor = MyDB.rawQuery("Select * from student where email_address = ?", new String[]{emailAddress});
+        if (cursor.getCount() > 0)
+            return true;
+        else
+            return false;
+    }
+
+    public Boolean checkEmailPass(String emailAddress, String password){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        Cursor cursor = MyDB.rawQuery("Select * from student where email_address = ? and password = ?", new String[] {emailAddress,password});
+        if(cursor.getCount()>0)
+            return true;
+        else
+            return false;
+    }
 
     @Override
     public Student create(Student type) {
