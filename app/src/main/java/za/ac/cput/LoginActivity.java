@@ -6,30 +6,57 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+import za.ac.cput.repository.StudentRepositoryImpl;
 
-    private Button loginButton;
-    private Button nonExistingUserButton;
+public class LoginActivity extends AppCompatActivity {
+    EditText emailAddress, password;
+    private Button loginButton, nonExistingUserButton;
+    private StudentRepositoryImpl DB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        emailAddress = (EditText) findViewById(R.id.loginEmailEditText);
+        password = (EditText) findViewById(R.id.loginPasswordEditText);
+
         loginButton = findViewById(R.id.loginBtn);
-        loginButton.setOnClickListener(this);
 
         nonExistingUserButton = findViewById(R.id.nonExistingUserBtn);
-        nonExistingUserButton.setOnClickListener(this);
-    }
 
-    @Override
-    public void onClick(View view) {
-        if(view == loginButton) {
-            startActivity(new Intent(this, MainActivity.class));
-        }
-        if(view == nonExistingUserButton) {
-            startActivity(new Intent(this, SignUpActivity.class));
-        }
+        DB = new StudentRepositoryImpl(this);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String email = emailAddress.getText().toString();
+                String pass = password.getText().toString();
+
+                if(email.equals("")||pass.equals(""))
+                    Toast.makeText(LoginActivity.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
+                else{
+                    Boolean checkEmailPass = DB.checkEmailPass(email, pass);
+                    if(checkEmailPass==true){
+                        Toast.makeText(LoginActivity.this, "Sign in successfull", Toast.LENGTH_SHORT).show();
+                        Intent intent  = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+        nonExistingUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
