@@ -17,31 +17,63 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Objects;
+
+import za.ac.cput.repository.StudentRepositoryImpl;
+import za.ac.cput.utils.DBUtils;
 
 public class MainActivity extends AppCompatActivity {
 
     private MaterialToolbar toolbar;
+    private TextView studentNameTextView;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
+    private String authenticatedUser;
+    private int studentId;
+    private StudentRepositoryImpl DB;
+    private String studentName;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
+        authenticatedUser = getIntent().getStringExtra(DBUtils.AUTHENTICATED_USER);
+        DB = new StudentRepositoryImpl(this);
+        studentId = DB.getCurrentStudentId(authenticatedUser);
+        studentName = DB.getCurrentStudentFirstName(studentId);
         replaceFragment(new HomeFragment());
+
 
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = headerView.findViewById(R.id.studentNameTextView);
+        TextView currentDateTextView = headerView.findViewById(R.id.currentDateTextView);
+        navUsername.setText("Hello " + studentName);
+
+        LocalDate currentDate = LocalDate.now();
+        currentDateTextView.setText(currentDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
+
         toolbar = findViewById(R.id.materialToolBar);
+
+        System.out.println("LOGGED IN STUDENT: " + authenticatedUser);
+        System.out.println("LOGGED IN STUDENT ID: " + studentId);
 
         // open navigation drawer layout when clicking icon in toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -53,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
         // handle item click in navigation view
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -61,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
                 drawerLayout.closeDrawer(GravityCompat.START);
                 switch (id) {
+
                     case R.id.logoutNavMenu:
                         startActivity(new Intent(MainActivity.this, SignUpActivity.class));
                         break;
@@ -86,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void replaceFragment(Fragment fragment) {
+
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.frameLayout, fragment);

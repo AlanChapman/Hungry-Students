@@ -52,8 +52,4 @@ public class TransactionRepositoryImpl extends SQLiteOpenHelper implements ITran
         return false;
     }
 
-    @Override
-    public List<Transaction> getAll() {
-        return null;
-    }
 }

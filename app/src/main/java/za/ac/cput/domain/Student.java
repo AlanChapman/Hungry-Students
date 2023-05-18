@@ -4,68 +4,98 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Student {
-    private String studentId;
-    private String firstName;
-    private String lastName;
+    private int studentId;
+    private String fullName;
     private String emailAddress;
-    private LocalDate dataOfBirth;
-    private LocalDateTime createdAt;
-    private float pointBalance;
+    private LocalDate dateOfBirth;
+    private LocalDate createdAt;
+    private long pointBalance;
+    private String password;
 
     public Student() {}
 
-    public Student(String studentId, String firstName, String lastName, String emailAddress, LocalDate dataOfBirth, LocalDateTime createdAt, float pointBalance) {
-        this.studentId = studentId;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Student(String fullName, String emailAddress, LocalDate dateOfBirth, LocalDate createdAt, long pointBalance, String password) {
+        this.fullName = fullName;
         this.emailAddress = emailAddress;
-        this.dataOfBirth = dataOfBirth;
+        this.dateOfBirth = dateOfBirth;
+        this.createdAt = createdAt;
+        this.pointBalance = pointBalance;
+        this.password = password;
+    }
+
+    public Student(String fullName, String emailAddress, LocalDate dateOfBirth, String password) {
+        this.fullName = fullName;
+        this.emailAddress = emailAddress;
+        this.dateOfBirth = dateOfBirth;
+        this.password = password;
+    }
+
+    public Student(int studentId, String fullName, String emailAddress, LocalDate dateOfBirth, LocalDate createdAt, long pointBalance, String password) {
+        this.studentId = studentId;
+        this.fullName = fullName;
+        this.emailAddress = emailAddress;
+        this.dateOfBirth = dateOfBirth;
+        this.createdAt = createdAt;
+        this.pointBalance = pointBalance;
+        this.password = password;
+    }
+
+    public Student(int studentId, String fullName, String emailAddress, LocalDate dateOfBirth, LocalDate createdAt, long pointBalance) {
+        this.studentId = studentId;
+        this.fullName = fullName;
+        this.emailAddress = emailAddress;
+        this.dateOfBirth = dateOfBirth;
         this.createdAt = createdAt;
         this.pointBalance = pointBalance;
     }
 
-    public String getStudentId() {
+    public int getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(String studentId) {
+    public void setStudentId(int studentId) {
         this.studentId = studentId;
     }
 
-    public String getFirstName() { return firstName; }
+    public String getFullName() { return fullName; }
 
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-
-    public String getLastName() { return lastName; }
-
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public void setFullName(String firstName) { this.fullName = fullName; }
 
     public String getEmailAddress() { return emailAddress; }
 
     public void setEmailAddress(String emailAddress) { this.emailAddress = emailAddress;}
 
-    public LocalDate getDataOfBirth() { return dataOfBirth; }
+    public LocalDate getDateOfBirth() { return dateOfBirth; }
 
-    public void setDataOfBirth(LocalDate dataOfBirth) { this.dataOfBirth = dataOfBirth; }
+    public void setDateOfBirth(LocalDate dataOfBirth) { this.dateOfBirth = dataOfBirth; }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDate getCreatedAt() { return createdAt; }
 
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public void setCreatedAt(LocalDate createdAt) { this.createdAt = createdAt; }
 
     public float getPointBalance() { return pointBalance; }
 
-    public void setPointBalance(float pointBalance) { this.pointBalance = pointBalance; }
+    public void setPointBalance(long pointBalance) { this.pointBalance = pointBalance; }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 
     @Override
     public String toString() {
         return "Student{" +
-                "studentId='" + studentId + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                "studentId=" + studentId +
+                ", fullName='" + fullName + '\'' +
                 ", emailAddress='" + emailAddress + '\'' +
-                ", dataOfBirth=" + dataOfBirth +
+                ", dateOfBirth=" + dateOfBirth +
                 ", createdAt=" + createdAt +
                 ", pointBalance=" + pointBalance +
+                ", password='" + password + '\'' +
                 '}';
     }
 }

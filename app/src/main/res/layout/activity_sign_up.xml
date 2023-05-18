@@ -91,13 +91,16 @@
             android:hint="Email Address"
             android:layout_marginBottom="10dp" />
 
+
         <EditText
             android:id="@+id/DOBEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/EditTextStyleOutline"
+            android:editable="false"
             android:hint="Date of birth"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            tools:ignore="Deprecated" />
 
         <EditText
             android:id="@+id/passwordEditText"

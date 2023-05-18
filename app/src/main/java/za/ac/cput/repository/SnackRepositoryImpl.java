@@ -52,8 +52,4 @@ public class SnackRepositoryImpl extends SQLiteOpenHelper implements ISnackRepos
         return false;
     }
 
-    @Override
-    public List<Snack> getAll() {
-        return null;
-    }
 }

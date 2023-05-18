@@ -4,29 +4,32 @@
     android:layout_height="200dp"
     android:padding="20dp"
     android:gravity="bottom"
+    android:id="@+id/navHeaderLinearLayout"
     android:orientation="vertical"
     android:background="@color/dark_blue">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="61dp"
-        android:src="@drawable/ic_user_account"/>
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="61dp"-->
+<!--        android:src="@drawable/ic_user_account"/>-->
 
     <TextView
+        android:id="@+id/studentNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your Name"
-        android:textSize="32sp"
+        android:textSize="26sp"
         android:textColor="@color/white"
         android:textStyle="bold"/>
 
     <TextView
+        android:id="@+id/currentDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your Name"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:textStyle="bold"/>
+        android:textSize="16sp"
+        android:textColor="@color/primary_blue"
+        />
 
 
 

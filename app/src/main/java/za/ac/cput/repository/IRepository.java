@@ -7,5 +7,5 @@ public interface IRepository<T, ID>{
     T read(ID id);
     T update(T type);
     boolean delete(ID id);
-    List<T> getAll();
+
 }

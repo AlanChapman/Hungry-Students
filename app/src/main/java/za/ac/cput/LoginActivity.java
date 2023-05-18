@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import za.ac.cput.repository.StudentRepositoryImpl;
+import za.ac.cput.utils.DBUtils;
 
 public class LoginActivity extends AppCompatActivity {
     EditText emailAddress, password;
@@ -39,12 +40,15 @@ public class LoginActivity extends AppCompatActivity {
                 if(email.equals("")||pass.equals(""))
                     Toast.makeText(LoginActivity.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
                 else{
-                    Boolean checkEmailPass = DB.checkEmailPass(email, pass);
-                    if(checkEmailPass==true){
-                        Toast.makeText(LoginActivity.this, "Sign in successfull", Toast.LENGTH_SHORT).show();
-                        Intent intent  = new Intent(getApplicationContext(), LoginActivity.class);
+                    boolean checkEmailPass = DB.login(email, pass);
+                    System.out.println(email + " " + pass);
+                    if(checkEmailPass) {
+
+                        Toast.makeText(LoginActivity.this, "Sign in successful", Toast.LENGTH_SHORT).show();
+                        Intent intent  = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra(DBUtils.AUTHENTICATED_USER, email);
                         startActivity(intent);
-                    }else{
+                    } else {
                         Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
                     }
                 }
