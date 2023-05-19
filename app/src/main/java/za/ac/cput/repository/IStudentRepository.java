@@ -7,9 +7,9 @@ public interface IStudentRepository {
     boolean register(Student student);
     boolean login(String emailAddress, String password);
     int getCurrentStudentId(String emailAddress);
-    String getCurrentStudentFirstName(int studentId);
+    String getCurrentStudentFirstName(String emailAddress);
 
-    Student getStudentDetails(int studentId);
+    Student getStudentDetails(String emailAddress);
 
     String getCurrentStudentEmailAddress(int studentId);
 }

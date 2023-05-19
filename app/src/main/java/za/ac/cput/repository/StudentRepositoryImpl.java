@@ -98,12 +98,12 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
     }
 
 
-    private Boolean checkDuplicate(String email) {
+    private Boolean checkDuplicate(String emailAddress) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(DBUtils.STUDENT_TABLE,// Selecting Table
                 new String[]{DBUtils.COLUMN_STUDENT_EMAIL_ADDRESS},//Selecting columns want to query
                 DBUtils.COLUMN_STUDENT_EMAIL_ADDRESS + " = ?",
-                new String[]{email},//Where clause
+                new String[]{emailAddress},//Where clause
                 null, null, null);
 
         if (cursor != null && cursor.moveToFirst() && cursor.getCount() > 0) {
@@ -157,13 +157,13 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
     }
 
     @Override
-    public String getCurrentStudentFirstName(int studentId) {
+    public String getCurrentStudentFirstName(String emailAddress) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(DBUtils.STUDENT_TABLE,// Selecting Table
                 new String[]{DBUtils.COLUMN_STUDENT_FULL_NAME},//Selecting columns want to query
                 DBUtils.COLUMN_STUDENT_ID + " = ?",
-                new String[]{String.valueOf(studentId)},//Where clause
+                new String[]{emailAddress},//Where clause
                 null, null, null);
 
         String firstName = null;
@@ -182,20 +182,20 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public Student getStudentDetails(int studentId) {
+    public Student getStudentDetails(String emailAddress) {
         SQLiteDatabase db = this.getReadableDatabase();
         Student student = null;
         Cursor cursor = db.query(DBUtils.STUDENT_TABLE,// Selecting Table
                 new String[]{DBUtils.COLUMN_STUDENT_ID, DBUtils.COLUMN_STUDENT_FULL_NAME, DBUtils.COLUMN_STUDENT_ID, DBUtils.COLUMN_STUDENT_EMAIL_ADDRESS,
                         DBUtils.COLUMN_STUDENT_DATE_OF_BIRTH, DBUtils.COLUMN_STUDENT_CREATED_AT, DBUtils.COLUMN_STUDENT_POINTS_BALANCE},//Selecting columns want to query
                 DBUtils.COLUMN_STUDENT_ID + " = ?",
-                new String[]{String.valueOf(studentId)},//Where clause
+                new String[]{emailAddress},//Where clause
                 null, null, null);
 
         while(cursor.moveToNext()) {
-            int theStudentId = cursor.getInt(0);
+            int studentId = cursor.getInt(0);
             String fullName = cursor.getString(1);
-            String emailAddress = cursor.getString(2);
+            String theEmailAddress = cursor.getString(2);
             String dateOfBirth = cursor.getString(3);
             String createdAt = cursor.getString(4);
 
@@ -205,7 +205,7 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
 
             long pointBalance = cursor.getLong(5);
 
-            student = new Student(theStudentId, fullName, emailAddress, dateOfBirthFormatted, createdAtFormatted, pointBalance);
+            student = new Student(studentId, fullName, theEmailAddress, dateOfBirthFormatted, createdAtFormatted, pointBalance);
         }
 
 

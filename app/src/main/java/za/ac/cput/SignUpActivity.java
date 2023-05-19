@@ -89,7 +89,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
             DatePickerDialog dialog = new DatePickerDialog(SignUpActivity.this, android.R.style.Theme_Holo_Light_Dialog, dateSetListener, year, month, day);
 
-            dialog.setTitle("Select project due date");
+            dialog.setTitle("Select Date of Birth");
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
         }
@@ -112,10 +112,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if(pass.equals(confirmPass)) {
             if (validateInput(name, email, pass)) {
                 boolean isValid = DB.register(new Student(name, email, LocalDate.parse(birthDate, formatter), pass));
-                if (isValid) {
-                    clearInput();
-                }
             }
+        } else {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show();
         }
 
 

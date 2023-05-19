@@ -15,10 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.List;
 
 import za.ac.cput.domain.Objective;
+import za.ac.cput.repository.StudentRepositoryImpl;
+import za.ac.cput.utils.DBUtils;
 
 public class HomeFragment extends Fragment implements View.OnClickListener{
 
@@ -26,6 +29,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private Button buyPointsBtn, pointsHistoryBtn;
     private RecyclerView objectiveRecyclerView;
     private ObjectivesRecyclerAdapter objectivesRecyclerAdapter;
+    private StudentRepositoryImpl DB;
+    private String studentName;
+    private String authenticatedUser;
+
+    private TextView welcomeStudentTextView;
 
     private List<Objective> objectiveList = List.of(
             new Objective("Donate points", "Donate points to a friend", 250, false),
@@ -37,21 +45,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     );
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, null);
 
+
+        authenticatedUser = getActivity().getIntent().getStringExtra(DBUtils.AUTHENTICATED_USER);
+        DB = new StudentRepositoryImpl(getActivity());
+        studentName = DB.getCurrentStudentFirstName(authenticatedUser);
+
         buyPointsBtn = view.findViewById(R.id.buyPointsBtn);
         pointsHistoryBtn = view.findViewById(R.id.pointsHistoryBtn);
+        welcomeStudentTextView = view.findViewById(R.id.welcomeStudentTextView);
 
+        welcomeStudentTextView.setText("Welcome " + studentName);
         pointsHistoryBtn.setOnClickListener(this);
         buyPointsBtn.setOnClickListener(this);
 

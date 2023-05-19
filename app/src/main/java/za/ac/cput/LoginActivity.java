@@ -37,9 +37,14 @@ public class LoginActivity extends AppCompatActivity {
                 String email = emailAddress.getText().toString();
                 String pass = password.getText().toString();
 
-                if(email.equals("")||pass.equals(""))
+                if(email.equals("")){
                     Toast.makeText(LoginActivity.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
-                else{
+                    emailAddress.setError("Please enter a value");
+                }
+                else if(pass.equals("")) {
+                    password.setError("Please enter a value");
+                    Toast.makeText(LoginActivity.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
+                } else{
                     boolean checkEmailPass = DB.login(email, pass);
                     System.out.println(email + " " + pass);
                     if(checkEmailPass) {

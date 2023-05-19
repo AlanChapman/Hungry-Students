@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
 
     private String authenticatedUser;
-    private int studentId;
     private StudentRepositoryImpl DB;
     private String studentName;
 
@@ -54,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         authenticatedUser = getIntent().getStringExtra(DBUtils.AUTHENTICATED_USER);
         DB = new StudentRepositoryImpl(this);
-        studentId = DB.getCurrentStudentId(authenticatedUser);
-        studentName = DB.getCurrentStudentFirstName(studentId);
+        studentName = DB.getCurrentStudentFirstName(authenticatedUser);
         replaceFragment(new HomeFragment());
 
 
@@ -73,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.materialToolBar);
 
         System.out.println("LOGGED IN STUDENT: " + authenticatedUser);
-        System.out.println("LOGGED IN STUDENT ID: " + studentId);
 
         // open navigation drawer layout when clicking icon in toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
