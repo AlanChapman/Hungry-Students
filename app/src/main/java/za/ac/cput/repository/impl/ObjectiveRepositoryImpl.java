@@ -5,9 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +20,10 @@ import za.ac.cput.utils.DBUtils;
 
 public class ObjectiveRepositoryImpl extends SQLiteOpenHelper implements IObjectiveRepository {
 
+    private final Context context;
     public ObjectiveRepositoryImpl(@Nullable Context context) {
         super(context, DBUtils.DATABASE_NAME, null, DBUtils.DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -35,7 +39,7 @@ public class ObjectiveRepositoryImpl extends SQLiteOpenHelper implements IObject
         onCreate(db);
     }
 
-    @Override
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Objective create(Objective objective) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -55,17 +59,17 @@ public class ObjectiveRepositoryImpl extends SQLiteOpenHelper implements IObject
 
     }
 
-    @Override
+
     public Objective read(String s) {
         return null;
     }
 
-    @Override
+
     public Objective update(Objective type) {
         return null;
     }
 
-    @Override
+
     public boolean delete(String s) {
         return false;
     }

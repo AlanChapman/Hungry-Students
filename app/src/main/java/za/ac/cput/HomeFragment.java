@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import za.ac.cput.domain.Objective;
@@ -34,7 +35,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private String authenticatedUser;
     private ObjectiveRepositoryImpl objectiveRepository;
 
-    private List<Objective> objectiveList;
+    private List<Objective> objectiveList = new ArrayList<>();
     private TextView welcomeStudentTextView;
 
 //    private List<Objective> objectiveList = List.of(
@@ -46,6 +47,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 //            new Objective("Spend 10 000 points", "Spend your first 10 000 points", 250, false)
 //    );
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -56,24 +58,31 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         studentRepository = new StudentRepositoryImpl(getActivity());
 
 
-        objectiveRepository = new ObjectiveRepositoryImpl(getActivity());
+//        objectiveRepository = new ObjectiveRepositoryImpl(getActivity());
+//
+//
+//        if(objectiveRepository.getAll().isEmpty()) {
+//            objectiveRepository.create(new Objective.Builder()
+//                    .setTitle("Spend 5000 points")
+//                    .setDescription("This is earned by spending 5000 points")
+//                    .setPoints(250)
+//                    .build());
+//
+//            objectiveRepository.create(new Objective.Builder()
+//                    .setTitle("Spend 10000 points")
+//                    .setDescription("This is earned by spending 10000 points")
+//                    .setPoints(500)
+//                    .build());
+//
+//            objectiveRepository.create(new Objective.Builder()
+//                    .setTitle("Spend 15000 points")
+//                    .setDescription("This is earned by spending 10000 points")
+//                    .setPoints(750)
+//                    .build());
+//        }
+//
+//        objectiveList = objectiveRepository.getAll();
 
-
-        if(objectiveRepository.getAll().size() < 0) {
-            objectiveRepository.create(new Objective.Builder()
-                    .setTitle("Spend 5000 points")
-                    .setDescription("This is earned by spending 5000 points")
-                    .setPoints(350)
-                    .build());
-
-            objectiveRepository.create(new Objective.Builder()
-                    .setTitle("Spend 10000 points")
-                    .setDescription("This is earned by spending 10000 points")
-                    .setPoints(500)
-                    .build());
-        }else {
-            objectiveList = objectiveRepository.getAll();
-        }
         studentName = studentRepository.getCurrentStudentFirstName(authenticatedUser);
 
         buyPointsBtn = view.findViewById(R.id.buyPointsBtn);
@@ -101,6 +110,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         if(view == buyPointsBtn) {
+
            replaceFragment(new DonatePointsFragment());
         } else if(view == pointsHistoryBtn) {
             replaceFragment(new PointsHistoryFragment());

@@ -45,10 +45,10 @@ public class ObjectivesRecyclerAdapter extends RecyclerView.Adapter<ObjectivesRe
         Objective objective = objectiveList.get(position);
 
         // Styling to set when a user already achieved an objective
-        if(objective.isAchieved()) {
-            holder.objectiveTitleTextView.setPaintFlags(holder.objectiveTitleTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            holder.objectiveDescriptionTextView.setPaintFlags(holder.objectiveDescriptionTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        }
+//        if(objective.isAchieved()) {
+//            holder.objectiveTitleTextView.setPaintFlags(holder.objectiveTitleTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//            holder.objectiveDescriptionTextView.setPaintFlags(holder.objectiveDescriptionTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//        }
 
         holder.objectiveTitleTextView.setText(objective.getTitle());
         holder.objectiveDescriptionTextView.setText(objective.getDescription());

@@ -25,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import za.ac.cput.domain.Student;
+import za.ac.cput.repository.impl.ObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentRepositoryImpl;
 import za.ac.cput.utils.DBUtils;
 
@@ -37,7 +38,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private String authenticatedUser;
     private int studentId;
     private Dialog dialog;
-    private StudentRepositoryImpl DB;
+    private StudentRepositoryImpl studentRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         existingUserButton = (Button) findViewById(R.id.existingUserBtn);
 
-        DB = new StudentRepositoryImpl(this);
+        studentRepository = new StudentRepositoryImpl(this);
+
         dialog = new Dialog(this);
 
         authenticatedUser =  getIntent().getStringExtra(DBUtils.AUTHENTICATED_USER);
@@ -99,11 +101,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void registerUser() {
 
-        String name = fullNameEditText.getText().toString().trim();
-        String email = emailEditText.getText().toString().trim();
-        String birthDate = DOBEditText.getText().toString().trim();
-        String pass = passwordEditText.getText().toString().trim();
-        String confirmPass = confirmPasswordEditText.getText().toString().trim();
+//        String name = fullNameEditText.getText().toString().trim();
+//        String email = emailEditText.getText().toString().trim();
+//        String birthDate = DOBEditText.getText().toString().trim();
+//        String pass = passwordEditText.getText().toString().trim();
+//        String confirmPass = confirmPasswordEditText.getText().toString().trim();
+
+        String name = "john";
+        String email = "john1234@gmail.com";
+        String birthDate = "2023-05-22";
+        String pass = "password";
+        String confirmPass = "password";
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -111,7 +119,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         System.out.println(name + " " + email + " " + birthDate + " " + pass + " " + confirmPass);
         if(pass.equals(confirmPass)) {
             if (validateInput(name, email, pass)) {
-                boolean isValid = DB.register(new Student(name, email, LocalDate.parse(birthDate, formatter), pass));
+                studentRepository.register(new Student(name, email, LocalDate.parse(birthDate, formatter), pass));
             }
         } else {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show();

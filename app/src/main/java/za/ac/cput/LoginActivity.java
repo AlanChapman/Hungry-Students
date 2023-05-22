@@ -1,8 +1,10 @@
 package za.ac.cput;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +17,7 @@ import za.ac.cput.utils.DBUtils;
 public class LoginActivity extends AppCompatActivity {
     EditText emailAddress, password;
     private Button loginButton, nonExistingUserButton;
-    private StudentRepositoryImpl DB;
+    private StudentRepositoryImpl studentRepository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,15 +29,20 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginBtn);
 
         nonExistingUserButton = findViewById(R.id.nonExistingUserBtn);
+        studentRepository = new StudentRepositoryImpl(this);
 
-        DB = new StudentRepositoryImpl(this);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
 
-                String email = emailAddress.getText().toString();
-                String pass = password.getText().toString();
+//                String email = emailAddress.getText().toString();
+//                String pass = password.getText().toString();
+
+                String email = "john1234@gmail.com";
+                String pass = "password";
+
 
                 if(email.equals("")){
                     Toast.makeText(LoginActivity.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
@@ -45,12 +52,12 @@ public class LoginActivity extends AppCompatActivity {
                     password.setError("Please enter a value");
                     Toast.makeText(LoginActivity.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
                 } else{
-                    boolean checkEmailPass = DB.login(email, pass);
+                    boolean checkEmailPass = studentRepository.login(email, pass);
                     System.out.println(email + " " + pass);
                     if(checkEmailPass) {
 
                         Toast.makeText(LoginActivity.this, "Sign in successful", Toast.LENGTH_SHORT).show();
-                        Intent intent  = new Intent(getApplicationContext(), MainActivity.class);
+                        Intent intent  = new Intent(getApplicationContext(), NavActivity.class);
                         intent.putExtra(DBUtils.AUTHENTICATED_USER, email);
                         startActivity(intent);
                     } else {

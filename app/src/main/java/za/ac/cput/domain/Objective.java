@@ -19,6 +19,12 @@ public class Objective {
         this.points = builder.points;
     }
 
+    public Objective(String title, String description, int points) {
+        this.title = title;
+        this.description = description;
+        this.points = points;
+    }
+
     public int getObjectiveId() {
         return objectiveId;
     }

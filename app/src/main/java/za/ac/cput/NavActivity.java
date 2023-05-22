@@ -28,7 +28,7 @@ import za.ac.cput.repository.impl.ObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentRepositoryImpl;
 import za.ac.cput.utils.DBUtils;
 
-public class MainActivity extends AppCompatActivity {
+public class NavActivity extends AppCompatActivity {
 
     private MaterialToolbar toolbar;
     private TextView studentNameTextView;
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String authenticatedUser;
     private StudentRepositoryImpl studentRepository;
+    private ObjectiveRepositoryImpl objectiveRepository;
     private String studentName;
 
 
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         authenticatedUser = getIntent().getStringExtra(DBUtils.AUTHENTICATED_USER);
         studentRepository = new StudentRepositoryImpl(this);
+        objectiveRepository = new ObjectiveRepositoryImpl(this);
         studentName = studentRepository.getCurrentStudentFirstName(authenticatedUser);
         replaceFragment(new HomeFragment());
 
@@ -92,7 +94,31 @@ public class MainActivity extends AppCompatActivity {
                 switch (id) {
 
                     case R.id.logoutNavMenu:
-                        startActivity(new Intent(MainActivity.this, SignUpActivity.class));
+
+
+                        System.out.println("inserting data..");
+                        objectiveRepository.create(new Objective.Builder()
+                                .setTitle("Spend 5000 points")
+                                .setDescription("This is earned by spending 5000 points")
+                                .setPoints(250)
+                                .build());
+
+                        objectiveRepository.create(new Objective.Builder()
+                                .setTitle("Spend 10000 points")
+                                .setDescription("This is earned by spending 10000 points")
+                                .setPoints(500)
+                                .build());
+
+                        objectiveRepository.create(new Objective.Builder()
+                                .setTitle("Spend 15000 points")
+                                .setDescription("This is earned by spending 10000 points")
+                                .setPoints(750)
+                                .build());
+
+                        System.out.println(objectiveRepository.getAll());
+
+                        //objectiveList = objectiveRepository.getAll();
+                        //startActivity(new Intent(NavActivity.this, SignUpActivity.class));
                         break;
 
                     case R.id.donatePointsNavMenu:

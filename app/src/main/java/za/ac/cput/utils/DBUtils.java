@@ -6,11 +6,11 @@ public class DBUtils {
     public static final String AUTHENTICATED_USER = "authenticatedUser";
     public static final String STUDENT_ID = "studentId";
     public static final String DATABASE_NAME = "hungrystudents.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
-    // Table name for User
+    // STUDENT TABLE
     public static final String STUDENT_TABLE = "student";
-    // Static attributes for User
+
     public static final String COLUMN_STUDENT_ID = "id";
     public static final String COLUMN_STUDENT_FULL_NAME = "full_name";
     public static final String COLUMN_STUDENT_EMAIL_ADDRESS = "email_address";
@@ -21,7 +21,6 @@ public class DBUtils {
     public static final String COLUMN_STUDENT_PASSWORD = "password";
 
 
-    // Query for Creating Student Table
     public static final String CREATE_STUDENT_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS " + STUDENT_TABLE + "(" + COLUMN_STUDENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_STUDENT_FULL_NAME + " TEXT,"  + COLUMN_STUDENT_EMAIL_ADDRESS + " TEXT," + COLUMN_STUDENT_DATE_OF_BIRTH + " TEXT,"
             + COLUMN_STUDENT_POINTS_BALANCE + " INTEGER," + COLUMN_STUDENT_CREATED_AT + " TEXT," + COLUMN_STUDENT_PASSWORD + " TEXT)";
@@ -29,6 +28,8 @@ public class DBUtils {
     public static final String DROP_STUDENT_TABLE_QUERY = "DROP TABLE IF EXISTS " + STUDENT_TABLE;
 
 
+
+    // OBJECTIVE TABLE
     public static final String OBJECTIVE_TABLE = "objective";
     public static final String COLUMN_OBJECTIVE_ID = "id";
     public static final String COLUMN_OBJECTIVE_TITLE = "title";
@@ -37,8 +38,14 @@ public class DBUtils {
 
     public static final String CREATE_OBJECTIVE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS " + OBJECTIVE_TABLE + "(" + COLUMN_OBJECTIVE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_OBJECTIVE_TITLE + " TEXT,"  + COLUMN_OBJECTIVE_DESCRIPTION + " TEXT," + COLUMN_OBJECTIVE_POINTS + " INTEGER)";
+
     public static final String DROP_OBJECTIVE_TABLE_QUERY = "DROP TABLE IF EXISTS " + OBJECTIVE_TABLE;
 
+
+
+
+
+    // STUDENT OBJECTIVE TABLE
     public static final String STUDENT_OBJECTIVE_TABLE = "student_objective";
     public static final String COLUMN_STUDENT_OBJECTIVE_ID = "id";
     public static final String COLUMN_STUDENT_OBJECTIVE_STUDENT_ID = "student_id";
@@ -46,10 +53,22 @@ public class DBUtils {
 
     public static final String CREATE_STUDENT_OBJECTIVE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS " + STUDENT_OBJECTIVE_TABLE + "(" + COLUMN_STUDENT_OBJECTIVE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_STUDENT_OBJECTIVE_STUDENT_ID + " INTEGER,"  + COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID + " INTEGER)";
+
     public static final String DROP_STUDENT_OBJECTIVE_TABLE_QUERY = "DROP TABLE IF EXISTS " + STUDENT_OBJECTIVE_TABLE;
 
 
+    // SNACK TABLE
     public static final String CREATE_SNACK_TABLE_QUERY = "";
     public static final String DROP_SNACK_TABLE_QUERY = "";
+
+
+
+    //  POINTS TRANSACTION TABLE
+    public static final String POINTS_TRANSACTION_TABLE = "points_transaction";
+
+    public static final String COLUMN_POINTS_TRANSACTION_ID = "id";
+
+    public static final String CREATE_POINTS_TRANSACTION_TABLE_QUERY = "";
+    public static final String DROP_POINTS_TRANSACTION_TABLE_QUERY = "";
 
 }
