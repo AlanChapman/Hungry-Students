@@ -2,8 +2,6 @@ package za.ac.cput;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -14,12 +12,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -27,9 +22,8 @@ import com.google.android.material.navigation.NavigationView;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Objects;
 
-import za.ac.cput.repository.StudentRepositoryImpl;
+import za.ac.cput.repository.impl.StudentRepositoryImpl;
 import za.ac.cput.utils.DBUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         studentName = DB.getCurrentStudentFirstName(authenticatedUser);
         replaceFragment(new HomeFragment());
 
+        System.out.println(authenticatedUser);
+        System.out.println(studentName);
 
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);

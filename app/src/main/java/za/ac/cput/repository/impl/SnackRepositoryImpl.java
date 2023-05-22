@@ -1,4 +1,4 @@
-package za.ac.cput.repository;
+package za.ac.cput.repository.impl;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,12 +7,11 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import java.util.List;
-
 import za.ac.cput.domain.Snack;
+import za.ac.cput.repository.interfaces.ISnackRepository;
 import za.ac.cput.utils.DBUtils;
 
-public class SnackRepositoryImpl extends SQLiteOpenHelper implements ISnackRepository{
+public class SnackRepositoryImpl extends SQLiteOpenHelper implements ISnackRepository {
 
     public SnackRepositoryImpl(@Nullable Context context) {
         super(context, DBUtils.DATABASE_NAME, null, DBUtils.DATABASE_VERSION);

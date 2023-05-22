@@ -1,5 +1,9 @@
 package za.ac.cput.domain;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.time.LocalDateTime;
 
 public class StudentObjective {
@@ -8,16 +12,18 @@ public class StudentObjective {
     private int objectiveId;
     private LocalDateTime dateAchieved;
 
-    public StudentObjective() {
+    private StudentObjective() {
 
     }
 
-    public StudentObjective(int studentObjectiveId, int studentId, int objectiveId, LocalDateTime dateAchieved) {
-        this.studentObjectiveId = studentObjectiveId;
-        this.studentId = studentId;
-        this.objectiveId = objectiveId;
-        this.dateAchieved = dateAchieved;
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private StudentObjective(Builder builder) {
+        this.studentObjectiveId = builder.studentObjectiveId;
+        this.studentId = builder.studentId;
+        this.objectiveId = builder.objectiveId;
+        this.dateAchieved = LocalDateTime.now();
     }
+
 
     public int getStudentObjectiveId() {
         return studentObjectiveId;
@@ -43,5 +49,32 @@ public class StudentObjective {
                 ", objectiveId=" + objectiveId +
                 ", dateAchieved=" + dateAchieved +
                 '}';
+    }
+
+    public static class Builder {
+        private int studentObjectiveId;
+        private int studentId;
+        private int objectiveId;
+        private LocalDateTime dateAchieved;
+
+        public Builder setStudentObjectiveId(int studentObjectiveId) {
+            this.studentObjectiveId = studentObjectiveId;
+            return this;
+        }
+
+        public Builder setStudentId(int studentId) {
+            this.studentId = studentId;
+            return this;
+        }
+
+        public Builder setObjectiveId(int objectiveId) {
+            this.objectiveId = objectiveId;
+            return this;
+        }
+
+
+        public StudentObjective build() {
+            return new StudentObjective(this);
+        }
     }
 }

@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import za.ac.cput.domain.Student;
-import za.ac.cput.repository.StudentRepositoryImpl;
+import za.ac.cput.repository.impl.StudentRepositoryImpl;
 import za.ac.cput.utils.DBUtils;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {

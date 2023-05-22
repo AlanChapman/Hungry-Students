@@ -1,6 +1,5 @@
 package za.ac.cput;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -20,7 +19,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import za.ac.cput.domain.Objective;
-import za.ac.cput.repository.StudentRepositoryImpl;
+import za.ac.cput.repository.impl.StudentRepositoryImpl;
 import za.ac.cput.utils.DBUtils;
 
 public class HomeFragment extends Fragment implements View.OnClickListener{

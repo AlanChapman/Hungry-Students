@@ -1,4 +1,4 @@
-package za.ac.cput.repository;
+package za.ac.cput.repository.impl;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,12 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
 
 import za.ac.cput.domain.Student;
+import za.ac.cput.repository.interfaces.IStudentRepository;
 import za.ac.cput.utils.DBUtils;
 
 public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentRepository {
@@ -162,7 +160,7 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
 
         Cursor cursor = db.query(DBUtils.STUDENT_TABLE,// Selecting Table
                 new String[]{DBUtils.COLUMN_STUDENT_FULL_NAME},//Selecting columns want to query
-                DBUtils.COLUMN_STUDENT_ID + " = ?",
+                DBUtils.COLUMN_STUDENT_EMAIL_ADDRESS + " = ?",
                 new String[]{emailAddress},//Where clause
                 null, null, null);
 

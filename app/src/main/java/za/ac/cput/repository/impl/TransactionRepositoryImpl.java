@@ -1,4 +1,4 @@
-package za.ac.cput.repository;
+package za.ac.cput.repository.impl;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,12 +7,11 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import java.util.List;
-
 import za.ac.cput.domain.Transaction;
+import za.ac.cput.repository.interfaces.ITransactionRepository;
 import za.ac.cput.utils.DBUtils;
 
-public class TransactionRepositoryImpl extends SQLiteOpenHelper implements ITransactionRepository{
+public class TransactionRepositoryImpl extends SQLiteOpenHelper implements ITransactionRepository {
 
     public TransactionRepositoryImpl(@Nullable Context context) {
         super(context, DBUtils.DATABASE_NAME, null, DBUtils.DATABASE_VERSION);

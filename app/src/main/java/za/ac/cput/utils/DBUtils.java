@@ -28,8 +28,16 @@ public class DBUtils {
 
     public static final String DROP_STUDENT_TABLE_QUERY = "DROP TABLE IF EXISTS " + STUDENT_TABLE;
 
-    public static final String CREATE_OBJECTIVE_TABLE_QUERY = "";
-    public static final String DROP_OBJECTIVE_TABLE_QUERY = "";
+
+    public static final String OBJECTIVE_TABLE = "objective";
+    public static final String COLUMN_OBJECTIVE_ID = "id";
+    public static final String COLUMN_OBJECTIVE_TITLE = "title";
+    public static final String COLUMN_OBJECTIVE_DESCRIPTION = "description";
+    public static final String COLUMN_OBJECTIVE_POINTS = "points";
+
+    public static final String CREATE_OBJECTIVE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS " + OBJECTIVE_TABLE + "(" + COLUMN_OBJECTIVE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_OBJECTIVE_TITLE + " TEXT,"  + COLUMN_OBJECTIVE_DESCRIPTION + " TEXT," + COLUMN_OBJECTIVE_POINTS + " INTEGER)";
+    public static final String DROP_OBJECTIVE_TABLE_QUERY = "DROP TABLE IF EXISTS " + OBJECTIVE_TABLE;
 
     public static final String CREATE_TRANSACTION_TABLE_QUERY = "";
     public static final String DROP_TRANSACTION_TABLE_QUERY = "";

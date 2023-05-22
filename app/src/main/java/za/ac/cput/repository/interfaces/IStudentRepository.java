@@ -1,4 +1,4 @@
-package za.ac.cput.repository;
+package za.ac.cput.repository.interfaces;
 
 import za.ac.cput.domain.Student;
 

@@ -3,20 +3,24 @@ package za.ac.cput.domain;
 import java.util.Objects;
 
 public class Objective {
+    private int objectiveId;
     private String title;
     private String description;
     private int points;
-    private boolean isAchieved;
 
-    public Objective() {
+    private Objective() {
 
     }
 
-    public Objective(String title, String description, int points, boolean isAchieved) {
-        this.title = title;
-        this.description = description;
-        this.points = points;
-        this.isAchieved = isAchieved;
+    private Objective(Builder builder) {
+        this.objectiveId = builder.objectiveId;
+        this.title = builder.title;
+        this.description = builder.description;
+        this.points = builder.points;
+    }
+
+    public int getObjectiveId() {
+        return objectiveId;
     }
 
     public String getTitle() {
@@ -31,30 +35,44 @@ public class Objective {
         return points;
     }
 
-    public boolean isAchieved() {
-        return isAchieved;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Objective objective = (Objective) o;
-        return points == objective.points && isAchieved == objective.isAchieved && title.equals(objective.title) && description.equals(objective.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(title, description, points, isAchieved);
-    }
-
     @Override
     public String toString() {
         return "Objective{" +
-                "title='" + title + '\'' +
+                "objectiveId=" + objectiveId +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", points=" + points +
-                ", isAchieved=" + isAchieved +
                 '}';
+    }
+
+    public static class Builder {
+        private int objectiveId;
+        private String title;
+        private String description;
+        private int points;
+
+        public Builder setObjectiveId(int objectiveId) {
+            this.objectiveId = objectiveId;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder setPoints(int points) {
+            this.points = points;
+            return this;
+        }
+
+        public Objective build() {
+            return new Objective(this);
+        }
     }
 }

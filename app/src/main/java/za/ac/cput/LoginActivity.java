@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import za.ac.cput.repository.StudentRepositoryImpl;
+import za.ac.cput.repository.impl.StudentRepositoryImpl;
 import za.ac.cput.utils.DBUtils;
 
 public class LoginActivity extends AppCompatActivity {
