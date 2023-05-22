@@ -23,6 +23,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
+import za.ac.cput.domain.Objective;
+import za.ac.cput.repository.impl.ObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentRepositoryImpl;
 import za.ac.cput.utils.DBUtils;
 
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
 
     private String authenticatedUser;
-    private StudentRepositoryImpl DB;
+    private StudentRepositoryImpl studentRepository;
     private String studentName;
 
 
@@ -45,9 +47,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
+
         authenticatedUser = getIntent().getStringExtra(DBUtils.AUTHENTICATED_USER);
-        DB = new StudentRepositoryImpl(this);
-        studentName = DB.getCurrentStudentFirstName(authenticatedUser);
+        studentRepository = new StudentRepositoryImpl(this);
+        studentName = studentRepository.getCurrentStudentFirstName(authenticatedUser);
         replaceFragment(new HomeFragment());
 
         System.out.println(authenticatedUser);
@@ -65,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
         currentDateTextView.setText(currentDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
 
         toolbar = findViewById(R.id.materialToolBar);
-
-        System.out.println("LOGGED IN STUDENT: " + authenticatedUser);
 
         // open navigation drawer layout when clicking icon in toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

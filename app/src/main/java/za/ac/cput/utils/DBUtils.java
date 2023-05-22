@@ -39,8 +39,15 @@ public class DBUtils {
             + COLUMN_OBJECTIVE_TITLE + " TEXT,"  + COLUMN_OBJECTIVE_DESCRIPTION + " TEXT," + COLUMN_OBJECTIVE_POINTS + " INTEGER)";
     public static final String DROP_OBJECTIVE_TABLE_QUERY = "DROP TABLE IF EXISTS " + OBJECTIVE_TABLE;
 
-    public static final String CREATE_TRANSACTION_TABLE_QUERY = "";
-    public static final String DROP_TRANSACTION_TABLE_QUERY = "";
+    public static final String STUDENT_OBJECTIVE_TABLE = "student_objective";
+    public static final String COLUMN_STUDENT_OBJECTIVE_ID = "id";
+    public static final String COLUMN_STUDENT_OBJECTIVE_STUDENT_ID = "student_id";
+    public static final String COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID = "objective_id";
+
+    public static final String CREATE_STUDENT_OBJECTIVE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS " + STUDENT_OBJECTIVE_TABLE + "(" + COLUMN_STUDENT_OBJECTIVE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_STUDENT_OBJECTIVE_STUDENT_ID + " INTEGER,"  + COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID + " INTEGER)";
+    public static final String DROP_STUDENT_OBJECTIVE_TABLE_QUERY = "DROP TABLE IF EXISTS " + STUDENT_OBJECTIVE_TABLE;
+
 
     public static final String CREATE_SNACK_TABLE_QUERY = "";
     public static final String DROP_SNACK_TABLE_QUERY = "";

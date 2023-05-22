@@ -19,6 +19,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import za.ac.cput.domain.Objective;
+import za.ac.cput.repository.impl.ObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentRepositoryImpl;
 import za.ac.cput.utils.DBUtils;
 
@@ -28,20 +29,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private Button buyPointsBtn, pointsHistoryBtn;
     private RecyclerView objectiveRecyclerView;
     private ObjectivesRecyclerAdapter objectivesRecyclerAdapter;
-    private StudentRepositoryImpl DB;
+    private StudentRepositoryImpl studentRepository;
     private String studentName;
     private String authenticatedUser;
+    private ObjectiveRepositoryImpl objectiveRepository;
 
+    private List<Objective> objectiveList;
     private TextView welcomeStudentTextView;
 
-    private List<Objective> objectiveList = List.of(
-            new Objective("Donate points", "Donate points to a friend", 250, false),
-            new Objective("Add a bank card", "Add a bank card to your account", 250, false),
-            new Objective("Spend 5000 points", "Spend your first 5000 points", 250, true),
-            new Objective("Spend 10 000 points", "Spend your first 10 000 points", 250, false),
-            new Objective("Spend 10 000 points", "Spend your first 10 000 points", 250, true),
-            new Objective("Spend 10 000 points", "Spend your first 10 000 points", 250, false)
-    );
+//    private List<Objective> objectiveList = List.of(
+//            new Objective("Donate points", "Donate points to a friend", 250, false),
+//            new Objective("Add a bank card", "Add a bank card to your account", 250, false),
+//            new Objective("Spend 5000 points", "Spend your first 5000 points", 250, true),
+//            new Objective("Spend 10 000 points", "Spend your first 10 000 points", 250, false),
+//            new Objective("Spend 10 000 points", "Spend your first 10 000 points", 250, true),
+//            new Objective("Spend 10 000 points", "Spend your first 10 000 points", 250, false)
+//    );
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,8 +53,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
 
         authenticatedUser = getActivity().getIntent().getStringExtra(DBUtils.AUTHENTICATED_USER);
-        DB = new StudentRepositoryImpl(getActivity());
-        studentName = DB.getCurrentStudentFirstName(authenticatedUser);
+        studentRepository = new StudentRepositoryImpl(getActivity());
+
+
+        objectiveRepository = new ObjectiveRepositoryImpl(getActivity());
+
+
+        if(objectiveRepository.getAll().size() < 0) {
+            objectiveRepository.create(new Objective.Builder()
+                    .setTitle("Spend 5000 points")
+                    .setDescription("This is earned by spending 5000 points")
+                    .setPoints(350)
+                    .build());
+
+            objectiveRepository.create(new Objective.Builder()
+                    .setTitle("Spend 10000 points")
+                    .setDescription("This is earned by spending 10000 points")
+                    .setPoints(500)
+                    .build());
+        }else {
+            objectiveList = objectiveRepository.getAll();
+        }
+        studentName = studentRepository.getCurrentStudentFirstName(authenticatedUser);
 
         buyPointsBtn = view.findViewById(R.id.buyPointsBtn);
         pointsHistoryBtn = view.findViewById(R.id.pointsHistoryBtn);
