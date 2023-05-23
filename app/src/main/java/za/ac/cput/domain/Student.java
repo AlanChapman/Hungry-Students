@@ -1,5 +1,9 @@
 package za.ac.cput.domain;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -14,38 +18,23 @@ public class Student {
 
     public Student() {}
 
-    public Student(String fullName, String emailAddress, LocalDate dateOfBirth, LocalDate createdAt, long pointBalance, String password) {
-        this.fullName = fullName;
-        this.emailAddress = emailAddress;
-        this.dateOfBirth = dateOfBirth;
-        this.createdAt = createdAt;
-        this.pointBalance = pointBalance;
-        this.password = password;
-    }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Student(String fullName, String emailAddress, LocalDate dateOfBirth, String password) {
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.dateOfBirth = dateOfBirth;
+        this.createdAt = LocalDate.now();
         this.password = password;
     }
 
-    public Student(int studentId, String fullName, String emailAddress, LocalDate dateOfBirth, LocalDate createdAt, long pointBalance, String password) {
-        this.studentId = studentId;
-        this.fullName = fullName;
-        this.emailAddress = emailAddress;
-        this.dateOfBirth = dateOfBirth;
-        this.createdAt = createdAt;
-        this.pointBalance = pointBalance;
-        this.password = password;
-    }
-
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Student(int studentId, String fullName, String emailAddress, LocalDate dateOfBirth, LocalDate createdAt, long pointBalance) {
         this.studentId = studentId;
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.dateOfBirth = dateOfBirth;
-        this.createdAt = createdAt;
+        this.createdAt = LocalDate.now();
         this.pointBalance = pointBalance;
     }
 

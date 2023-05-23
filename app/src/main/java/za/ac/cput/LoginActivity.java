@@ -3,6 +3,8 @@ package za.ac.cput;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,12 +14,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import za.ac.cput.repository.impl.StudentRepositoryImpl;
+import za.ac.cput.services.ObjectiveAchievedService;
 import za.ac.cput.utils.DBUtils;
 
 public class LoginActivity extends AppCompatActivity {
     EditText emailAddress, password;
     private Button loginButton, nonExistingUserButton;
     private StudentRepositoryImpl studentRepository;
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 //                String email = emailAddress.getText().toString();
 //                String pass = password.getText().toString();
 
-                String email = "john1234@gmail.com";
+                String email = "john@gmail.com";
                 String pass = "password";
 
 
@@ -58,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         Toast.makeText(LoginActivity.this, "Sign in successful", Toast.LENGTH_SHORT).show();
                         Intent intent  = new Intent(getApplicationContext(), NavActivity.class);
-                        intent.putExtra(DBUtils.AUTHENTICATED_USER, email);
+                        intent.putExtra(DBUtils.AUTHENTICATED_STUDENT_EMAIL, email);
                         startActivity(intent);
                     } else {
                         Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
@@ -75,4 +79,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

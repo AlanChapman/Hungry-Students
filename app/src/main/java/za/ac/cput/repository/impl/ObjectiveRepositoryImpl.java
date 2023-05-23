@@ -30,12 +30,16 @@ public class ObjectiveRepositoryImpl extends SQLiteOpenHelper implements IObject
     public void onCreate(SQLiteDatabase db) {
         Log.i("Warn", "Creating db");
         db.execSQL(DBUtils.CREATE_OBJECTIVE_TABLE_QUERY);
+        db.execSQL(DBUtils.CREATE_STUDENT_TABLE_QUERY);
+        db.execSQL(DBUtils.CREATE_STUDENT_OBJECTIVE_TABLE_QUERY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         Log.i("Warn", "Updating db");
         db.execSQL(DBUtils.DROP_OBJECTIVE_TABLE_QUERY);
+        db.execSQL(DBUtils.DROP_STUDENT_TABLE_QUERY);
+        db.execSQL(DBUtils.DROP_STUDENT_OBJECTIVE_TABLE_QUERY);
         onCreate(db);
     }
 
@@ -59,20 +63,32 @@ public class ObjectiveRepositoryImpl extends SQLiteOpenHelper implements IObject
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Objective getObjective(int objectiveId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DBUtils.OBJECTIVE_TABLE +
+                " WHERE " + DBUtils.COLUMN_OBJECTIVE_ID + " = ?", new String[]{String.valueOf(objectiveId)});
 
-    public Objective read(String s) {
-        return null;
+    if(cursor.moveToFirst()) {
+        int theObjectiveId = cursor.getInt(0);
+        String title = cursor.getString(1);
+        String description = cursor.getString(2);
+        int points = cursor.getInt(3);
+
+        return new Objective.Builder()
+                .setObjectiveId(theObjectiveId)
+                .setTitle(title)
+                .setDescription(description)
+                .setPoints(points)
+                .build();
+    }
+    cursor.close();
+    return null;
+
+
+
     }
 
-
-    public Objective update(Objective type) {
-        return null;
-    }
-
-
-    public boolean delete(String s) {
-        return false;
-    }
 
     @Override
     public List<Objective> getAll() {

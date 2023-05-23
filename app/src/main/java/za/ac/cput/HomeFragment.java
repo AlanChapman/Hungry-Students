@@ -1,5 +1,8 @@
 package za.ac.cput;
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -20,8 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import za.ac.cput.domain.Objective;
+import za.ac.cput.domain.StudentObjective;
 import za.ac.cput.repository.impl.ObjectiveRepositoryImpl;
+import za.ac.cput.repository.impl.StudentObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentRepositoryImpl;
+import za.ac.cput.services.ObjectiveAchievedService;
+import za.ac.cput.services.StudentObjectiveServiceImpl;
 import za.ac.cput.utils.DBUtils;
 
 public class HomeFragment extends Fragment implements View.OnClickListener{
@@ -31,12 +38,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private RecyclerView objectiveRecyclerView;
     private ObjectivesRecyclerAdapter objectivesRecyclerAdapter;
     private StudentRepositoryImpl studentRepository;
-    private String studentName;
-    private String authenticatedUser;
+    private String authenticatedStudentName;
+    private String authenticatedStudentEmail;
+    private int authenticatedStudentId;
     private ObjectiveRepositoryImpl objectiveRepository;
 
     private List<Objective> objectiveList = new ArrayList<>();
     private TextView welcomeStudentTextView;
+
+    private StudentObjectiveRepositoryImpl studentObjectiveRepository;
 
 //    private List<Objective> objectiveList = List.of(
 //            new Objective("Donate points", "Donate points to a friend", 250, false),
@@ -47,55 +57,47 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 //            new Objective("Spend 10 000 points", "Spend your first 10 000 points", 250, false)
 //    );
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, null);
 
-
-        authenticatedUser = getActivity().getIntent().getStringExtra(DBUtils.AUTHENTICATED_USER);
         studentRepository = new StudentRepositoryImpl(getActivity());
+        studentObjectiveRepository = new StudentObjectiveRepositoryImpl(getActivity());
+        authenticatedStudentEmail = getActivity().getIntent().getStringExtra(DBUtils.AUTHENTICATED_STUDENT_EMAIL);
+        authenticatedStudentName = getActivity().getIntent().getStringExtra(DBUtils.AUTHENTICATED_STUDENT_NAME);
+        authenticatedStudentId = getActivity().getIntent().getIntExtra(DBUtils.AUTHENTICATED_STUDENT_ID, -999);
 
+        System.out.println("auth user home frag " + authenticatedStudentEmail);
+        System.out.println("stud name home frag" + authenticatedStudentName);
+        System.out.println("stud id home frag" + authenticatedStudentId);
 
-//        objectiveRepository = new ObjectiveRepositoryImpl(getActivity());
-//
-//
-//        if(objectiveRepository.getAll().isEmpty()) {
-//            objectiveRepository.create(new Objective.Builder()
-//                    .setTitle("Spend 5000 points")
-//                    .setDescription("This is earned by spending 5000 points")
-//                    .setPoints(250)
-//                    .build());
-//
-//            objectiveRepository.create(new Objective.Builder()
-//                    .setTitle("Spend 10000 points")
-//                    .setDescription("This is earned by spending 10000 points")
-//                    .setPoints(500)
-//                    .build());
-//
-//            objectiveRepository.create(new Objective.Builder()
-//                    .setTitle("Spend 15000 points")
-//                    .setDescription("This is earned by spending 10000 points")
-//                    .setPoints(750)
-//                    .build());
-//        }
-//
-//        objectiveList = objectiveRepository.getAll();
+        objectiveRepository = new ObjectiveRepositoryImpl(getActivity());
 
-        studentName = studentRepository.getCurrentStudentFirstName(authenticatedUser);
+        loadObjectives();
+
+        Intent objectiveServiceIntent = new Intent(getActivity(), ObjectiveAchievedService.class);
+        objectiveServiceIntent.putExtra(DBUtils.AUTHENTICATED_STUDENT_ID, authenticatedStudentId);
+        getActivity().startService(objectiveServiceIntent);
+
 
         buyPointsBtn = view.findViewById(R.id.buyPointsBtn);
         pointsHistoryBtn = view.findViewById(R.id.pointsHistoryBtn);
         welcomeStudentTextView = view.findViewById(R.id.welcomeStudentTextView);
 
-        welcomeStudentTextView.setText("Welcome " + studentName);
+        welcomeStudentTextView.setText("Welcome " + authenticatedStudentName);
         pointsHistoryBtn.setOnClickListener(this);
         buyPointsBtn.setOnClickListener(this);
 
         buildRecyclerView(view);
         return view;
     }
+
+
+
 
 
     private void buildRecyclerView(View v) {
@@ -122,6 +124,43 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.frameLayout, fragment);
         transaction.commit();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void loadObjectives() {
+        if(objectiveRepository.getAll().isEmpty()) {
+            objectiveRepository.create(new Objective.Builder()
+                    .setTitle("Spend 5000 points")
+                    .setDescription("This is earned by spending 5000 points")
+                    .setPoints(250)
+                    .build());
+
+            objectiveRepository.create(new Objective.Builder()
+                    .setTitle("Spend 10000 points")
+                    .setDescription("This is earned by spending 10000 points")
+                    .setPoints(500)
+                    .build());
+
+            objectiveRepository.create(new Objective.Builder()
+                    .setTitle("Spend 15000 points")
+                    .setDescription("This is earned by spending 10000 points")
+                    .setPoints(750)
+                    .build());
+
+            objectiveRepository.create(new Objective.Builder()
+                    .setTitle("Donate 2500 points")
+                    .setDescription("This is earned by spending 10000 points")
+                    .setPoints(250)
+                    .build());
+
+            objectiveRepository.create(new Objective.Builder()
+                    .setTitle("Donate 5000 points")
+                    .setDescription("This is earned by spending 10000 points")
+                    .setPoints(500)
+                    .build());
+        }
+
+        objectiveList = objectiveRepository.getAll();
     }
 
 

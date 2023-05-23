@@ -1,6 +1,5 @@
 package za.ac.cput;
 
-import static za.ac.cput.utils.DBUtils.STUDENT_ID;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,8 +34,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private TimePickerDialog timePickerDialog;
-    private String authenticatedUser;
-    private int studentId;
+//    private String authenticatedStudentEmail;
+//    private int authenticatedStudentId;
     private Dialog dialog;
     private StudentRepositoryImpl studentRepository;
 
@@ -59,8 +58,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         dialog = new Dialog(this);
 
-        authenticatedUser =  getIntent().getStringExtra(DBUtils.AUTHENTICATED_USER);
-        studentId = getIntent().getIntExtra(STUDENT_ID, -999);
+//        authenticatedStudentEmail =  getIntent().getStringExtra(DBUtils.AUTHENTICATED_STUDENT_EMAIL);
+//        authenticatedStudentId = getIntent().getIntExtra(DBUtils.AUTHENTICATED_STUDENT_ID, -999);
 
         DOBEditText.setOnClickListener(this);
 
@@ -108,8 +107,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 //        String confirmPass = confirmPasswordEditText.getText().toString().trim();
 
         String name = "john";
-        String email = "john1234@gmail.com";
-        String birthDate = "2023-05-22";
+        String email = "john@gmail.com";
+        String birthDate = "2001-01-22";
         String pass = "password";
         String confirmPass = "password";
 

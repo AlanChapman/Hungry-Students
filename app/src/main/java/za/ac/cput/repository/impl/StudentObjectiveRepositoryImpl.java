@@ -24,12 +24,16 @@ public class StudentObjectiveRepositoryImpl extends SQLiteOpenHelper implements 
     public void onCreate(SQLiteDatabase db) {
         Log.i("Warn", "Creating db");
         db.execSQL(DBUtils.CREATE_STUDENT_OBJECTIVE_TABLE_QUERY);
+        db.execSQL(DBUtils.CREATE_OBJECTIVE_TABLE_QUERY);
+        db.execSQL(DBUtils.CREATE_STUDENT_TABLE_QUERY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         Log.i("Warn", "Updating db");
-        //db.execSQL(DBUtils.DROP_STUDENT_OBJECTIVE_TABLE_QUERY);
+        db.execSQL(DBUtils.DROP_STUDENT_OBJECTIVE_TABLE_QUERY);
+        db.execSQL(DBUtils.DROP_STUDENT_TABLE_QUERY);
+        db.execSQL(DBUtils.DROP_OBJECTIVE_TABLE_QUERY);
         onCreate(db);
     }
 

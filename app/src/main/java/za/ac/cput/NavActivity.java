@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,10 +24,12 @@ import com.google.android.material.navigation.NavigationView;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Objects;
 
 import za.ac.cput.domain.Objective;
 import za.ac.cput.repository.impl.ObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentRepositoryImpl;
+import za.ac.cput.services.ObjectiveAchievedService;
 import za.ac.cput.utils.DBUtils;
 
 public class NavActivity extends AppCompatActivity {
@@ -35,10 +39,11 @@ public class NavActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
-    private String authenticatedUser;
     private StudentRepositoryImpl studentRepository;
     private ObjectiveRepositoryImpl objectiveRepository;
-    private String studentName;
+    private String authenticatedStudentName;
+    private String authenticatedStudentEmail;
+    private int authenticatedStudentId;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -50,14 +55,28 @@ public class NavActivity extends AppCompatActivity {
 
 
 
-        authenticatedUser = getIntent().getStringExtra(DBUtils.AUTHENTICATED_USER);
+        authenticatedStudentEmail = getIntent().getStringExtra(DBUtils.AUTHENTICATED_STUDENT_EMAIL);
         studentRepository = new StudentRepositoryImpl(this);
         objectiveRepository = new ObjectiveRepositoryImpl(this);
-        studentName = studentRepository.getCurrentStudentFirstName(authenticatedUser);
+        authenticatedStudentName = studentRepository.getCurrentStudentFirstName(authenticatedStudentEmail);
+        authenticatedStudentId = studentRepository.getCurrentStudentId(authenticatedStudentEmail);
+
+
+        getIntent().putExtra(DBUtils.AUTHENTICATED_STUDENT_EMAIL, authenticatedStudentEmail);
+        getIntent().putExtra(DBUtils.AUTHENTICATED_STUDENT_NAME, authenticatedStudentName);
+        getIntent().putExtra(DBUtils.AUTHENTICATED_STUDENT_ID, authenticatedStudentId);
         replaceFragment(new HomeFragment());
 
-        System.out.println(authenticatedUser);
-        System.out.println(studentName);
+
+        Intent projectServiceIntent = new Intent(this, ObjectiveAchievedService.class);
+        projectServiceIntent.putExtra(DBUtils.AUTHENTICATED_STUDENT_ID, authenticatedStudentId);
+
+
+
+        if(!isMyServiceRunning(ObjectiveAchievedService.class)) {
+            startForegroundService(projectServiceIntent);
+        }
+
 
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);
@@ -65,12 +84,14 @@ public class NavActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = headerView.findViewById(R.id.studentNameTextView);
         TextView currentDateTextView = headerView.findViewById(R.id.currentDateTextView);
-        navUsername.setText("Hello " + studentName);
+        navUsername.setText("Hello " + authenticatedStudentName);
 
         LocalDate currentDate = LocalDate.now();
         currentDateTextView.setText(currentDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
 
         toolbar = findViewById(R.id.materialToolBar);
+
+
 
         // open navigation drawer layout when clicking icon in toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -94,31 +115,7 @@ public class NavActivity extends AppCompatActivity {
                 switch (id) {
 
                     case R.id.logoutNavMenu:
-
-
-                        System.out.println("inserting data..");
-                        objectiveRepository.create(new Objective.Builder()
-                                .setTitle("Spend 5000 points")
-                                .setDescription("This is earned by spending 5000 points")
-                                .setPoints(250)
-                                .build());
-
-                        objectiveRepository.create(new Objective.Builder()
-                                .setTitle("Spend 10000 points")
-                                .setDescription("This is earned by spending 10000 points")
-                                .setPoints(500)
-                                .build());
-
-                        objectiveRepository.create(new Objective.Builder()
-                                .setTitle("Spend 15000 points")
-                                .setDescription("This is earned by spending 10000 points")
-                                .setPoints(750)
-                                .build());
-
-                        System.out.println(objectiveRepository.getAll());
-
-                        //objectiveList = objectiveRepository.getAll();
-                        //startActivity(new Intent(NavActivity.this, SignUpActivity.class));
+                        startActivity(new Intent(NavActivity.this, SignUpActivity.class));
                         break;
 
                     case R.id.donatePointsNavMenu:
@@ -141,10 +138,26 @@ public class NavActivity extends AppCompatActivity {
         });
     }
 
+
+    // Check if service is running, if it's not then I can start it to continuosly run in foreground
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
     private void replaceFragment(Fragment fragment) {
+
 
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
+
         transaction.replace(R.id.frameLayout, fragment);
         transaction.commit();
     }

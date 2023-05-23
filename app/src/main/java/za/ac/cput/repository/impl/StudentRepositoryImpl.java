@@ -32,12 +32,16 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
     public void onCreate(SQLiteDatabase db) {
         Log.i("Warn", "Creating db");
         db.execSQL(DBUtils.CREATE_STUDENT_TABLE_QUERY);
+        db.execSQL(DBUtils.CREATE_OBJECTIVE_TABLE_QUERY);
+        db.execSQL(DBUtils.CREATE_STUDENT_OBJECTIVE_TABLE_QUERY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         Log.i("Warn", "Updating db");
         db.execSQL(DBUtils.DROP_STUDENT_TABLE_QUERY);
+        db.execSQL(DBUtils.DROP_OBJECTIVE_TABLE_QUERY);
+        db.execSQL(DBUtils.DROP_STUDENT_OBJECTIVE_TABLE_QUERY);
         onCreate(db);
     }
 
@@ -51,11 +55,11 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
         cv.put(DBUtils.COLUMN_STUDENT_FULL_NAME, student.getFullName());
         cv.put(DBUtils.COLUMN_STUDENT_EMAIL_ADDRESS, student.getEmailAddress());
         cv.put(DBUtils.COLUMN_STUDENT_DATE_OF_BIRTH, student.getDateOfBirth().toString());
-        cv.put(DBUtils.COLUMN_STUDENT_CREATED_AT, LocalDate.now().toString());
+        cv.put(DBUtils.COLUMN_STUDENT_CREATED_AT, student.getCreatedAt().toString());
         cv.put(DBUtils.COLUMN_STUDENT_POINTS_BALANCE, 0);
         cv.put(DBUtils.COLUMN_STUDENT_PASSWORD, student.getPassword());
 
-        if(checkDuplicate(student.getEmailAddress())) {
+        if(existsByEmail(student.getEmailAddress())) {
             Toast.makeText(context.getApplicationContext(), "Student already exists with this Email Address.", Toast.LENGTH_SHORT).show();
         } else {
             db.insert(DBUtils.STUDENT_TABLE, null, cv);
@@ -96,7 +100,7 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
     }
 
 
-    private Boolean checkDuplicate(String emailAddress) {
+    public boolean existsByEmail(String emailAddress) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(DBUtils.STUDENT_TABLE,// Selecting Table
                 new String[]{DBUtils.COLUMN_STUDENT_EMAIL_ADDRESS},//Selecting columns want to query
@@ -180,28 +184,63 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public Student getStudentDetails(String emailAddress) {
+    public Student getStudent(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Student student = null;
         Cursor cursor = db.query(DBUtils.STUDENT_TABLE,// Selecting Table
-                new String[]{DBUtils.COLUMN_STUDENT_ID, DBUtils.COLUMN_STUDENT_FULL_NAME, DBUtils.COLUMN_STUDENT_ID, DBUtils.COLUMN_STUDENT_EMAIL_ADDRESS,
-                        DBUtils.COLUMN_STUDENT_DATE_OF_BIRTH, DBUtils.COLUMN_STUDENT_CREATED_AT, DBUtils.COLUMN_STUDENT_POINTS_BALANCE},//Selecting columns want to query
+                new String[]{DBUtils.COLUMN_STUDENT_ID, DBUtils.COLUMN_STUDENT_FULL_NAME, DBUtils.COLUMN_STUDENT_EMAIL_ADDRESS, DBUtils.COLUMN_STUDENT_DATE_OF_BIRTH,
+                        DBUtils.COLUMN_STUDENT_POINTS_BALANCE, DBUtils.COLUMN_STUDENT_CREATED_AT},//Selecting columns want to query
                 DBUtils.COLUMN_STUDENT_ID + " = ?",
-                new String[]{emailAddress},//Where clause
+                new String[]{String.valueOf(id)},//Where clause
                 null, null, null);
 
-        while(cursor.moveToNext()) {
+
+        if(cursor.moveToNext()) {
+
             int studentId = cursor.getInt(0);
             String fullName = cursor.getString(1);
             String theEmailAddress = cursor.getString(2);
             String dateOfBirth = cursor.getString(3);
-            String createdAt = cursor.getString(4);
+            long pointBalance = cursor.getLong(4);
+            String createdAt = cursor.getString(5);
 
-            DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
             LocalDate dateOfBirthFormatted = LocalDate.parse(dateOfBirth, formatter);
             LocalDate createdAtFormatted = LocalDate.parse(createdAt, formatter);
 
-            long pointBalance = cursor.getLong(5);
+            student = new Student(studentId, fullName, theEmailAddress, dateOfBirthFormatted, createdAtFormatted, pointBalance);
+        }
+
+
+        cursor.close();
+        return student;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public Student getStudent(String emailAddress) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Student student = null;
+        Cursor cursor = db.query(DBUtils.STUDENT_TABLE,// Selecting Table
+                new String[]{DBUtils.COLUMN_STUDENT_ID, DBUtils.COLUMN_STUDENT_FULL_NAME, DBUtils.COLUMN_STUDENT_EMAIL_ADDRESS, DBUtils.COLUMN_STUDENT_DATE_OF_BIRTH,
+                        DBUtils.COLUMN_STUDENT_POINTS_BALANCE, DBUtils.COLUMN_STUDENT_CREATED_AT},//Selecting columns want to query
+                DBUtils.COLUMN_STUDENT_EMAIL_ADDRESS + " = ?",
+                new String[]{emailAddress},//Where clause
+                null, null, null);
+
+
+        if(cursor.moveToNext()) {
+
+            int studentId = cursor.getInt(0);
+            String fullName = cursor.getString(1);
+            String theEmailAddress = cursor.getString(2);
+            String dateOfBirth = cursor.getString(3);
+            long pointBalance = cursor.getLong(4);
+            String createdAt = cursor.getString(5);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+            LocalDate dateOfBirthFormatted = LocalDate.parse(dateOfBirth, formatter);
+            LocalDate createdAtFormatted = LocalDate.parse(createdAt, formatter);
 
             student = new Student(studentId, fullName, theEmailAddress, dateOfBirthFormatted, createdAtFormatted, pointBalance);
         }

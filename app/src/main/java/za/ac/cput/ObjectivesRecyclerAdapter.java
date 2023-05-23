@@ -19,10 +19,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import za.ac.cput.domain.Objective;
+import za.ac.cput.domain.StudentObjective;
+import za.ac.cput.repository.impl.StudentObjectiveRepositoryImpl;
 
 public class ObjectivesRecyclerAdapter extends RecyclerView.Adapter<ObjectivesRecyclerAdapter.MyViewHolder>  {
 
     private List<Objective> objectiveList;
+    private StudentObjectiveRepositoryImpl studentObjectiveRepository;
     private OnProjectClickListener onProjectClickListener;
     private Context context;
 
@@ -39,11 +42,11 @@ public class ObjectivesRecyclerAdapter extends RecyclerView.Adapter<ObjectivesRe
         return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.objective_item_card, parent, false));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         Objective objective = objectiveList.get(position);
-
         // Styling to set when a user already achieved an objective
 //        if(objective.isAchieved()) {
 //            holder.objectiveTitleTextView.setPaintFlags(holder.objectiveTitleTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);

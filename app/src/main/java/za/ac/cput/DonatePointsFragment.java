@@ -17,14 +17,27 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import za.ac.cput.domain.Student;
+import za.ac.cput.repository.impl.StudentObjectiveRepositoryImpl;
+import za.ac.cput.repository.impl.StudentRepositoryImpl;
+import za.ac.cput.utils.DBUtils;
 
 public class DonatePointsFragment extends Fragment implements View.OnClickListener{
 
     private CardView donatePointsCardView;
     private EditText donatePointsEmailAddressEditText;
-    private Button donatePointsBtn, pointsHistoryBtn;
+    private TextView donateUserEmailAddress;
+    private Button donatePointsBtn, pointsHistoryBtn, donatePointsSearchUserBtn;
 
     private LinearLayout donatePointsUserNotFoundContainer;
+
+    private StudentObjectiveRepositoryImpl studentObjectiveRepository;
+    private StudentRepositoryImpl studentRepository;
+    private String authenticatedStudentName;
+    private String authenticatedStudentEmail;
+    private int authenticatedStudentId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,11 +54,18 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
         donatePointsBtn = view.findViewById(R.id.donatePointsBtn);
         pointsHistoryBtn = view.findViewById(R.id.pointsHistoryBtn);
         donatePointsUserNotFoundContainer = view.findViewById(R.id.donatePointsUserNotFoundContainer);
+        donatePointsSearchUserBtn = view.findViewById(R.id.donatePointsSearchUserBtn);
+        donateUserEmailAddress = view.findViewById(R.id.donateUserEmailAddress);
 
+        studentRepository = new StudentRepositoryImpl(getActivity());
+        authenticatedStudentEmail = getActivity().getIntent().getStringExtra(DBUtils.AUTHENTICATED_STUDENT_EMAIL);
+        authenticatedStudentName = getActivity().getIntent().getStringExtra(DBUtils.AUTHENTICATED_STUDENT_NAME);
+        authenticatedStudentId = getActivity().getIntent().getIntExtra(DBUtils.AUTHENTICATED_STUDENT_ID, -999);
 
 
         donatePointsCardView.setVisibility(View.GONE);
 
+        donatePointsSearchUserBtn.setOnClickListener(this);
         pointsHistoryBtn.setOnClickListener(this);
         donatePointsBtn.setOnClickListener(this);
 
@@ -56,12 +76,16 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View view) {
-        if(view == donatePointsBtn) {
-            donatePoints();
+        if(view == donatePointsSearchUserBtn) {
+            searchForStudent();
         } else if(view == pointsHistoryBtn) {
             replaceFragment(new PointsHistoryFragment());
+        } else if (view == donatePointsBtn) {
+            donatePoints();
         }
     }
+
+
 
 
     private void replaceFragment(Fragment fragment) {
@@ -72,14 +96,35 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void donatePoints() {
-        if(isNullOrEmpty(donatePointsEmailAddressEditText.getText())) {
+
+
+
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void searchForStudent() {
+        String studentEmail = donatePointsEmailAddressEditText.getText().toString();
+        Student current = studentRepository.getStudent(authenticatedStudentId);
+        Student donate;
+
+
+        if(studentEmail.equals("")) {
             donatePointsEmailAddressEditText.setError("Please enter a value");
+        }
+
+        if(studentRepository.existsByEmail(studentEmail)) {
+            donatePointsCardView.setVisibility(View.VISIBLE);
+            donate = studentRepository.getStudent(studentEmail);
+            System.out.println("curr " + current);
+            System.out.println("donate " + donate);
+            donateUserEmailAddress.setText(studentEmail);
+            donatePointsUserNotFoundContainer.setVisibility(View.GONE);
+        } else {
             donatePointsCardView.setVisibility(View.GONE);
             donatePointsUserNotFoundContainer.setVisibility(View.VISIBLE);
-        } else {
-            donatePointsCardView.setVisibility(View.VISIBLE);
-            donatePointsUserNotFoundContainer.setVisibility(View.GONE);
         }
 
     }

@@ -3,8 +3,9 @@ package za.ac.cput.utils;
 public class DBUtils {
 
     // Common Database attributes
-    public static final String AUTHENTICATED_USER = "authenticatedUser";
-    public static final String STUDENT_ID = "studentId";
+    public static final String AUTHENTICATED_STUDENT_EMAIL = "studentEmail";
+    public static final String AUTHENTICATED_STUDENT_ID = "studentId";
+    public static final String AUTHENTICATED_STUDENT_NAME = "studentName";
     public static final String DATABASE_NAME = "hungrystudents.db";
     public static final int DATABASE_VERSION = 2;
 
@@ -52,8 +53,7 @@ public class DBUtils {
     public static final String COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID = "objective_id";
 
     public static final String CREATE_STUDENT_OBJECTIVE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS " + STUDENT_OBJECTIVE_TABLE + "(" + COLUMN_STUDENT_OBJECTIVE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + COLUMN_STUDENT_OBJECTIVE_STUDENT_ID + " INTEGER,"  + COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID + " INTEGER)";
-
+            + COLUMN_STUDENT_OBJECTIVE_STUDENT_ID + " INTEGER UNIQUE,"  + COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID + " INTEGER UNIQUE)";
     public static final String DROP_STUDENT_OBJECTIVE_TABLE_QUERY = "DROP TABLE IF EXISTS " + STUDENT_OBJECTIVE_TABLE;
 
 

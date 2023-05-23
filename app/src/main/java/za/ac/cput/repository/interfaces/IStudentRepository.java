@@ -9,7 +9,7 @@ public interface IStudentRepository {
     int getCurrentStudentId(String emailAddress);
     String getCurrentStudentFirstName(String emailAddress);
 
-    Student getStudentDetails(String emailAddress);
-
+    Student getStudent(int id);
+    Student getStudent(String emailAddress);
     String getCurrentStudentEmailAddress(int studentId);
 }

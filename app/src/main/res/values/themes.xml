@@ -3,23 +3,30 @@
     <style name="HungryStudents" parent="Theme.MaterialComponents.Light.NoActionBar">
 
         <item name="colorPrimary">@color/primary_blue</item>
-<!--        <item name="colorPrimaryDark">@color/dark_black</item>-->
+        <!--        <item name="colorPrimaryDark">@color/dark_black</item>-->
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
 
     </style>
 
 
-
-<!--    <style name="DrawerIcon" parent="Widget.AppCompat.DrawerArrowToggle">-->
-<!--        <item name="color">@color/black</item>-->
-<!--    </style>-->
-
+    <!--    <style name="DrawerIcon" parent="Widget.AppCompat.DrawerArrowToggle">-->
+    <!--        <item name="color">@color/black</item>-->
+    <!--    </style>-->
 
 
     <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="HungryStudents.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="HungryStudents.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="HungryStudents.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
