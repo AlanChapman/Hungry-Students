@@ -2,12 +2,20 @@ package za.ac.cput.repository.impl;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import za.ac.cput.domain.Student;
 import za.ac.cput.domain.StudentObjective;
 import za.ac.cput.repository.interfaces.IStudentObjectiveRepository;
 import za.ac.cput.utils.DBUtils;
@@ -38,7 +46,8 @@ public class StudentObjectiveRepositoryImpl extends SQLiteOpenHelper implements 
     }
 
 
-    @Override
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public StudentObjective create(StudentObjective studentObjective) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -46,7 +55,7 @@ public class StudentObjectiveRepositoryImpl extends SQLiteOpenHelper implements 
 
         cv.put(DBUtils.COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID, studentObjective.getObjectiveId());
         cv.put(DBUtils.COLUMN_STUDENT_OBJECTIVE_STUDENT_ID, studentObjective.getStudentId());
-
+        cv.put(DBUtils.COLUMN_STUDENT_OBJECTIVE_DATE_ACHIEVED, LocalDateTime.now().toString());
         long result = db.insert(DBUtils.STUDENT_OBJECTIVE_TABLE, null, cv);
 
         if(result == -1) {
@@ -56,18 +65,39 @@ public class StudentObjectiveRepositoryImpl extends SQLiteOpenHelper implements 
         return studentObjective;
     }
 
-    @Override
-    public StudentObjective read(Integer integer) {
-        return null;
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public StudentObjective getStudentObjectiveById(int id) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        StudentObjective studentObjective = null;
+
+        Cursor cursor = db.query(DBUtils.STUDENT_OBJECTIVE_TABLE,// Selecting Table
+                new String[]{DBUtils.COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID, DBUtils.COLUMN_STUDENT_OBJECTIVE_STUDENT_ID, DBUtils.COLUMN_STUDENT_OBJECTIVE_DATE_ACHIEVED},
+                DBUtils.COLUMN_STUDENT_OBJECTIVE_ID + " = ?",
+                new String[]{String.valueOf(id)},//Where clause
+                null, null, null);
+
+
+        if(cursor.moveToNext()) {
+            int objectiveId = cursor.getInt(0);
+            int studentId = cursor.getInt(1);
+            String dateAchieved = cursor.getString(2);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+            LocalDateTime dateAchievedFormatted = LocalDateTime.parse(dateAchieved, formatter);
+
+            studentObjective = new StudentObjective.Builder()
+                    .setObjectiveId(objectiveId)
+                    .setStudentId(studentId)
+                    .setDateAchieved(dateAchievedFormatted)
+                    .build();
+        }
+
+        cursor.close();
+
+        return studentObjective;
     }
 
-    @Override
-    public StudentObjective update(StudentObjective type) {
-        return null;
-    }
 
-    @Override
-    public boolean delete(Integer integer) {
-        return false;
-    }
+
 }

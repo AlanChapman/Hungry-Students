@@ -21,7 +21,7 @@ public class StudentObjective {
         this.studentObjectiveId = builder.studentObjectiveId;
         this.studentId = builder.studentId;
         this.objectiveId = builder.objectiveId;
-        this.dateAchieved = LocalDateTime.now();
+        this.dateAchieved = builder.dateAchieved;
     }
 
 
@@ -72,7 +72,13 @@ public class StudentObjective {
             return this;
         }
 
+        public Builder setDateAchieved(LocalDateTime dateAchieved) {
+            this.dateAchieved = dateAchieved;
+            return this;
+        }
 
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
         public StudentObjective build() {
             return new StudentObjective(this);
         }

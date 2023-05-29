@@ -27,7 +27,9 @@ import java.time.format.FormatStyle;
 import java.util.Objects;
 
 import za.ac.cput.domain.Objective;
+import za.ac.cput.domain.StudentObjective;
 import za.ac.cput.repository.impl.ObjectiveRepositoryImpl;
+import za.ac.cput.repository.impl.StudentObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentRepositoryImpl;
 import za.ac.cput.services.ObjectiveAchievedService;
 import za.ac.cput.utils.DBUtils;
@@ -45,6 +47,8 @@ public class NavActivity extends AppCompatActivity {
     private String authenticatedStudentEmail;
     private int authenticatedStudentId;
 
+    private StudentObjectiveRepositoryImpl studentObjectiveRepository;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -60,7 +64,13 @@ public class NavActivity extends AppCompatActivity {
         objectiveRepository = new ObjectiveRepositoryImpl(this);
         authenticatedStudentName = studentRepository.getCurrentStudentFirstName(authenticatedStudentEmail);
         authenticatedStudentId = studentRepository.getCurrentStudentId(authenticatedStudentEmail);
+        studentObjectiveRepository = new StudentObjectiveRepositoryImpl(this);
 
+        // Test adding into student_objective
+        studentObjectiveRepository.create(new StudentObjective.Builder()
+                .setObjectiveId(1)
+                .setStudentId(authenticatedStudentId)
+                .build());
 
         getIntent().putExtra(DBUtils.AUTHENTICATED_STUDENT_EMAIL, authenticatedStudentEmail);
         getIntent().putExtra(DBUtils.AUTHENTICATED_STUDENT_NAME, authenticatedStudentName);
