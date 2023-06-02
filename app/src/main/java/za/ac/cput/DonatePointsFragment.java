@@ -101,8 +101,8 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void donatePoints() {
-        Long amount = Long.parseLong(donatePointsAmountEditText.getText().toString());
-        student.setPointBalance((long) (student.getPointBalance() + amount));
+        //Long amount = Long.parseLong(donatePointsAmountEditText.getText().toString());
+        student.setPointBalance((long) (student.getPointBalance() + 2000));
         studentRepository.updateStudentPoints(student);
         System.out.println("Student donae points: " + student);
 

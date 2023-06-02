@@ -23,6 +23,7 @@ import za.ac.cput.LoginActivity;
 import za.ac.cput.R;
 import za.ac.cput.SignUpActivity;
 import za.ac.cput.domain.Student;
+import za.ac.cput.domain.StudentObjective;
 import za.ac.cput.repository.impl.ObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentRepositoryImpl;
@@ -42,7 +43,7 @@ public class ObjectiveAchievedService extends Service {
         super.onCreate();
 
         studentRepository = new StudentRepositoryImpl(this);
-
+        studentObjectiveRepository = new StudentObjectiveRepositoryImpl(this);
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -50,12 +51,60 @@ public class ObjectiveAchievedService extends Service {
                 System.out.println("STUDENT SERVICE onCreate: " + student);
 
                 if(student.getPointBalance() > 2500) {
+                    StudentObjective studentObjective = new StudentObjective.Builder()
+                            .setStudentId(student.getStudentId())
+                            .setObjectiveId(1)
+                            .build();
+
+                    // Checks if student already completed a specific objective, if they did then make sure not to attempt to add a record
+                    boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
+                    System.out.println(res ? "Student completed obj " + 1 : "Student not complete obj " + 1);
+                    if(!res) {
+                        studentObjectiveRepository.create(studentObjective);
+                    }
+
                     System.out.println("SERVICE: SENDS NOTIFICATION FOR > 2500 PTS");
                 }
 
-                if(student.getPointBalance() > 13000) {
-                    System.out.println("SERVICE: SENDS NOTIFICATION FOR > 13000 PTS");
+                if(student.getPointBalance() > 5000) {
+                    StudentObjective studentObjective = new StudentObjective.Builder()
+                            .setStudentId(student.getStudentId())
+                            .setObjectiveId(2)
+                            .build();
+                    boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
+                    System.out.println(res ? "Student completed obj " + 2 : "Student not complete obj " + 2);
+                    if(!res) {
+                        studentObjectiveRepository.create(studentObjective);
+                    }
+                    System.out.println("SERVICE: SENDS NOTIFICATION FOR > 5000 PTS");
                 }
+
+                if(student.getPointBalance() > 7500) {
+                    StudentObjective studentObjective = new StudentObjective.Builder()
+                            .setStudentId(student.getStudentId())
+                            .setObjectiveId(3)
+                            .build();
+                    boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
+                    System.out.println(res ? "Student completed obj " + 3 : "Student not complete obj " + 3);
+                    if(!res) {
+                        studentObjectiveRepository.create(studentObjective);
+                    }
+                    System.out.println("SERVICE: SENDS NOTIFICATION FOR > 7500 PTS");
+                }
+
+                if(student.getPointBalance() > 10000) {
+                    StudentObjective studentObjective = new StudentObjective.Builder()
+                            .setStudentId(student.getStudentId())
+                            .setObjectiveId(4)
+                            .build();
+                    boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
+                    System.out.println(res ? "Student completed obj " + 4 : "Student not complete obj " + 4);
+                    if(!res) {
+                        studentObjectiveRepository.create(studentObjective);
+                    }
+                    System.out.println("SERVICE: SENDS NOTIFICATION FOR > 10000 PTS");
+                }
+
 
             }
         }, 10, 10000);

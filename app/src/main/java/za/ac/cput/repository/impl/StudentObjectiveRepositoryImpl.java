@@ -65,6 +65,32 @@ public class StudentObjectiveRepositoryImpl extends SQLiteOpenHelper implements 
         return studentObjective;
     }
 
+    public boolean checkStudentObjectiveCompletion(StudentObjective studentObjective) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        //StudentObjective studentObjective = null;
+
+        Cursor cursor = db.rawQuery("SELECT " + DBUtils.COLUMN_STUDENT_OBJECTIVE_STUDENT_ID  + ", " + DBUtils.COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID
+                + " FROM " + DBUtils.STUDENT_OBJECTIVE_TABLE
+                + " WHERE " + DBUtils.COLUMN_STUDENT_OBJECTIVE_STUDENT_ID + " = ? AND " + DBUtils.COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID +
+                " = ?", new String[]{String.valueOf(studentObjective.getStudentId()), String.valueOf(studentObjective.getObjectiveId())});
+
+        if(cursor.moveToNext()) {
+            int studentId = cursor.getInt(0);
+            int objId = cursor.getInt(1);
+
+            System.out.println("FOUND OBJ: " + studentId + ", " + objId);
+            return true;
+        }
+
+        cursor.close();
+
+        return false;
+    }
+
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public StudentObjective getStudentObjectiveById(int id) {
 
@@ -72,7 +98,7 @@ public class StudentObjectiveRepositoryImpl extends SQLiteOpenHelper implements 
         StudentObjective studentObjective = null;
 
         Cursor cursor = db.query(DBUtils.STUDENT_OBJECTIVE_TABLE,// Selecting Table
-                new String[]{DBUtils.COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID, DBUtils.COLUMN_STUDENT_OBJECTIVE_STUDENT_ID, DBUtils.COLUMN_STUDENT_OBJECTIVE_DATE_ACHIEVED},
+                new String[]{DBUtils.COLUMN_STUDENT_OBJECTIVE_STUDENT_ID, DBUtils.COLUMN_STUDENT_OBJECTIVE_DATE_ACHIEVED},
                 DBUtils.COLUMN_STUDENT_OBJECTIVE_ID + " = ?",
                 new String[]{String.valueOf(id)},//Where clause
                 null, null, null);

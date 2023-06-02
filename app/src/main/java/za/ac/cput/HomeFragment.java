@@ -130,21 +130,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private void loadObjectives() {
         if(objectiveRepository.getAll().isEmpty()) {
             objectiveRepository.create(new Objective.Builder()
+                    .setTitle("Spend 2500 points")
+                    .setDescription("This is earned by spending 2500 points")
+                    .setPoints(250)
+                    .build());
+
+            objectiveRepository.create(new Objective.Builder()
                     .setTitle("Spend 5000 points")
                     .setDescription("This is earned by spending 5000 points")
-                    .setPoints(250)
+                    .setPoints(500)
+                    .build());
+
+            objectiveRepository.create(new Objective.Builder()
+                    .setTitle("Spend 7500 points")
+                    .setDescription("This is earned by spending 7500 points")
+                    .setPoints(750)
                     .build());
 
             objectiveRepository.create(new Objective.Builder()
                     .setTitle("Spend 10000 points")
                     .setDescription("This is earned by spending 10000 points")
-                    .setPoints(500)
-                    .build());
-
-            objectiveRepository.create(new Objective.Builder()
-                    .setTitle("Spend 15000 points")
-                    .setDescription("This is earned by spending 10000 points")
-                    .setPoints(750)
+                    .setPoints(1000)
                     .build());
 
             objectiveRepository.create(new Objective.Builder()

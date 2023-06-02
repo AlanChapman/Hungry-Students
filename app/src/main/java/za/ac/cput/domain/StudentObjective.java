@@ -7,7 +7,6 @@ import androidx.annotation.RequiresApi;
 import java.time.LocalDateTime;
 
 public class StudentObjective {
-    private int studentObjectiveId;
     private int studentId;
     private int objectiveId;
     private LocalDateTime dateAchieved;
@@ -18,15 +17,9 @@ public class StudentObjective {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private StudentObjective(Builder builder) {
-        this.studentObjectiveId = builder.studentObjectiveId;
         this.studentId = builder.studentId;
         this.objectiveId = builder.objectiveId;
         this.dateAchieved = builder.dateAchieved;
-    }
-
-
-    public int getStudentObjectiveId() {
-        return studentObjectiveId;
     }
 
     public int getStudentId() {
@@ -44,7 +37,6 @@ public class StudentObjective {
     @Override
     public String toString() {
         return "StudentObjective{" +
-                "studentObjectiveId=" + studentObjectiveId +
                 ", studentId=" + studentId +
                 ", objectiveId=" + objectiveId +
                 ", dateAchieved=" + dateAchieved +
@@ -52,15 +44,9 @@ public class StudentObjective {
     }
 
     public static class Builder {
-        private int studentObjectiveId;
         private int studentId;
         private int objectiveId;
         private LocalDateTime dateAchieved;
-
-        public Builder setStudentObjectiveId(int studentObjectiveId) {
-            this.studentObjectiveId = studentObjectiveId;
-            return this;
-        }
 
         public Builder setStudentId(int studentId) {
             this.studentId = studentId;
