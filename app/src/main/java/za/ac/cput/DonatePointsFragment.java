@@ -27,7 +27,7 @@ import za.ac.cput.utils.DBUtils;
 public class DonatePointsFragment extends Fragment implements View.OnClickListener{
 
     private CardView donatePointsCardView;
-    private EditText donatePointsEmailAddressEditText;
+    private EditText donatePointsEmailAddressEditText, donatePointsAmountEditText;
     private TextView donateUserEmailAddress;
     private Button donatePointsBtn, pointsHistoryBtn, donatePointsSearchUserBtn;
 
@@ -39,6 +39,7 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
     private String authenticatedStudentEmail;
     private int authenticatedStudentId;
 
+    private Student student;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,7 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
 
         View view = inflater.inflate(R.layout.fragment_donate_points, null);
         donatePointsCardView = view.findViewById(R.id.donatePointsCardView);
+        donatePointsAmountEditText = view.findViewById(R.id.donatePointsAmountEditText);
         donatePointsEmailAddressEditText = view.findViewById(R.id.donatePointsEmailAddressEditText);
         donatePointsBtn = view.findViewById(R.id.donatePointsBtn);
         pointsHistoryBtn = view.findViewById(R.id.pointsHistoryBtn);
@@ -63,6 +65,7 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
         authenticatedStudentId = getActivity().getIntent().getIntExtra(DBUtils.AUTHENTICATED_STUDENT_ID, -999);
 
 
+        student = studentRepository.getStudent(authenticatedStudentId);
         donatePointsCardView.setVisibility(View.GONE);
 
         donatePointsSearchUserBtn.setOnClickListener(this);
@@ -98,7 +101,10 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void donatePoints() {
-
+        Long amount = Long.parseLong(donatePointsAmountEditText.getText().toString());
+        student.setPointBalance((long) (student.getPointBalance() + amount));
+        studentRepository.updateStudentPoints(student);
+        System.out.println("Student donae points: " + student);
 
 
 

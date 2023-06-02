@@ -217,6 +217,34 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
+    public Student updateStudentPoints(Student student) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DBUtils.STUDENT_TABLE + " WHERE " + DBUtils.COLUMN_STUDENT_ID + " = ?",
+                new String[]{String.valueOf(student.getStudentId())});
+
+
+        if (cursor.getCount() > 0) {
+            cv.put(DBUtils.COLUMN_STUDENT_POINTS_BALANCE, student.getPointBalance());
+            db.update(DBUtils.STUDENT_TABLE, cv, DBUtils.COLUMN_STUDENT_ID + " = ?",
+                    new String[]{String.valueOf(student.getStudentId())});
+
+            System.out.println("Update successfull");
+            return getStudent(student.getStudentId());
+        }
+
+        db.close();
+
+        cursor.close();
+        System.out.println("Update eror");
+
+        return null;
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public Student getStudent(String emailAddress) {
         SQLiteDatabase db = this.getReadableDatabase();

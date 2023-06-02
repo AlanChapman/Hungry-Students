@@ -42,16 +42,31 @@ public class ObjectiveAchievedService extends Service {
         super.onCreate();
 
         studentRepository = new StudentRepositoryImpl(this);
-        student = studentRepository.getStudent(authenticatedStudentId);
 
-        System.out.println("STUDENT SERVICE: " + student);
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                student = studentRepository.getStudent(authenticatedStudentId);
+                System.out.println("STUDENT SERVICE onCreate: " + student);
+
+                if(student.getPointBalance() > 2500) {
+                    System.out.println("SERVICE: SENDS NOTIFICATION FOR > 2500 PTS");
+                }
+
+                if(student.getPointBalance() > 13000) {
+                    System.out.println("SERVICE: SENDS NOTIFICATION FOR > 13000 PTS");
+                }
+
+            }
+        }, 10, 10000);
+
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendNotification(String title, String description) {
         Intent resultIntent = new Intent(this, LoginActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_IMMUTABLE);
         Notification.Action action = new Notification.Action.Builder(R.drawable.logo_small, "Open", pendingIntent)
                 .build();
 
@@ -93,6 +108,9 @@ public class ObjectiveAchievedService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         System.out.println("SERVIE RUNNING");
         authenticatedStudentId = intent.getIntExtra(DBUtils.AUTHENTICATED_STUDENT_ID, -999);
+
+        sendNotification("TEST", "TEST DEASCRIPTIN");
+
         sendForegroundNotification("Hungry Students", "Service is running...");
 
         return START_NOT_STICKY;
