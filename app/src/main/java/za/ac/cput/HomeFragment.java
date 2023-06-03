@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import za.ac.cput.domain.Objective;
+import za.ac.cput.domain.Student;
 import za.ac.cput.domain.StudentObjective;
 import za.ac.cput.repository.impl.ObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentObjectiveRepositoryImpl;
@@ -42,21 +43,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private String authenticatedStudentEmail;
     private int authenticatedStudentId;
     private ObjectiveRepositoryImpl objectiveRepository;
-
+    private Student authenticatedStudent;
     private List<Objective> objectiveList = new ArrayList<>();
-    private TextView welcomeStudentTextView;
+    private TextView welcomeStudentTextView, currentPointBalanceTextView;
 
     private StudentObjectiveRepositoryImpl studentObjectiveRepository;
-
-//    private List<Objective> objectiveList = List.of(
-//            new Objective("Donate points", "Donate points to a friend", 250, false),
-//            new Objective("Add a bank card", "Add a bank card to your account", 250, false),
-//            new Objective("Spend 5000 points", "Spend your first 5000 points", 250, true),
-//            new Objective("Spend 10 000 points", "Spend your first 10 000 points", 250, false),
-//            new Objective("Spend 10 000 points", "Spend your first 10 000 points", 250, true),
-//            new Objective("Spend 10 000 points", "Spend your first 10 000 points", 250, false)
-//    );
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -71,23 +62,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         authenticatedStudentName = getActivity().getIntent().getStringExtra(DBUtils.AUTHENTICATED_STUDENT_NAME);
         authenticatedStudentId = getActivity().getIntent().getIntExtra(DBUtils.AUTHENTICATED_STUDENT_ID, -999);
 
+        authenticatedStudent = studentRepository.getStudent(authenticatedStudentId);
         System.out.println("auth user home frag " + authenticatedStudentEmail);
         System.out.println("stud name home frag" + authenticatedStudentName);
         System.out.println("stud id home frag" + authenticatedStudentId);
+
 
         objectiveRepository = new ObjectiveRepositoryImpl(getActivity());
 
         loadObjectives();
 
-        Intent objectiveServiceIntent = new Intent(getActivity(), ObjectiveAchievedService.class);
-        objectiveServiceIntent.putExtra(DBUtils.AUTHENTICATED_STUDENT_ID, authenticatedStudentId);
-        getActivity().startService(objectiveServiceIntent);
-
 
         buyPointsBtn = view.findViewById(R.id.buyPointsBtn);
         pointsHistoryBtn = view.findViewById(R.id.pointsHistoryBtn);
         welcomeStudentTextView = view.findViewById(R.id.welcomeStudentTextView);
+        currentPointBalanceTextView = view.findViewById(R.id.currentPointBalanceTextView);
 
+        currentPointBalanceTextView.setText(authenticatedStudent.getPointBalance() + " points");
         welcomeStudentTextView.setText("Welcome " + authenticatedStudentName);
         pointsHistoryBtn.setOnClickListener(this);
         buyPointsBtn.setOnClickListener(this);
@@ -155,15 +146,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             objectiveRepository.create(new Objective.Builder()
                     .setTitle("Donate 2500 points")
-                    .setDescription("This is earned by spending 10000 points")
+                    .setDescription("This is earned by spending 2500 points")
                     .setPoints(250)
                     .build());
 
             objectiveRepository.create(new Objective.Builder()
                     .setTitle("Donate 5000 points")
-                    .setDescription("This is earned by spending 10000 points")
+                    .setDescription("This is earned by spending 5000 points")
                     .setPoints(500)
                     .build());
+
+            objectiveRepository.create(new Objective.Builder()
+                    .setTitle("Donate 7500 points")
+                    .setDescription("This is earned by spending 7500 points")
+                    .setPoints(750)
+                    .build());
+
+            objectiveRepository.create(new Objective.Builder()
+                    .setTitle("Donate 10000 points")
+                    .setDescription("This is earned by spending 10000 points")
+                    .setPoints(1000)
+                    .build());
+
+
         }
 
         objectiveList = objectiveRepository.getAll();

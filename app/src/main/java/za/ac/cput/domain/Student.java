@@ -13,7 +13,9 @@ public class Student {
     private String emailAddress;
     private LocalDate dateOfBirth;
     private LocalDate createdAt;
-    private long pointBalance;
+    private int pointBalance;
+
+    private int donatedPointsBalance;
     private String password;
 
     public Student() {}
@@ -29,13 +31,14 @@ public class Student {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Student(int studentId, String fullName, String emailAddress, LocalDate dateOfBirth, LocalDate createdAt, long pointBalance) {
+    public Student(int studentId, String fullName, String emailAddress, LocalDate dateOfBirth, LocalDate createdAt, int pointBalance, int donatedPointsBalance) {
         this.studentId = studentId;
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.dateOfBirth = dateOfBirth;
         this.createdAt = LocalDate.now();
         this.pointBalance = pointBalance;
+        this.donatedPointsBalance = donatedPointsBalance;
     }
 
     public int getStudentId() {
@@ -62,9 +65,9 @@ public class Student {
 
     public void setCreatedAt(LocalDate createdAt) { this.createdAt = createdAt; }
 
-    public float getPointBalance() { return pointBalance; }
+    public int getPointBalance() { return pointBalance; }
 
-    public void setPointBalance(long pointBalance) { this.pointBalance = pointBalance; }
+    public void setPointBalance(int pointBalance) { this.pointBalance = pointBalance; }
 
     public String getPassword() {
         return password;
@@ -74,6 +77,13 @@ public class Student {
         this.password = password;
     }
 
+    public int getDonatedPointsBalance() {
+        return donatedPointsBalance;
+    }
+
+    public void setDonatedPointsBalance(int donatedPointsBalance) {
+        this.donatedPointsBalance = donatedPointsBalance;
+    }
 
     @Override
     public String toString() {
@@ -84,6 +94,7 @@ public class Student {
                 ", dateOfBirth=" + dateOfBirth +
                 ", createdAt=" + createdAt +
                 ", pointBalance=" + pointBalance +
+                ", donatedPointsBalance=" + donatedPointsBalance +
                 ", password='" + password + '\'' +
                 '}';
     }

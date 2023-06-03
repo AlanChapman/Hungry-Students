@@ -2,6 +2,7 @@ package za.ac.cput.services;
 
 import static za.ac.cput.utils.NotificationUtils.CHANNEL_ID_1;
 import static za.ac.cput.utils.NotificationUtils.CHANNEL_ID_2;
+import static za.ac.cput.utils.NotificationUtils.sendNotification;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -50,61 +51,106 @@ public class ObjectiveAchievedService extends Service {
                 student = studentRepository.getStudent(authenticatedStudentId);
                 System.out.println("STUDENT SERVICE onCreate: " + student);
 
-                if(student.getPointBalance() > 2500) {
-                    StudentObjective studentObjective = new StudentObjective.Builder()
-                            .setStudentId(student.getStudentId())
-                            .setObjectiveId(1)
+                if(student.getPointBalance() >= 2500) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(1)
                             .build();
 
                     // Checks if student already completed a specific objective, if they did then make sure not to attempt to add a record
                     boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
-                    System.out.println(res ? "Student completed obj " + 1 : "Student not complete obj " + 1);
+
                     if(!res) {
                         studentObjectiveRepository.create(studentObjective);
+                        sendNotification("Objective completed", "You have spent more than 2500 pts.", getApplicationContext());
                     }
-
-                    System.out.println("SERVICE: SENDS NOTIFICATION FOR > 2500 PTS");
                 }
 
-                if(student.getPointBalance() > 5000) {
-                    StudentObjective studentObjective = new StudentObjective.Builder()
-                            .setStudentId(student.getStudentId())
-                            .setObjectiveId(2)
-                            .build();
+                if(student.getPointBalance() >= 5000) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(2)
+                        .build();
                     boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
-                    System.out.println(res ? "Student completed obj " + 2 : "Student not complete obj " + 2);
+
                     if(!res) {
                         studentObjectiveRepository.create(studentObjective);
+                        sendNotification("Objective completed", "You have spent more than 5000 pts.", getApplicationContext());
                     }
-                    System.out.println("SERVICE: SENDS NOTIFICATION FOR > 5000 PTS");
                 }
 
-                if(student.getPointBalance() > 7500) {
-                    StudentObjective studentObjective = new StudentObjective.Builder()
-                            .setStudentId(student.getStudentId())
-                            .setObjectiveId(3)
-                            .build();
+                if(student.getPointBalance() >= 7500) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(3)
+                        .build();
+
                     boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
-                    System.out.println(res ? "Student completed obj " + 3 : "Student not complete obj " + 3);
+
                     if(!res) {
                         studentObjectiveRepository.create(studentObjective);
+                        sendNotification("Objective completed", "You have spent more than 7500 pts.", getApplicationContext());
                     }
-                    System.out.println("SERVICE: SENDS NOTIFICATION FOR > 7500 PTS");
                 }
 
-                if(student.getPointBalance() > 10000) {
-                    StudentObjective studentObjective = new StudentObjective.Builder()
-                            .setStudentId(student.getStudentId())
-                            .setObjectiveId(4)
+                if(student.getPointBalance() >= 10000) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(4)
                             .build();
+
                     boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
-                    System.out.println(res ? "Student completed obj " + 4 : "Student not complete obj " + 4);
+
                     if(!res) {
                         studentObjectiveRepository.create(studentObjective);
+                        sendNotification("Objective completed", "You have spent more than 10000 pts.", getApplicationContext());
                     }
-                    System.out.println("SERVICE: SENDS NOTIFICATION FOR > 10000 PTS");
+
                 }
 
+                if(student.getDonatedPointsBalance() >= 2500) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(5)
+                        .build();
+
+                    boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
+
+                    if(!res) {
+                        studentObjectiveRepository.create(studentObjective);
+                        sendNotification("Objective completed", "You have donated more than 2500 pts.", getApplicationContext());
+                    }
+
+                }
+
+                if(student.getDonatedPointsBalance() >= 5000) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(6)
+                        .build();
+
+                    boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
+
+                    if(!res) {
+                        studentObjectiveRepository.create(studentObjective);
+                        sendNotification("Objective completed", "You have donated more than 5000 pts.", getApplicationContext());
+                    }
+
+                }
+
+                if(student.getDonatedPointsBalance() >= 7500) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(7)
+                        .build();
+
+                    boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
+
+                    if(!res) {
+                        studentObjectiveRepository.create(studentObjective);
+                        sendNotification("Objective completed", "You have donated more than 7500 pts.", getApplicationContext());
+                    }
+
+                }
+
+                if(student.getDonatedPointsBalance() >= 10000) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(8)
+                        .build();
+
+                    boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
+
+                    if(!res) {
+                        studentObjectiveRepository.create(studentObjective);
+                        sendNotification("Objective completed", "You have donated more than 10000 pts.", getApplicationContext());
+                    }
+
+                }
 
             }
         }, 10, 10000);
@@ -112,27 +158,7 @@ public class ObjectiveAchievedService extends Service {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void sendNotification(String title, String description) {
-        Intent resultIntent = new Intent(this, LoginActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_IMMUTABLE);
-        Notification.Action action = new Notification.Action.Builder(R.drawable.logo_small, "Open", pendingIntent)
-                .build();
 
-        Notification notification = new Notification.Builder(this, CHANNEL_ID_1)
-                .setContentTitle(title)
-                .setContentText(description)
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setChannelId(CHANNEL_ID_1)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .setActions(action)
-                .build();
-
-        NotificationManager manager = getSystemService(NotificationManager.class);
-
-        manager.notify(1001, notification);
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void sendForegroundNotification(String title, String text) {
@@ -157,9 +183,6 @@ public class ObjectiveAchievedService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         System.out.println("SERVIE RUNNING");
         authenticatedStudentId = intent.getIntExtra(DBUtils.AUTHENTICATED_STUDENT_ID, -999);
-
-        sendNotification("TEST", "TEST DEASCRIPTIN");
-
         sendForegroundNotification("Hungry Students", "Service is running...");
 
         return START_NOT_STICKY;

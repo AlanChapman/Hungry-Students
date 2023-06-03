@@ -189,7 +189,7 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
         Student student = null;
         Cursor cursor = db.query(DBUtils.STUDENT_TABLE,// Selecting Table
                 new String[]{DBUtils.COLUMN_STUDENT_ID, DBUtils.COLUMN_STUDENT_FULL_NAME, DBUtils.COLUMN_STUDENT_EMAIL_ADDRESS, DBUtils.COLUMN_STUDENT_DATE_OF_BIRTH,
-                        DBUtils.COLUMN_STUDENT_POINTS_BALANCE, DBUtils.COLUMN_STUDENT_CREATED_AT},//Selecting columns want to query
+                        DBUtils.COLUMN_STUDENT_POINTS_BALANCE,   DBUtils.COLUMN_STUDENT_TOTAL_DONATED_POINTS, DBUtils.COLUMN_STUDENT_CREATED_AT},//Selecting columns want to query
                 DBUtils.COLUMN_STUDENT_ID + " = ?",
                 new String[]{String.valueOf(id)},//Where clause
                 null, null, null);
@@ -201,14 +201,15 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
             String fullName = cursor.getString(1);
             String theEmailAddress = cursor.getString(2);
             String dateOfBirth = cursor.getString(3);
-            long pointBalance = cursor.getLong(4);
-            String createdAt = cursor.getString(5);
+            int pointBalance = cursor.getInt(4);
+            int donatedPointsBalance = cursor.getInt(5);
+            String createdAt = cursor.getString(6);
 
             DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
             LocalDate dateOfBirthFormatted = LocalDate.parse(dateOfBirth, formatter);
             LocalDate createdAtFormatted = LocalDate.parse(createdAt, formatter);
 
-            student = new Student(studentId, fullName, theEmailAddress, dateOfBirthFormatted, createdAtFormatted, pointBalance);
+            student = new Student(studentId, fullName, theEmailAddress, dateOfBirthFormatted, createdAtFormatted, pointBalance, donatedPointsBalance);
         }
 
 
@@ -228,6 +229,7 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
 
         if (cursor.getCount() > 0) {
             cv.put(DBUtils.COLUMN_STUDENT_POINTS_BALANCE, student.getPointBalance());
+            cv.put(DBUtils.COLUMN_STUDENT_TOTAL_DONATED_POINTS, student.getDonatedPointsBalance());
             db.update(DBUtils.STUDENT_TABLE, cv, DBUtils.COLUMN_STUDENT_ID + " = ?",
                     new String[]{String.valueOf(student.getStudentId())});
 
@@ -238,7 +240,7 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
         db.close();
 
         cursor.close();
-        System.out.println("Update eror");
+
 
         return null;
 
@@ -251,7 +253,7 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
         Student student = null;
         Cursor cursor = db.query(DBUtils.STUDENT_TABLE,// Selecting Table
                 new String[]{DBUtils.COLUMN_STUDENT_ID, DBUtils.COLUMN_STUDENT_FULL_NAME, DBUtils.COLUMN_STUDENT_EMAIL_ADDRESS, DBUtils.COLUMN_STUDENT_DATE_OF_BIRTH,
-                        DBUtils.COLUMN_STUDENT_POINTS_BALANCE, DBUtils.COLUMN_STUDENT_CREATED_AT},//Selecting columns want to query
+                        DBUtils.COLUMN_STUDENT_POINTS_BALANCE, DBUtils.COLUMN_STUDENT_TOTAL_DONATED_POINTS, DBUtils.COLUMN_STUDENT_CREATED_AT},//Selecting columns want to query
                 DBUtils.COLUMN_STUDENT_EMAIL_ADDRESS + " = ?",
                 new String[]{emailAddress},//Where clause
                 null, null, null);
@@ -263,14 +265,15 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
             String fullName = cursor.getString(1);
             String theEmailAddress = cursor.getString(2);
             String dateOfBirth = cursor.getString(3);
-            long pointBalance = cursor.getLong(4);
-            String createdAt = cursor.getString(5);
+            int pointBalance = cursor.getInt(4);
+            int donatedPointsBalance = cursor.getInt(5);
+            String createdAt = cursor.getString(6);
 
             DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
             LocalDate dateOfBirthFormatted = LocalDate.parse(dateOfBirth, formatter);
             LocalDate createdAtFormatted = LocalDate.parse(createdAt, formatter);
 
-            student = new Student(studentId, fullName, theEmailAddress, dateOfBirthFormatted, createdAtFormatted, pointBalance);
+            student = new Student(studentId, fullName, theEmailAddress, dateOfBirthFormatted, createdAtFormatted, pointBalance, donatedPointsBalance);
         }
 
 

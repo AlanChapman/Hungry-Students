@@ -99,7 +99,7 @@ public class StudentObjectiveRepositoryImpl extends SQLiteOpenHelper implements 
 
         Cursor cursor = db.query(DBUtils.STUDENT_OBJECTIVE_TABLE,// Selecting Table
                 new String[]{DBUtils.COLUMN_STUDENT_OBJECTIVE_STUDENT_ID, DBUtils.COLUMN_STUDENT_OBJECTIVE_DATE_ACHIEVED},
-                DBUtils.COLUMN_STUDENT_OBJECTIVE_ID + " = ?",
+                DBUtils.COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID + " = ?",
                 new String[]{String.valueOf(id)},//Where clause
                 null, null, null);
 

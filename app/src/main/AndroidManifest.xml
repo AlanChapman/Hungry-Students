@@ -54,7 +54,7 @@
                 android:value="" />
         </activity>
 
-        <service android:name=".services.ObjectiveAchievedService"/>
+        <service android:name="za.ac.cput.services.ObjectiveAchievedService"/>
     </application>
 
 </manifest>

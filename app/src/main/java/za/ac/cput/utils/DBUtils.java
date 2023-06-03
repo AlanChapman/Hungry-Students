@@ -7,7 +7,7 @@ public class DBUtils {
     public static final String AUTHENTICATED_STUDENT_ID = "studentId";
     public static final String AUTHENTICATED_STUDENT_NAME = "studentName";
     public static final String DATABASE_NAME = "hungrystudents.db";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 4;
 
     // STUDENT TABLE
     public static final String STUDENT_TABLE = "student";
@@ -18,13 +18,15 @@ public class DBUtils {
     public static final String COLUMN_STUDENT_DATE_OF_BIRTH = "date_of_birth";
 
     public static final String COLUMN_STUDENT_CREATED_AT = "created_at";
+
+    public static final String COLUMN_STUDENT_TOTAL_DONATED_POINTS= "donated_points";
     public static final String COLUMN_STUDENT_POINTS_BALANCE = "point_balance";
     public static final String COLUMN_STUDENT_PASSWORD = "password";
 
 
     public static final String CREATE_STUDENT_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS " + STUDENT_TABLE + "(" + COLUMN_STUDENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_STUDENT_FULL_NAME + " TEXT,"  + COLUMN_STUDENT_EMAIL_ADDRESS + " TEXT," + COLUMN_STUDENT_DATE_OF_BIRTH + " TEXT,"
-            + COLUMN_STUDENT_POINTS_BALANCE + " INTEGER," + COLUMN_STUDENT_CREATED_AT + " TEXT," + COLUMN_STUDENT_PASSWORD + " TEXT)";
+            + COLUMN_STUDENT_POINTS_BALANCE + " INTEGER," + COLUMN_STUDENT_TOTAL_DONATED_POINTS + " INTEGER, " + COLUMN_STUDENT_CREATED_AT + " TEXT," + COLUMN_STUDENT_PASSWORD + " TEXT)";
 
     public static final String DROP_STUDENT_TABLE_QUERY = "DROP TABLE IF EXISTS " + STUDENT_TABLE;
 
@@ -48,7 +50,6 @@ public class DBUtils {
 
     // STUDENT OBJECTIVE TABLE
     public static final String STUDENT_OBJECTIVE_TABLE = "student_objective";
-    public static final String COLUMN_STUDENT_OBJECTIVE_ID = "id";
     public static final String COLUMN_STUDENT_OBJECTIVE_STUDENT_ID = "student_id";
     public static final String COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID = "objective_id";
     public static final String COLUMN_STUDENT_OBJECTIVE_DATE_ACHIEVED = "date_achieved";

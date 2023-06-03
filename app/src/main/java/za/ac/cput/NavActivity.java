@@ -78,13 +78,13 @@ public class NavActivity extends AppCompatActivity {
         replaceFragment(new HomeFragment());
 
 
-        Intent projectServiceIntent = new Intent(this, ObjectiveAchievedService.class);
-        projectServiceIntent.putExtra(DBUtils.AUTHENTICATED_STUDENT_ID, authenticatedStudentId);
+        Intent objectiveServiceIntent = new Intent(this, ObjectiveAchievedService.class);
+        objectiveServiceIntent.putExtra(DBUtils.AUTHENTICATED_STUDENT_ID, authenticatedStudentId);
 
 
 
         if(!isMyServiceRunning(ObjectiveAchievedService.class)) {
-            startForegroundService(projectServiceIntent);
+            startForegroundService(objectiveServiceIntent);
         }
 
 
