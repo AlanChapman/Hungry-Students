@@ -28,15 +28,12 @@ public class NotificationUtils {
         Intent resultIntent = new Intent(context, LoginActivity.class);
         int num = (int) System.currentTimeMillis();
         PendingIntent pendingIntent1 = PendingIntent.getActivity(context, 1, resultIntent, PendingIntent.FLAG_IMMUTABLE);
-        PendingIntent pendingIntent2 = PendingIntent.getActivity(context, 1, resultIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        Notification.Action action1 = new Notification.Action.Builder(R.drawable.logo_small, "Open Hungry Students", pendingIntent1)
+        Notification.Action action = new Notification.Action.Builder(R.drawable.logo_small, "Open Hungry Students", pendingIntent1)
                 .build();
 
-        Notification.Action action2 = new Notification.Action.Builder(R.drawable.logo_small, "Open Hungry Students", pendingIntent2)
-                .build();
 
-        Notification notification1 = new Notification.Builder(context, CHANNEL_ID_1)
+        Notification notification = new Notification.Builder(context, CHANNEL_ID_1)
                 .setContentTitle(title)
                 .setContentText(description)
                 .setSmallIcon(R.drawable.logo_small)
@@ -45,24 +42,12 @@ public class NotificationUtils {
                 .setGroup("example_group")
                 .setContentIntent(pendingIntent1)
                 .setAutoCancel(true)
-                .setActions(action1)
-                .build();
-
-        Notification notification2 = new Notification.Builder(context, CHANNEL_ID_1)
-                .setContentTitle(title)
-                .setContentText(description)
-                .setSmallIcon(R.drawable.logo_small)
-                .setPriority(Notification.PRIORITY_MAX)
-                .setChannelId(CHANNEL_ID_1)
-                .setGroup("example_group")
-                .setContentIntent(pendingIntent2)
-                .setAutoCancel(true)
-                .setActions(action2)
+                .setActions(action)
                 .build();
 
 
         NotificationManager manager = context.getSystemService(NotificationManager.class);
 
-        manager.notify(num, notification1);
+        manager.notify(num, notification);
     }
 }

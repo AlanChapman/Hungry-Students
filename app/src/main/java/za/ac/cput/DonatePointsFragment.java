@@ -117,7 +117,7 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
 
 
         if(authenticatedStudent.getPointBalance()<=0){
-            authenticatedStudent.setPointBalance(5000);
+            authenticatedStudent.setPointBalance(10000);
             studentRepository.updateStudentPoints(authenticatedStudent);
         }
 
@@ -133,7 +133,6 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
         }
         int parsedPointsToSend = Integer.parseInt(pointsToSend);
 
-        // check negative
         if(authenticatedStudent.getPointBalance() < parsedPointsToSend) {
             Toast.makeText(getActivity(), "Insufficient points balance.", Toast.LENGTH_LONG).show();
             return;

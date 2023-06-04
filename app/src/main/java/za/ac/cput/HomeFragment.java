@@ -1,5 +1,6 @@
 package za.ac.cput;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -86,6 +87,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
 
     private void buildRecyclerView(View v) {
+        Intent intent = new Intent(getActivity(), ObjectivesRecyclerAdapter.class);
+
+        intent.putExtra(DBUtils.AUTHENTICATED_STUDENT_ID, authenticatedStudentId);
         objectiveRecyclerView = v.findViewById(R.id.objectiveRecyclerView);
         objectiveRecyclerView.setHasFixedSize(true);
         objectiveRecyclerView.setLayoutManager(new LinearLayoutManager(HomeFragment.this.getActivity()));
@@ -110,6 +114,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         transaction.replace(R.id.frameLayout, fragment);
         transaction.commit();
     }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void loadObjectives() {

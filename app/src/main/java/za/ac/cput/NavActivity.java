@@ -142,6 +142,9 @@ public class NavActivity extends AppCompatActivity {
         });
     }
 
+//    @Override
+//    public void onBackPressed() {
+//    }
 
     // Check if service is running, if it's not then I can start it to continuosly run in foreground
     private boolean isMyServiceRunning(Class<?> serviceClass) {

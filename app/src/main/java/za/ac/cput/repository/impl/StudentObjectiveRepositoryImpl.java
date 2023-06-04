@@ -93,13 +93,13 @@ public class StudentObjectiveRepositoryImpl extends SQLiteOpenHelper implements 
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public StudentObjective getStudentObjectiveById(int id) {
+    public StudentObjective getStudentObjectiveByObjectiveId(int id) {
 
         SQLiteDatabase db = this.getReadableDatabase();
         StudentObjective studentObjective = null;
 
         Cursor cursor = db.query(DBUtils.STUDENT_OBJECTIVE_TABLE,// Selecting Table
-                new String[]{DBUtils.COLUMN_STUDENT_OBJECTIVE_STUDENT_ID, DBUtils.COLUMN_STUDENT_OBJECTIVE_DATE_ACHIEVED},
+                new String[]{DBUtils.COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID, DBUtils.COLUMN_STUDENT_OBJECTIVE_STUDENT_ID, DBUtils.COLUMN_STUDENT_OBJECTIVE_TITLE, DBUtils.COLUMN_STUDENT_OBJECTIVE_DATE_ACHIEVED},
                 DBUtils.COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID + " = ?",
                 new String[]{String.valueOf(id)},//Where clause
                 null, null, null);
@@ -108,7 +108,8 @@ public class StudentObjectiveRepositoryImpl extends SQLiteOpenHelper implements 
         if(cursor.moveToNext()) {
             int objectiveId = cursor.getInt(0);
             int studentId = cursor.getInt(1);
-            String dateAchieved = cursor.getString(2);
+            String objectiveTitle = cursor.getString(2);
+            String dateAchieved = cursor.getString(3);
 
             DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
             LocalDateTime dateAchievedFormatted = LocalDateTime.parse(dateAchieved, formatter);
@@ -116,6 +117,7 @@ public class StudentObjectiveRepositoryImpl extends SQLiteOpenHelper implements 
             studentObjective = new StudentObjective.Builder()
                     .setObjectiveId(objectiveId)
                     .setStudentId(studentId)
+                    .setObjectiveTitle(objectiveTitle)
                     .setDateAchieved(dateAchievedFormatted)
                     .build();
         }
