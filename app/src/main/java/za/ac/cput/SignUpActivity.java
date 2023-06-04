@@ -106,9 +106,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 //        String pass = passwordEditText.getText().toString().trim();
 //        String confirmPass = confirmPasswordEditText.getText().toString().trim();
 
-        String name = "test";
-        String email = "demo@gmail.com";
-        String birthDate = "2001-01-22";
+        String name = "John Doe";
+        String email = "john1234@gmail.com";
+        String birthDate = "2001-05-18";
         String pass = "password";
         String confirmPass = "password";
 

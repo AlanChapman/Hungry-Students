@@ -66,12 +66,6 @@ public class NavActivity extends AppCompatActivity {
         authenticatedStudentId = studentRepository.getCurrentStudentId(authenticatedStudentEmail);
         studentObjectiveRepository = new StudentObjectiveRepositoryImpl(this);
 
-        // Test adding into student_objective
-        studentObjectiveRepository.create(new StudentObjective.Builder()
-                .setObjectiveId(1)
-                .setStudentId(authenticatedStudentId)
-                .build());
-
         getIntent().putExtra(DBUtils.AUTHENTICATED_STUDENT_EMAIL, authenticatedStudentEmail);
         getIntent().putExtra(DBUtils.AUTHENTICATED_STUDENT_NAME, authenticatedStudentName);
         getIntent().putExtra(DBUtils.AUTHENTICATED_STUDENT_ID, authenticatedStudentId);

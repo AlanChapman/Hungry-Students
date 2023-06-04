@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.time.LocalDate;
+
+import za.ac.cput.domain.Student;
 import za.ac.cput.repository.impl.StudentRepositoryImpl;
 import za.ac.cput.services.ObjectiveAchievedService;
 import za.ac.cput.utils.DBUtils;
@@ -47,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 String email = "john1234@gmail.com";
                 String pass = "password";
 
+                studentRepository.register(new Student("test", "demo@gmail.com", LocalDate.now(), "password"));
 
                 if(email.equals("")){
                     Toast.makeText(LoginActivity.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();

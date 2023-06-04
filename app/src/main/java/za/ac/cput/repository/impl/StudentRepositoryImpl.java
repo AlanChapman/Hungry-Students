@@ -57,6 +57,7 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
         cv.put(DBUtils.COLUMN_STUDENT_DATE_OF_BIRTH, student.getDateOfBirth().toString());
         cv.put(DBUtils.COLUMN_STUDENT_CREATED_AT, student.getCreatedAt().toString());
         cv.put(DBUtils.COLUMN_STUDENT_POINTS_BALANCE, 0);
+        cv.put(DBUtils.COLUMN_STUDENT_TOTAL_DONATED_POINTS, 0);
         cv.put(DBUtils.COLUMN_STUDENT_PASSWORD, student.getPassword());
 
         if(existsByEmail(student.getEmailAddress())) {

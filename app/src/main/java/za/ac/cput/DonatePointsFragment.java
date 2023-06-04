@@ -162,8 +162,8 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void searchForStudent() {
-        String studentEmail = donatePointsEmailAddressEditText.getText().toString().trim();
-        //String studentEmail = "demo@gmail.com";
+        //String studentEmail = donatePointsEmailAddressEditText.getText().toString().trim();
+        String studentEmail = "demo@gmail.com";
 
         if(studentEmail.equals("")) {
             donatePointsEmailAddressEditText.setError("Please enter a value");
