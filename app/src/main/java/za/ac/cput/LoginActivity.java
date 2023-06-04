@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 //                String email = emailAddress.getText().toString();
 //                String pass = password.getText().toString();
 
-                String email = "demo@gmail.com";
+                String email = "john1234@gmail.com";
                 String pass = "password";
 
 

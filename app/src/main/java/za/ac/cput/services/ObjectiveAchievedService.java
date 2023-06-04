@@ -36,7 +36,7 @@ public class ObjectiveAchievedService extends Service {
     private StudentObjectiveRepositoryImpl studentObjectiveRepository;
     private ObjectiveRepositoryImpl objectiveRepository;
     private int authenticatedStudentId;
-    private Student student;
+    private Student authenticatedStudent;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -48,106 +48,131 @@ public class ObjectiveAchievedService extends Service {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                student = studentRepository.getStudent(authenticatedStudentId);
-                System.out.println("STUDENT SERVICE onCreate: " + student);
+                authenticatedStudent = studentRepository.getStudent(authenticatedStudentId);
+                System.out.println("STUDENT SERVICE onCreate: " + authenticatedStudent);
 
-                if(student.getPointBalance() >= 2500) {
-                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(1)
-                            .build();
+                if(authenticatedStudent.getPointBalance() >= 2500) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(authenticatedStudent.getStudentId()).setObjectiveId(1)
+                        .setObjectiveTitle("Spend 2500 points")
+                        .build();
 
                     // Checks if student already completed a specific objective, if they did then make sure not to attempt to add a record
                     boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
 
                     if(!res) {
                         studentObjectiveRepository.create(studentObjective);
-                        sendNotification("Objective completed", "You have spent more than 2500 pts.", getApplicationContext());
+                        authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 250);
+                        studentRepository.updateStudentPoints(authenticatedStudent);
+                        sendNotification("Objective completed - Spend 2500 points", "You have been rewarded with 250 points.", getApplicationContext());
                     }
                 }
 
-                if(student.getPointBalance() >= 5000) {
-                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(2)
+                if(authenticatedStudent.getPointBalance() >= 5000) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(authenticatedStudent.getStudentId()).setObjectiveId(2)
+                        .setObjectiveTitle("Spend 5000 points")
                         .build();
                     boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
 
                     if(!res) {
                         studentObjectiveRepository.create(studentObjective);
-                        sendNotification("Objective completed", "You have spent more than 5000 pts.", getApplicationContext());
+                        authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 500);
+                        studentRepository.updateStudentPoints(authenticatedStudent);
+                        sendNotification("Objective completed - Spend 5000 points", "You have been rewarded with 500 points.", getApplicationContext());
                     }
                 }
 
-                if(student.getPointBalance() >= 7500) {
-                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(3)
-                        .build();
-
-                    boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
-
-                    if(!res) {
-                        studentObjectiveRepository.create(studentObjective);
-                        sendNotification("Objective completed", "You have spent more than 7500 pts.", getApplicationContext());
-                    }
-                }
-
-                if(student.getPointBalance() >= 10000) {
-                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(4)
-                            .build();
-
-                    boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
-
-                    if(!res) {
-                        studentObjectiveRepository.create(studentObjective);
-                        sendNotification("Objective completed", "You have spent more than 10000 pts.", getApplicationContext());
-                    }
-
-                }
-
-                if(student.getDonatedPointsBalance() >= 2500) {
-                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(5)
+                if(authenticatedStudent.getPointBalance() >= 7500) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(authenticatedStudent.getStudentId()).setObjectiveId(3)
+                        .setObjectiveTitle("Spend 7500 points")
                         .build();
 
                     boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
 
                     if(!res) {
                         studentObjectiveRepository.create(studentObjective);
-                        sendNotification("Objective completed", "You have donated more than 2500 pts.", getApplicationContext());
+                        authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 750);
+                        studentRepository.updateStudentPoints(authenticatedStudent);
+                        sendNotification("Objective completed - Spend 7500 points", "You have been rewarded with 750 points.", getApplicationContext());
                     }
-
                 }
 
-                if(student.getDonatedPointsBalance() >= 5000) {
-                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(6)
+                if(authenticatedStudent.getPointBalance() >= 10000) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(authenticatedStudent.getStudentId()).setObjectiveId(4)
+                        .setObjectiveTitle("Spend 10000 points")
                         .build();
 
                     boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
 
                     if(!res) {
                         studentObjectiveRepository.create(studentObjective);
-                        sendNotification("Objective completed", "You have donated more than 5000 pts.", getApplicationContext());
+                        authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 1000);
+                        studentRepository.updateStudentPoints(authenticatedStudent);
+                        sendNotification("Objective completed - Spend 10000 points", "You have been rewarded with 1000 points.", getApplicationContext());
                     }
 
                 }
 
-                if(student.getDonatedPointsBalance() >= 7500) {
-                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(7)
+                if(authenticatedStudent.getDonatedPointsBalance() >= 2500) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(authenticatedStudent.getStudentId()).setObjectiveId(5)
+                        .setObjectiveTitle("Donate 2500 points")
                         .build();
 
                     boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
 
                     if(!res) {
                         studentObjectiveRepository.create(studentObjective);
-                        sendNotification("Objective completed", "You have donated more than 7500 pts.", getApplicationContext());
+                        authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 250);
+                        studentRepository.updateStudentPoints(authenticatedStudent);
+                        sendNotification("Objective completed - Donate 2500 points", "You have been rewarded with 250 points.", getApplicationContext());
                     }
 
                 }
 
-                if(student.getDonatedPointsBalance() >= 10000) {
-                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(student.getStudentId()).setObjectiveId(8)
+                if(authenticatedStudent.getDonatedPointsBalance() >= 5000) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(authenticatedStudent.getStudentId()).setObjectiveId(6)
+                        .setObjectiveTitle("Donate 5000 points")
+                        .build();
+
+
+                    boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
+
+                    if(!res) {
+                        studentObjectiveRepository.create(studentObjective);
+                        authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 500);
+                        studentRepository.updateStudentPoints(authenticatedStudent);
+                        sendNotification("Objective completed - Donate 5000 points", "You have been rewarded with 500 points.", getApplicationContext());
+                    }
+
+                }
+
+                if(authenticatedStudent.getDonatedPointsBalance() >= 7500) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(authenticatedStudent.getStudentId()).setObjectiveId(7)
+                        .setObjectiveTitle("Donate 7500 points")
                         .build();
 
                     boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
 
                     if(!res) {
                         studentObjectiveRepository.create(studentObjective);
-                        sendNotification("Objective completed", "You have donated more than 10000 pts.", getApplicationContext());
+                        authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 750);
+                        studentRepository.updateStudentPoints(authenticatedStudent);
+                        sendNotification("Objective completed - Donate 7500 points", "You have been rewarded with 750 points.", getApplicationContext());
+                    }
+
+                }
+
+                if(authenticatedStudent.getDonatedPointsBalance() >= 10000) {
+                    StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(authenticatedStudent.getStudentId()).setObjectiveId(8)
+                        .setObjectiveTitle("Donate 10000 points")
+                        .build();
+
+                    boolean res = studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective);
+
+                    if(!res) {
+                        studentObjectiveRepository.create(studentObjective);
+                        authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 1000);
+                        studentRepository.updateStudentPoints(authenticatedStudent);
+                        sendNotification("Objective completed - Spend 10000 points", "You have been rewarded with 1000 points.", getApplicationContext());
                     }
 
                 }

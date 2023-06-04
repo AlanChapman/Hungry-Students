@@ -55,6 +55,7 @@ public class StudentObjectiveRepositoryImpl extends SQLiteOpenHelper implements 
 
         cv.put(DBUtils.COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID, studentObjective.getObjectiveId());
         cv.put(DBUtils.COLUMN_STUDENT_OBJECTIVE_STUDENT_ID, studentObjective.getStudentId());
+        cv.put(DBUtils.COLUMN_STUDENT_OBJECTIVE_TITLE, studentObjective.getObjectiveTitle());
         cv.put(DBUtils.COLUMN_STUDENT_OBJECTIVE_DATE_ACHIEVED, LocalDateTime.now().toString());
         long result = db.insert(DBUtils.STUDENT_OBJECTIVE_TABLE, null, cv);
 
