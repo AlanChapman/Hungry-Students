@@ -115,8 +115,9 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
     private void donatePoints() {
         String pointsToSend = donatePointsAmountEditText.getText().toString().trim();
 
+
         if(authenticatedStudent.getPointBalance()<=0){
-            authenticatedStudent.setPointBalance(7500);
+            authenticatedStudent.setPointBalance(5000);
             studentRepository.updateStudentPoints(authenticatedStudent);
         }
 
