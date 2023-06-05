@@ -97,7 +97,7 @@ public class ObjectiveRepositoryImpl extends SQLiteOpenHelper implements IObject
         Cursor cursor = db.rawQuery("SELECT * FROM " + DBUtils.OBJECTIVE_TABLE, null);
 
 
-        int count = 0;
+
         while(cursor.moveToNext()) {
             int id = cursor.getInt(0);
             String title = cursor.getString(1);
@@ -110,8 +110,6 @@ public class ObjectiveRepositoryImpl extends SQLiteOpenHelper implements IObject
                     .setDescription(description)
                     .setPoints(points)
                     .build();
-
-            count++;
             objectiveList.add(objective);
         }
 

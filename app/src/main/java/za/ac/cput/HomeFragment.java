@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         System.out.println("stud id home frag" + authenticatedStudentId);
 
 
+
+
         objectiveRepository = new ObjectiveRepositoryImpl(getActivity());
 
         loadObjectives();
@@ -87,9 +90,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
 
     private void buildRecyclerView(View v) {
-        Intent intent = new Intent(getActivity(), ObjectivesRecyclerAdapter.class);
 
-        intent.putExtra(DBUtils.AUTHENTICATED_STUDENT_ID, authenticatedStudentId);
         objectiveRecyclerView = v.findViewById(R.id.objectiveRecyclerView);
         objectiveRecyclerView.setHasFixedSize(true);
         objectiveRecyclerView.setLayoutManager(new LinearLayoutManager(HomeFragment.this.getActivity()));
@@ -111,8 +112,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private void replaceFragment(Fragment fragment) {
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.frameLayout, fragment);
-        transaction.commit();
+        transaction.replace(R.id.frameLayout, fragment).addToBackStack("tag").commit();
     }
 
 
@@ -171,7 +171,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         }
 
+
         objectiveList = objectiveRepository.getAll();
+
     }
 
 

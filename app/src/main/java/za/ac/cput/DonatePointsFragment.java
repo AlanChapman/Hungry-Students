@@ -51,6 +51,7 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -106,8 +107,7 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
     private void replaceFragment(Fragment fragment) {
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.frameLayout, fragment);
-        transaction.commit();
+        transaction.replace(R.id.frameLayout, fragment).addToBackStack("tag").commit();
     }
 
 
@@ -117,15 +117,9 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
 
 
         if(authenticatedStudent.getPointBalance()<=0){
-            authenticatedStudent.setPointBalance(10000);
+            authenticatedStudent.setPointBalance(7500);
             studentRepository.updateStudentPoints(authenticatedStudent);
         }
-
-
-        System.out.println("auth student : " + authenticatedStudent);
-        System.out.println("donate student : " + donateToStudent);
-        System.out.println("auth student before: " + authenticatedStudent.getPointBalance());
-        System.out.println("donate student before: " + donateToStudent.getPointBalance());
 
         if(pointsToSend.equals("")) {
             donatePointsAmountEditText.setError("Please enter an amount to send");
@@ -144,11 +138,6 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
         studentRepository.updateStudentPoints(authenticatedStudent);
         studentRepository.updateStudentPoints(donateToStudent);
 
-
-
-        System.out.println("auth student after: " + authenticatedStudent.getPointBalance());
-        System.out.println("donate student after: " + donateToStudent.getPointBalance());
-
         Toast.makeText(getActivity(), "You have successfully sent " + pointsToSend + " to " + donateToStudent.getEmailAddress(), Toast.LENGTH_LONG).show();
         donatePointsBtn.setEnabled(false);
         new Handler().postDelayed(new Runnable() {
@@ -156,14 +145,14 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
             public void run() {
                 replaceFragment(new HomeFragment());
             }
-        },2000);
+        },1500);
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void searchForStudent() {
-        //String studentEmail = donatePointsEmailAddressEditText.getText().toString().trim();
-        String studentEmail = "demo@gmail.com";
+        String studentEmail = donatePointsEmailAddressEditText.getText().toString().trim();
+        //String studentEmail = "demo@gmail.com";
 
         if(studentEmail.equals("")) {
             donatePointsEmailAddressEditText.setError("Please enter a value");

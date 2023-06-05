@@ -27,9 +27,9 @@ public class NotificationUtils {
     public static void sendNotification(String title, String description, Context context) {
         Intent resultIntent = new Intent(context, LoginActivity.class);
         int num = (int) System.currentTimeMillis();
-        PendingIntent pendingIntent1 = PendingIntent.getActivity(context, 1, resultIntent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, resultIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        Notification.Action action = new Notification.Action.Builder(R.drawable.logo_small, "Open Hungry Students", pendingIntent1)
+        Notification.Action action = new Notification.Action.Builder(R.drawable.logo_small, "Open Hungry Students", pendingIntent)
                 .build();
 
 
@@ -40,7 +40,7 @@ public class NotificationUtils {
                 .setPriority(Notification.PRIORITY_MAX)
                 .setChannelId(CHANNEL_ID_1)
                 .setGroup("example_group")
-                .setContentIntent(pendingIntent1)
+                .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setActions(action)
                 .build();

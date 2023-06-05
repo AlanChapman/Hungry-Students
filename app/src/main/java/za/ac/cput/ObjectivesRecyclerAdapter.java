@@ -1,9 +1,12 @@
 package za.ac.cput;
 
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
@@ -36,6 +39,8 @@ public class ObjectivesRecyclerAdapter extends RecyclerView.Adapter<ObjectivesRe
     private StudentRepositoryImpl studentRepository;
     private Context context;
 
+    private int authenticatedStudentId;
+
     public ObjectivesRecyclerAdapter(Context context, List<Objective> objectiveList, OnProjectClickListener onProjectClickListener) {
         this.objectiveList = objectiveList;
         this.context = context;
@@ -58,15 +63,17 @@ public class ObjectivesRecyclerAdapter extends RecyclerView.Adapter<ObjectivesRe
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
 
+        SharedPreferences sharedPreferences = context.getSharedPreferences("STUDENT_DETAILS", MODE_PRIVATE);
+        authenticatedStudentId = sharedPreferences.getInt(DBUtils.AUTHENTICATED_STUDENT_ID,-999);
+
         Objective objective = objectiveList.get(position);
 
         StudentObjective studentObjective = new StudentObjective.Builder()
                 .setObjectiveId(objective.getObjectiveId())
-                .setStudentId(1)
+                .setStudentId(authenticatedStudentId)
                 .build();
 
         if(studentObjectiveRepository.checkStudentObjectiveCompletion(studentObjective)) {
-            System.out.println("Completed obj: " + objective.getObjectiveId());
             holder.objectiveItemCardLinearLayout.setBackgroundColor(Color.rgb(0, 230, 77));
             holder.objectiveTitleTextView.setTextColor(Color.WHITE);
             holder.objectiveDescriptionTextView.setTextColor(Color.WHITE);
@@ -86,7 +93,7 @@ public class ObjectivesRecyclerAdapter extends RecyclerView.Adapter<ObjectivesRe
 
     public void refreshList(List<Objective> objectiveList) {
         this.objectiveList = objectiveList;
-        notifyDataSetChanged();
+
     }
 
 

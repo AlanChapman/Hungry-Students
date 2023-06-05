@@ -3,6 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+    <item android:title="General">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:checkable="true"
+                    android:iconTint="@color/primary_blue"
+                    android:id="@+id/homeNavMenu"
+                    android:icon="@drawable/ic_baseline_home_24"
+                    android:title="Home" />
+
+            </group>
+        </menu>
+    </item>
+
     <item android:title="Points">
         <menu>
             <group android:checkableBehavior="single">

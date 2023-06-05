@@ -100,17 +100,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void registerUser() {
 
-//        String name = fullNameEditText.getText().toString().trim();
-//        String email = emailEditText.getText().toString().trim();
-//        String birthDate = DOBEditText.getText().toString().trim();
-//        String pass = passwordEditText.getText().toString().trim();
-//        String confirmPass = confirmPasswordEditText.getText().toString().trim();
+        String name = fullNameEditText.getText().toString().trim();
+        String email = emailEditText.getText().toString().trim();
+        String birthDate = DOBEditText.getText().toString().trim();
+        String pass = passwordEditText.getText().toString().trim();
+        String confirmPass = confirmPasswordEditText.getText().toString().trim();
 
-        String name = "John Doe";
-        String email = "john1234@gmail.com";
-        String birthDate = "2001-05-18";
-        String pass = "password";
-        String confirmPass = "password";
+//        String name = "John Doe";
+//        String email = "john1234@gmail.com";
+//        String birthDate = "2001-05-18";
+//        String pass = "password";
+//        String confirmPass = "password";
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

@@ -234,7 +234,6 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
             db.update(DBUtils.STUDENT_TABLE, cv, DBUtils.COLUMN_STUDENT_ID + " = ?",
                     new String[]{String.valueOf(student.getStudentId())});
 
-            System.out.println("Update successfull");
             return getStudent(student.getStudentId());
         }
 

@@ -12,8 +12,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -81,6 +83,13 @@ public class NavActivity extends AppCompatActivity {
             startForegroundService(objectiveServiceIntent);
         }
 
+        SharedPreferences sharedPreferences1 = getSharedPreferences("STUDENT_DETAILS", Context.MODE_PRIVATE);
+
+        //Creating editor to store values to shared preferences
+        SharedPreferences.Editor editor = sharedPreferences1.edit();
+
+        editor.putInt(DBUtils.AUTHENTICATED_STUDENT_ID, authenticatedStudentId);
+        editor.apply();
 
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);
@@ -117,7 +126,9 @@ public class NavActivity extends AppCompatActivity {
 
                 drawerLayout.closeDrawer(GravityCompat.START);
                 switch (id) {
-
+                    case R.id.homeNavMenu:
+                        replaceFragment(new HomeFragment());
+                        break;
                     case R.id.logoutNavMenu:
                         startActivity(new Intent(NavActivity.this, SignUpActivity.class));
                         break;
@@ -142,9 +153,13 @@ public class NavActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    public void onBackPressed() {
-//    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     // Check if service is running, if it's not then I can start it to continuosly run in foreground
     private boolean isMyServiceRunning(Class<?> serviceClass) {
@@ -160,13 +175,9 @@ public class NavActivity extends AppCompatActivity {
 
 
     private void replaceFragment(Fragment fragment) {
-
-
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-
-        transaction.replace(R.id.frameLayout, fragment);
-        transaction.commit();
+        transaction.replace(R.id.frameLayout, fragment).addToBackStack("tag").commit();
     }
 
 

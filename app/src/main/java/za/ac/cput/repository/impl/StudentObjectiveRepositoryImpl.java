@@ -79,8 +79,6 @@ public class StudentObjectiveRepositoryImpl extends SQLiteOpenHelper implements 
         if(cursor.moveToNext()) {
             int studentId = cursor.getInt(0);
             int objId = cursor.getInt(1);
-
-            System.out.println("FOUND OBJ: " + studentId + ", " + objId);
             return true;
         }
 

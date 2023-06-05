@@ -53,7 +53,6 @@ public class ObjectiveAchievedService extends Service {
             @Override
             public void run() {
                 authenticatedStudent = studentRepository.getStudent(authenticatedStudentId);
-                System.out.println("STUDENT SERVICE onCreate: " + authenticatedStudent);
 
                 if(authenticatedStudent.getPointBalance() >= 2500) {
                     StudentObjective studentObjective = new StudentObjective.Builder().setStudentId(authenticatedStudent.getStudentId()).setObjectiveId(1)
@@ -67,7 +66,6 @@ public class ObjectiveAchievedService extends Service {
                         studentObjectiveRepository.create(studentObjective);
                         authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 250);
                         studentRepository.updateStudentPoints(authenticatedStudent);
-                        System.out.println("send noti for spend 2500");
                         sendNotification("Objective completed - Spend 2500 points", "You have been rewarded with 250 points.", getApplicationContext());
                     }
                 }
@@ -82,7 +80,6 @@ public class ObjectiveAchievedService extends Service {
                         studentObjectiveRepository.create(studentObjective);
                         authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 500);
                         studentRepository.updateStudentPoints(authenticatedStudent);
-                        System.out.println("send noti for spend 5000");
                         sendNotification("Objective completed - Spend 5000 points", "You have been rewarded with 500 points.", getApplicationContext());
                     }
                 }
@@ -98,7 +95,6 @@ public class ObjectiveAchievedService extends Service {
                         studentObjectiveRepository.create(studentObjective);
                         authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 750);
                         studentRepository.updateStudentPoints(authenticatedStudent);
-                        System.out.println("send noti for spend 7500");
                         sendNotification("Objective completed - Spend 7500 points", "You have been rewarded with 750 points.", getApplicationContext());
                     }
                 }
@@ -114,7 +110,6 @@ public class ObjectiveAchievedService extends Service {
                         studentObjectiveRepository.create(studentObjective);
                         authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 1000);
                         studentRepository.updateStudentPoints(authenticatedStudent);
-                        System.out.println("send noti for spend 10000");
                         sendNotification("Objective completed - Spend 10000 points", "You have been rewarded with 1000 points.", getApplicationContext());
                     }
 
@@ -131,7 +126,6 @@ public class ObjectiveAchievedService extends Service {
                         studentObjectiveRepository.create(studentObjective);
                         authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 250);
                         studentRepository.updateStudentPoints(authenticatedStudent);
-                        System.out.println("send noti for donate 2500");
                         sendNotification("Objective completed - Donate 2500 points", "You have been rewarded with 250 points.", getApplicationContext());
                     }
 
@@ -149,7 +143,6 @@ public class ObjectiveAchievedService extends Service {
                         studentObjectiveRepository.create(studentObjective);
                         authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 500);
                         studentRepository.updateStudentPoints(authenticatedStudent);
-                        System.out.println("send noti for donate 5000");
                         sendNotification("Objective completed - Donate 5000 points", "You have been rewarded with 500 points.", getApplicationContext());
                     }
 
@@ -166,7 +159,6 @@ public class ObjectiveAchievedService extends Service {
                         studentObjectiveRepository.create(studentObjective);
                         authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 750);
                         studentRepository.updateStudentPoints(authenticatedStudent);
-                        System.out.println("send noti for donate 7500");
                         sendNotification("Objective completed - Donate 7500 points", "You have been rewarded with 750 points.", getApplicationContext());
                     }
 
@@ -183,7 +175,6 @@ public class ObjectiveAchievedService extends Service {
                         studentObjectiveRepository.create(studentObjective);
                         authenticatedStudent.setPointBalance(authenticatedStudent.getPointBalance() + 1000);
                         studentRepository.updateStudentPoints(authenticatedStudent);
-                        System.out.println("send noti for 10000 2500");
                         sendNotification("Objective completed - Spend 10000 points", "You have been rewarded with 1000 points.", getApplicationContext());
                     }
 
@@ -219,7 +210,6 @@ public class ObjectiveAchievedService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        System.out.println("SERVIE RUNNING");
         authenticatedStudentId = intent.getIntExtra(DBUtils.AUTHENTICATED_STUDENT_ID, -999);
         return START_NOT_STICKY;
     }
