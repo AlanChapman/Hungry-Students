@@ -44,7 +44,7 @@ public class ObjectiveRepositoryImpl extends SQLiteOpenHelper implements IObject
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Objective create(Objective objective) {
+    public Objective createObjective(Objective objective) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
