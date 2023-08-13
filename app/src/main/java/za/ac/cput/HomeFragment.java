@@ -1,6 +1,5 @@
 package za.ac.cput;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -11,7 +10,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,7 +103,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
            replaceFragment(new DonatePointsFragment());
         } else if(view == pointsHistoryBtn) {
-            replaceFragment(new PointsHistoryFragment());
+            replaceFragment(new TransactionHistoryFragment());
         }
     }
 

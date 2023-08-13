@@ -24,8 +24,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import za.ac.cput.domain.Student;
+import za.ac.cput.domain.Transaction;
+import za.ac.cput.domain.TransactionType;
 import za.ac.cput.repository.impl.ObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentRepositoryImpl;
+import za.ac.cput.repository.impl.TransactionRepositoryImpl;
 import za.ac.cput.utils.DBUtils;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
@@ -38,6 +41,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 //    private int authenticatedStudentId;
     private Dialog dialog;
     private StudentRepositoryImpl studentRepository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         existingUserButton = (Button) findViewById(R.id.existingUserBtn);
 
         studentRepository = new StudentRepositoryImpl(this);
+
 
         dialog = new Dialog(this);
 
@@ -115,7 +120,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 
-        System.out.println(name + " " + email + " " + birthDate + " " + pass + " " + confirmPass);
         if(pass.equals(confirmPass)) {
             if (validateInput(name, email, pass)) {
                 studentRepository.register(new Student(name, email, LocalDate.parse(birthDate, formatter), pass));
