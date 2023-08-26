@@ -183,6 +183,7 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
 
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public Student getStudent(int id) {
@@ -217,6 +218,7 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
         cursor.close();
         return student;
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Student updateStudentPoints(Student student) {
@@ -280,6 +282,9 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
         cursor.close();
         return student;
     }
+
+
+
 
 
 }
