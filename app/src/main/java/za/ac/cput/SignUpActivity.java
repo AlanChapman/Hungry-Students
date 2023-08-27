@@ -37,15 +37,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private TimePickerDialog timePickerDialog;
-//    private String authenticatedStudentEmail;
+    //    private String authenticatedStudentEmail;
 //    private int authenticatedStudentId;
     private Dialog dialog;
     private StudentRepositoryImpl studentRepository;
+    private Student authenticatedStudent;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_sign_up);
 
         fullNameEditText = (EditText) findViewById(R.id.fullNameEditText);
@@ -127,8 +129,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show();
         }
-
-
 
     }
 
