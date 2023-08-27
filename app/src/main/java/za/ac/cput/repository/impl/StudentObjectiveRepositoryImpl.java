@@ -32,8 +32,11 @@ public class StudentObjectiveRepositoryImpl extends SQLiteOpenHelper implements 
     public void onCreate(SQLiteDatabase db) {
         Log.i("Warn", "Creating db");
         db.execSQL(DBUtils.CREATE_STUDENT_OBJECTIVE_TABLE_QUERY);
-        db.execSQL(DBUtils.CREATE_OBJECTIVE_TABLE_QUERY);
         db.execSQL(DBUtils.CREATE_STUDENT_TABLE_QUERY);
+        db.execSQL(DBUtils.CREATE_OBJECTIVE_TABLE_QUERY);
+        db.execSQL(DBUtils.CREATE_TRANSACTION_TABLE_QUERY);
+        db.execSQL(DBUtils.CREATE_POINT_BALANCE_HISTORY_TABLE_QUERY);
+       // db.execSQL(DBUtils.CREATE_SNACK_TABLE_QUERY);
     }
 
     @Override
@@ -42,9 +45,11 @@ public class StudentObjectiveRepositoryImpl extends SQLiteOpenHelper implements 
         db.execSQL(DBUtils.DROP_STUDENT_OBJECTIVE_TABLE_QUERY);
         db.execSQL(DBUtils.DROP_STUDENT_TABLE_QUERY);
         db.execSQL(DBUtils.DROP_OBJECTIVE_TABLE_QUERY);
+        db.execSQL(DBUtils.DROP_TRANSACTION_TABLE_QUERY);
+        db.execSQL(DBUtils.DROP_POINT_BALANCE_HISTORY_QUERY);
+        //db.execSQL(DBUtils.DROP_SNACK_TABLE_QUERY);
         onCreate(db);
     }
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)

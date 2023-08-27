@@ -26,10 +26,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Objects;
 
-import za.ac.cput.domain.Objective;
-import za.ac.cput.domain.StudentObjective;
 import za.ac.cput.repository.impl.ObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentRepositoryImpl;
@@ -142,7 +139,7 @@ public class NavActivity extends AppCompatActivity {
                         break;
 
                     case R.id.viewPointHistoryNavMenu:
-                        replaceFragment(new PointsHistoryFragment());
+                        replaceFragment(new TransactionHistoryFragment());
                         break;
 
                     case R.id.viewAccountDetailsNavMenu:

@@ -17,25 +17,23 @@ import android.view.ViewGroup;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import za.ac.cput.ObjectivesRecyclerAdapter;
-import za.ac.cput.R;
-import za.ac.cput.domain.Objective;
 import za.ac.cput.domain.Transaction;
+import za.ac.cput.domain.TransactionType;
 
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class PointsHistoryFragment extends Fragment {
+public class TransactionHistoryFragment extends Fragment {
 
-    private RecyclerView pointsHistoryRecyclerView;
-    private PointsHistoryRecyclerAdapter pointsHistoryRecyclerAdapter;
+    private RecyclerView transactionHistoryRecyclerView;
+    private TransactionHistoryRecyclerAdapter transactionHistoryRecyclerAdapter;
 
     private List<Transaction> transactionList = List.of(
-            new Transaction("Food/Voucher", -350, LocalDateTime.now(),true),
-            new Transaction("Deposit points",2250, LocalDateTime.now(),true),
-            new Transaction("Donate points", -350, LocalDateTime.now(),false),
-            new Transaction("Deposit points", 1000, LocalDateTime.now(),true),
-            new Transaction("Donate points", -350, LocalDateTime.now(),true),
-            new Transaction("Food/Voucher",-350, LocalDateTime.now(),false)
+            new Transaction("Food/Voucher", TransactionType.PURCHASE, -350, LocalDateTime.now(),false),
+            new Transaction("Deposit points", TransactionType.PURCHASE,2250, LocalDateTime.now(),true),
+            new Transaction("Donate points", TransactionType.DONATE, -350, LocalDateTime.now(),false),
+            new Transaction("Deposit points", TransactionType.DONATE, +1000, LocalDateTime.now(),true),
+            new Transaction("Donate points", TransactionType.DONATE, +350, LocalDateTime.now(),true),
+            new Transaction("Food/Voucher", TransactionType.PURCHASE,-350, LocalDateTime.now(),false)
     );
 
     @Override
@@ -55,11 +53,11 @@ public class PointsHistoryFragment extends Fragment {
 
 
     private void buildRecyclerView(View v) {
-        pointsHistoryRecyclerView = v.findViewById(R.id.objectiveRecyclerView);
-        pointsHistoryRecyclerView.setHasFixedSize(true);
-        pointsHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(PointsHistoryFragment.this.getActivity()));
-        pointsHistoryRecyclerAdapter = new PointsHistoryRecyclerAdapter(PointsHistoryFragment.this.getActivity(), transactionList);
-        pointsHistoryRecyclerView.setAdapter(pointsHistoryRecyclerAdapter);
+        transactionHistoryRecyclerView = v.findViewById(R.id.objectiveRecyclerView);
+        transactionHistoryRecyclerView.setHasFixedSize(true);
+        transactionHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(TransactionHistoryFragment.this.getActivity()));
+        transactionHistoryRecyclerAdapter = new TransactionHistoryRecyclerAdapter(TransactionHistoryFragment.this.getActivity(), transactionList);
+        transactionHistoryRecyclerView.setAdapter(transactionHistoryRecyclerAdapter);
     }
 
 

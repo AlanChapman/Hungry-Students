@@ -3,7 +3,6 @@
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,15 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import za.ac.cput.domain.Objective;
 import za.ac.cput.domain.Transaction;
 
- public class PointsHistoryRecyclerAdapter extends RecyclerView.Adapter<PointsHistoryRecyclerAdapter.MyViewHolder>  {
+ public class TransactionHistoryRecyclerAdapter extends RecyclerView.Adapter<TransactionHistoryRecyclerAdapter.MyViewHolder>  {
 
     private List<Transaction> transactionList;
     private Context context;
 
-    public PointsHistoryRecyclerAdapter(Context context, List<Transaction> transactionList) {
+    public TransactionHistoryRecyclerAdapter(Context context, List<Transaction> transactionList) {
         this.transactionList = transactionList;
         this.context = context;
     }
@@ -45,13 +43,13 @@ import za.ac.cput.domain.Transaction;
         holder.transactionTitleTextView.setText(transaction.getTitle());
         holder.transactionDateTextView.setText(transaction.getCreatedAt().toLocalDate().toString());
 
-        if(transaction.getPoints() < 0) {
-            holder.transactionPointsTextView.setText(new StringBuilder().append(String.valueOf(transaction.getPoints())).append(" pts"));
+        if(transaction.getPointAmount() < 0) {
+            holder.transactionPointsTextView.setText(new StringBuilder().append(String.valueOf(transaction.getPointAmount() )).append(" pts"));
         } else {
-            holder.transactionPointsTextView.setText(new StringBuilder().append("+ ").append(String.valueOf(transaction.getPoints())).append(" pts"));
+            holder.transactionPointsTextView.setText(new StringBuilder().append("+ ").append(String.valueOf(transaction.getPointAmount())).append(" pts"));
         }
 
-        if(transaction.isSuccessful()) {
+        if(transaction.getStatus()) {
             holder.transactionStatusTextView.setText("success");
             holder.transactionStatusTextView.setTextColor(Color.GREEN);
         } else {

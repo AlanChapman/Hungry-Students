@@ -1,9 +1,5 @@
 package za.ac.cput;
 
-import static za.ac.cput.utils.Helper.isNullOrEmpty;
-import static za.ac.cput.utils.NotificationUtils.sendNotification;
-
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -24,8 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import za.ac.cput.domain.Student;
+import za.ac.cput.domain.Transaction;
+import za.ac.cput.domain.TransactionType;
 import za.ac.cput.repository.impl.StudentObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentRepositoryImpl;
+import za.ac.cput.repository.impl.TransactionRepositoryImpl;
 import za.ac.cput.utils.DBUtils;
 
 public class DonatePointsFragment extends Fragment implements View.OnClickListener{
@@ -39,6 +38,9 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
 
     private StudentObjectiveRepositoryImpl studentObjectiveRepository;
     private StudentRepositoryImpl studentRepository;
+
+    private TransactionRepositoryImpl transactionRepository;
+
     private String authenticatedStudentName;
     private String authenticatedStudentEmail;
     private int authenticatedStudentId;
@@ -65,6 +67,8 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
         donatePointsUserNotFoundContainer = view.findViewById(R.id.donatePointsUserNotFoundContainer);
         donatePointsSearchUserBtn = view.findViewById(R.id.donatePointsSearchUserBtn);
         donateUserEmailAddress = view.findViewById(R.id.donateUserEmailAddress);
+
+        transactionRepository = new TransactionRepositoryImpl(getActivity());
 
         studentRepository = new StudentRepositoryImpl(getActivity());
         authenticatedStudentEmail = getActivity().getIntent().getStringExtra(DBUtils.AUTHENTICATED_STUDENT_EMAIL);
@@ -95,7 +99,7 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
         if(view == donatePointsSearchUserBtn) {
             searchForStudent();
         } else if(view == pointsHistoryBtn) {
-            replaceFragment(new PointsHistoryFragment());
+            replaceFragment(new TransactionHistoryFragment());
         } else if (view == donatePointsBtn) {
             donatePoints();
         }
@@ -140,6 +144,11 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
 
         Toast.makeText(getActivity(), "You have successfully sent " + pointsToSend + " to " + donateToStudent.getEmailAddress(), Toast.LENGTH_LONG).show();
         donatePointsBtn.setEnabled(false);
+
+        transactionRepository.createTransaction(new Transaction(
+                2, "Donate Points",  1, TransactionType.DONATE, 4500,
+                false,1
+        ));
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
