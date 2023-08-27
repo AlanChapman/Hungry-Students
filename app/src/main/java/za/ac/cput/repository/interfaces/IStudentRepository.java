@@ -8,7 +8,7 @@ public interface IStudentRepository {
     boolean login(String emailAddress, String password);
     int getCurrentStudentId(String emailAddress);
     String getCurrentStudentFirstName(String emailAddress);
-
+    boolean updateStudentDetails(Student student);
     Student getStudent(int id);
     Student getStudent(String emailAddress);
     String getCurrentStudentEmailAddress(int studentId);
