@@ -7,12 +7,12 @@ public class DBUtils {
     public static final String AUTHENTICATED_STUDENT_ID = "studentId";
     public static final String AUTHENTICATED_STUDENT_NAME = "studentName";
     public static final String DATABASE_NAME = "hungrystudents.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 8;
 
     // STUDENT TABLE
     public static final String STUDENT_TABLE = "student";
 
-    public static final String COLUMN_STUDENT_ID = "student_id";
+    public static final String COLUMN_STUDENT_ID = "id";
     public static final String COLUMN_STUDENT_FULL_NAME = "full_name";
     public static final String COLUMN_STUDENT_EMAIL_ADDRESS = "email_address";
     public static final String COLUMN_STUDENT_DATE_OF_BIRTH = "date_of_birth";

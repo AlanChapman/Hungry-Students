@@ -44,11 +44,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-//                String email = emailAddress.getText().toString();
-//                String pass = password.getText().toString();
+                String email = emailAddress.getText().toString();
+                String pass = password.getText().toString();
 
-                String email = "john12345@gmail.com";
-                String pass = "password";
+                //String email = "john1234@gmail.com";
+                //String pass = "password";
 
                 //studentRepository.register(new Student("test", "demo@gmail.com", LocalDate.now(), "password"));
 
