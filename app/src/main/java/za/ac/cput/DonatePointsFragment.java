@@ -70,6 +70,8 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
 
         transactionRepository = new TransactionRepositoryImpl(getActivity());
 
+
+
         studentRepository = new StudentRepositoryImpl(getActivity());
         authenticatedStudentEmail = getActivity().getIntent().getStringExtra(DBUtils.AUTHENTICATED_STUDENT_EMAIL);
         authenticatedStudentName = getActivity().getIntent().getStringExtra(DBUtils.AUTHENTICATED_STUDENT_NAME);
@@ -146,8 +148,8 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
         donatePointsBtn.setEnabled(false);
 
         transactionRepository.createTransaction(new Transaction(
-                2, "Donate Points",  1, TransactionType.DONATE, 4500,
-                false,1
+                donateToStudent.getStudentId(), "Donate Points",  1, TransactionType.DONATE, parsedPointsToSend,
+                true,authenticatedStudentId
         ));
         new Handler().postDelayed(new Runnable() {
             @Override

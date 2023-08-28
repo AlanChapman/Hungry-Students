@@ -14,6 +14,8 @@ import androidx.annotation.RequiresApi;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import za.ac.cput.domain.Student;
 import za.ac.cput.domain.StudentObjective;
@@ -76,10 +78,51 @@ public class TransactionRepositoryImpl extends SQLiteOpenHelper implements ITran
             return null;
         }
 
+        System.out.println("CREATED TRANSACTION");
         return transaction;
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public List<Transaction> getAllTransactions(int studentId) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Transaction> transactions = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DBUtils.TRANSACTION_TABLE +
+                " WHERE " + DBUtils.COLUMN_TRANSACTION_STUDENT_ID + " = ?", new String[]{String.valueOf(studentId)});
+
+
+        System.out.println(cursor);
+        System.out.println(cursor.getCount());
+        int count = 0;
+
+        while(cursor.moveToNext()) {
+            int theTransactionId = cursor.getInt(0);
+            String title = cursor.getString(1);
+            int recipientId = cursor.getInt(2);
+            int senderId = cursor.getInt(3);
+            String type = cursor.getString(4);
+            int pointAmount = cursor.getInt(5);
+            int status = cursor.getInt(6);
+            int theStudentId = cursor.getInt(7);
+
+
+            //DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+            //LocalDateTime createdAtFormatted = LocalDateTime.parse(createdAt, formatter);
+
+            Transaction transaction = new Transaction(theTransactionId, title, recipientId, senderId, TransactionType.valueOf(type), pointAmount, status == 1 ? true : false, theStudentId);
+            transactions.add(transaction);
+
+            count++;
+
+        }
+        System.out.println(transactions);
+
+
+        cursor.close();
+        return transactions;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Transaction getTransaction(int transactionId, int studentId) {

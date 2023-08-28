@@ -19,22 +19,22 @@ import java.util.List;
 
 import za.ac.cput.domain.Transaction;
 import za.ac.cput.domain.TransactionType;
+import za.ac.cput.repository.impl.StudentRepositoryImpl;
+import za.ac.cput.repository.impl.TransactionRepositoryImpl;
+import za.ac.cput.utils.DBUtils;
 
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class TransactionHistoryFragment extends Fragment {
 
     private RecyclerView transactionHistoryRecyclerView;
+    private StudentRepositoryImpl studentRepository;
+    private TransactionRepositoryImpl transactionRepository;
+    private int authenticatedStudentId;
     private TransactionHistoryRecyclerAdapter transactionHistoryRecyclerAdapter;
+    private List<Transaction> transactionList;
 
-    private List<Transaction> transactionList = List.of(
-            new Transaction("Food/Voucher", TransactionType.PURCHASE, -350, LocalDateTime.now(),false),
-            new Transaction("Deposit points", TransactionType.PURCHASE,2250, LocalDateTime.now(),true),
-            new Transaction("Donate points", TransactionType.DONATE, -350, LocalDateTime.now(),false),
-            new Transaction("Deposit points", TransactionType.DONATE, +1000, LocalDateTime.now(),true),
-            new Transaction("Donate points", TransactionType.DONATE, +350, LocalDateTime.now(),true),
-            new Transaction("Food/Voucher", TransactionType.PURCHASE,-350, LocalDateTime.now(),false)
-    );
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,8 +44,18 @@ public class TransactionHistoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_points_history, null);
 
+        View view = inflater.inflate(R.layout.fragment_points_history, null);
+        transactionRepository = new TransactionRepositoryImpl(getActivity());
+        studentRepository = new StudentRepositoryImpl(getActivity());
+        authenticatedStudentId = getActivity().getIntent().getIntExtra(DBUtils.AUTHENTICATED_STUDENT_ID, -999);
+        //authenticatedStudent = studentRepository.getStudent(authenticatedStudentId);
+
+
+        System.out.println("get all transactions");
+        System.out.println(transactionRepository.getAllTransactions(authenticatedStudentId));
+
+        transactionList = transactionRepository.getAllTransactions(authenticatedStudentId);
 
         buildRecyclerView(view);
         return view;

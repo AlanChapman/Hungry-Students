@@ -49,13 +49,16 @@ import za.ac.cput.domain.Transaction;
             holder.transactionPointsTextView.setText(new StringBuilder().append("+ ").append(String.valueOf(transaction.getPointAmount())).append(" pts"));
         }
 
-        if(transaction.getStatus()) {
-            holder.transactionStatusTextView.setText("success");
-            holder.transactionStatusTextView.setTextColor(Color.GREEN);
-        } else {
-            holder.transactionStatusTextView.setText("failure");
-            holder.transactionStatusTextView.setTextColor(Color.RED);
-        }
+        holder.transactionStatusTextView.setText("success");
+        holder.transactionStatusTextView.setTextColor(Color.GREEN);
+
+//        if(transaction.getStatus()) {
+//            holder.transactionStatusTextView.setText("success");
+//            holder.transactionStatusTextView.setTextColor(Color.GREEN);
+//        } else {
+//            holder.transactionStatusTextView.setText("failure");
+//            holder.transactionStatusTextView.setTextColor(Color.RED);
+//        }
 
     }
 

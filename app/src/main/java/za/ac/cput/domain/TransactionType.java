@@ -1,5 +1,5 @@
 package za.ac.cput.domain;
 
 public enum TransactionType {
-    DONATE, PURCHASE
+    DONATE, PURCHASE, OBJECTIVE_REWARD
 }
