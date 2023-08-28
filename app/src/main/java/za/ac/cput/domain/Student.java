@@ -51,7 +51,7 @@ public class Student {
 
     public String getFullName() { return fullName; }
 
-    public void setFullName(String firstName) { this.fullName = fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
 
     public String getEmailAddress() { return emailAddress; }
 
@@ -98,4 +98,5 @@ public class Student {
                 ", password='" + password + '\'' +
                 '}';
     }
+
 }

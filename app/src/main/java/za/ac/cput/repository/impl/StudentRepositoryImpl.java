@@ -189,6 +189,7 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
 
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public Student getStudent(int id) {
@@ -223,6 +224,7 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
         cursor.close();
         return student;
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Student updateStudentPoints(Student student) {
@@ -285,6 +287,30 @@ public class StudentRepositoryImpl extends SQLiteOpenHelper implements IStudentR
 
         cursor.close();
         return student;
+    }
+
+
+    public boolean updateStudentDetails(Student student) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(DBUtils.COLUMN_STUDENT_FULL_NAME, student.getFullName());
+        cv.put(DBUtils.COLUMN_STUDENT_DATE_OF_BIRTH, student.getDateOfBirth().toString());
+        cv.put(DBUtils.COLUMN_STUDENT_EMAIL_ADDRESS, student.getEmailAddress());
+        long result = 0;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DBUtils.STUDENT_TABLE + " WHERE " + DBUtils.COLUMN_STUDENT_ID + " = ?",
+                new String[]{String.valueOf(student.getStudentId())});
+
+
+
+        if(cursor.getCount()>0) {
+            result = db.update(DBUtils.STUDENT_TABLE, cv,DBUtils.COLUMN_STUDENT_ID + " = ?", new String[]{String.valueOf(student.getStudentId())});
+        }
+        cursor.close();
+        db.close();
+
+        return result == -1 ? false : true;
     }
 
 

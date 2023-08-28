@@ -1,14 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_marginBottom="10dp"
     tools:context=".StudentDetailsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:padding="40dp">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:inputType="textPersonName"
+            android:text="My Details"
+
+            android:textColor="@color/dark_black"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.239" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="26dp">
+
+            <EditText
+                android:id="@+id/fullNameField"
+                style="@style/EditTextStyleOutline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:hint="Full Name"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/emailField"
+                style="@style/EditTextStyleOutline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Email Address"
+                android:inputType="textPersonName"
+                tools:layout_marginBottom="10dp" />
+
+            <EditText
+                android:id="@+id/DOBField"
+                style="@style/EditTextStyleOutline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Date of birth"
+                android:inputType="textPersonName"
+                tools:layout_marginBottom="10dp" />
+
+            <!--            <EditText-->
+            <!--                android:id="@+id/dateCreatedField"-->
+            <!--                style="@style/EditTextStyleOutline"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:ems="10"-->
+            <!--                android:hint="Date created"-->
+            <!--                android:inputType="textPersonName" />-->
+
+            <!--            <EditText-->
+            <!--                android:id="@+id/pointsBalanceField"-->
+            <!--                style="@style/EditTextStyleOutline"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:ems="10"-->
+            <!--                android:hint="Points Balance"-->
+            <!--                android:inputType="textPersonName" />-->
+
+            <!--            <EditText-->
+            <!--                android:id="@+id/donatedPointsField"-->
+            <!--                style="@style/EditTextStyleOutline"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:ems="10"-->
+            <!--                android:hint="Donated points balance"-->
+            <!--                android:inputType="textPersonName" />-->
+
+            <Button
+                android:id="@+id/saveButton"
+                style="@style/PrimaryBtnStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="saveChanges"
+                android:text="Save Changes" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>
