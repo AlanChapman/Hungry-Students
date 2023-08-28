@@ -126,6 +126,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if(pass.equals(confirmPass)) {
             if (validateInput(name, email, pass)) {
                 studentRepository.register(new Student(name, email, LocalDate.parse(birthDate, formatter), pass));
+                clearInput();
             }
         } else {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show();
@@ -137,6 +138,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         emailEditText.setText("");
         passwordEditText.setText("");
         confirmPasswordEditText.setText("");
+        DOBEditText.setText("");
     }
 
     private boolean validateInput(String fullName, String emailAddress, String password) {

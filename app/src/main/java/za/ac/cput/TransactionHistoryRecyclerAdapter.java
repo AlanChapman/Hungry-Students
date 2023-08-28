@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import za.ac.cput.domain.Transaction;
+import za.ac.cput.domain.TransactionType;
 
  public class TransactionHistoryRecyclerAdapter extends RecyclerView.Adapter<TransactionHistoryRecyclerAdapter.MyViewHolder>  {
 
@@ -43,9 +44,15 @@ import za.ac.cput.domain.Transaction;
         holder.transactionTitleTextView.setText(transaction.getTitle());
         holder.transactionDateTextView.setText(transaction.getCreatedAt().toLocalDate().toString());
 
-        if(transaction.getPointAmount() < 0) {
-            holder.transactionPointsTextView.setText(new StringBuilder().append(String.valueOf(transaction.getPointAmount() )).append(" pts"));
-        } else {
+        if(transaction.getType().equals(TransactionType.DONATE_SEND)) {
+            holder.transactionPointsTextView.setText(new StringBuilder().append("- ").append(String.valueOf(transaction.getPointAmount())).append(" pts"));
+        }else if(transaction.getType().equals(TransactionType.DONATE_RECEIVE)) {
+            holder.transactionPointsTextView.setText(new StringBuilder().append("+ ").append(String.valueOf(transaction.getPointAmount())).append(" pts"));
+        } else if(transaction.getType().equals(TransactionType.PURCHASE)) {
+            holder.transactionPointsTextView.setText(new StringBuilder().append("- ").append(String.valueOf(transaction.getPointAmount())).append(" pts"));
+        } else if(transaction.getType().equals(TransactionType.LOAD)) {
+            holder.transactionPointsTextView.setText(new StringBuilder().append("+ ").append(String.valueOf(transaction.getPointAmount())).append(" pts"));
+        } else if(transaction.getType().equals(TransactionType.REWARD)) {
             holder.transactionPointsTextView.setText(new StringBuilder().append("+ ").append(String.valueOf(transaction.getPointAmount())).append(" pts"));
         }
 

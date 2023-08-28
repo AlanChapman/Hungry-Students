@@ -148,8 +148,13 @@ public class DonatePointsFragment extends Fragment implements View.OnClickListen
         donatePointsBtn.setEnabled(false);
 
         transactionRepository.createTransaction(new Transaction(
-                donateToStudent.getStudentId(), "Donate Points",  1, TransactionType.DONATE, parsedPointsToSend,
+                donateToStudent.getStudentId(), "Donate Points",  authenticatedStudentId, TransactionType.DONATE_SEND, parsedPointsToSend,
                 true,authenticatedStudentId
+        ));
+
+        transactionRepository.createTransaction(new Transaction(
+                authenticatedStudentId, "Donate Points",  donateToStudent.getStudentId(), TransactionType.DONATE_RECEIVE, parsedPointsToSend,
+                true,donateToStudent.getStudentId()
         ));
         new Handler().postDelayed(new Runnable() {
             @Override
