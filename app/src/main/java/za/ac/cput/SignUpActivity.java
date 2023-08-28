@@ -37,8 +37,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private TimePickerDialog timePickerDialog;
-//    private String authenticatedStudentEmail;
-//    private int authenticatedStudentId;
+    private String authenticatedStudentEmail;
+    private int authenticatedStudentId;
     private Dialog dialog;
     private StudentRepositoryImpl studentRepository;
 
@@ -63,8 +63,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         dialog = new Dialog(this);
 
-//        authenticatedStudentEmail =  getIntent().getStringExtra(DBUtils.AUTHENTICATED_STUDENT_EMAIL);
-//        authenticatedStudentId = getIntent().getIntExtra(DBUtils.AUTHENTICATED_STUDENT_ID, -999);
+        authenticatedStudentEmail =  getIntent().getStringExtra(DBUtils.AUTHENTICATED_STUDENT_EMAIL);
+        authenticatedStudentId = getIntent().getIntExtra(DBUtils.AUTHENTICATED_STUDENT_ID, -999);
 
         DOBEditText.setOnClickListener(this);
 
@@ -87,6 +87,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(intent);
         } else if(view == signUpButton) {
             registerUser();
+            clearInput();
         } else if(view == DOBEditText) {
             Calendar mcurrentDate=Calendar.getInstance();
             int year = mcurrentDate.get(Calendar.YEAR);
@@ -101,24 +102,22 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void registerUser() {
 
-//        String name = fullNameEditText.getText().toString().trim();
-//        String email = emailEditText.getText().toString().trim();
-//        String birthDate = DOBEditText.getText().toString().trim();
-//        String pass = passwordEditText.getText().toString().trim();
-//        String confirmPass = confirmPasswordEditText.getText().toString().trim();
+        String name = fullNameEditText.getText().toString().trim();
+        String email = emailEditText.getText().toString().trim();
+        String birthDate = DOBEditText.getText().toString().trim();
+        String pass = passwordEditText.getText().toString().trim();
+        String confirmPass = confirmPasswordEditText.getText().toString().trim();
 
-        String name = "John Doe";
-        String email = "john1234@gmail.com";
-        String birthDate = "2001-05-18";
-        String pass = "password";
-        String confirmPass = "password";
+//        String name = "John Doe";
+//        String email = "john1234@gmail.com";
+//        String birthDate = "2001-05-18";
+//        String pass = "password";
+//        String confirmPass = "password";
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
 
         if(pass.equals(confirmPass)) {
             if (validateInput(name, email, pass)) {
@@ -127,9 +126,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show();
         }
-
-
-
     }
 
     private void clearInput() {
@@ -143,22 +139,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         boolean status = true;
 
-        if (TextUtils.isEmpty(fullName)) {
+        if (TextUtils.isEmpty(fullName) || TextUtils.isEmpty(emailAddress) || TextUtils.isEmpty(password)) {
             fullNameEditText.setError("Please enter a value");
             fullNameEditText.requestFocus();
-            status = false;
-        }
 
-
-        if (TextUtils.isEmpty(emailAddress)) {
             emailEditText.setError("Please enter a value");
             emailEditText.requestFocus();
-            status = false;
-        }
 
-        if (TextUtils.isEmpty(password)) {
             passwordEditText.setError("Please enter a value");
             passwordEditText.requestFocus();
+
             status = false;
         }
 
