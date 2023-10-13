@@ -146,6 +146,10 @@ public class NavActivity extends AppCompatActivity {
                          replaceFragment(new StudentDetailsFragment());
                         break;
 
+                    case R.id.loadPointsNavMenu:
+                        replaceFragment(new LoadPointsFragment());
+                        break;
+
                     default:
                         return true;
                 }
