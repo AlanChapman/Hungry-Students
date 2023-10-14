@@ -24,11 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import za.ac.cput.domain.Student;
-import za.ac.cput.domain.Transaction;
-import za.ac.cput.domain.TransactionType;
-import za.ac.cput.repository.impl.ObjectiveRepositoryImpl;
 import za.ac.cput.repository.impl.StudentRepositoryImpl;
-import za.ac.cput.repository.impl.TransactionRepositoryImpl;
 import za.ac.cput.utils.DBUtils;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
@@ -52,15 +48,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         setContentView(R.layout.activity_sign_up);
 
-        fullNameEditText = (EditText) findViewById(R.id.fullNameEditText);
-        emailEditText = (EditText) findViewById(R.id.emailEditText);
-        DOBEditText = (EditText) findViewById(R.id.DOBEditText);
+        fullNameEditText = (EditText) findViewById(R.id.etPurchaseAmount);
+        emailEditText = (EditText) findViewById(R.id.etPointsAmount);
+        DOBEditText = (EditText) findViewById(R.id.etAmount);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         confirmPasswordEditText = (EditText) findViewById(R.id.confirmPasswordEditText);
 
-        signUpButton = (Button) findViewById(R.id.signUpBtn);
+        signUpButton = (Button) findViewById(R.id.btnBuy);
 
-        existingUserButton = (Button) findViewById(R.id.existingUserBtn);
+        existingUserButton = (Button) findViewById(R.id.btnBack);
 
         studentRepository = new StudentRepositoryImpl(this);
 
