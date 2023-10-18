@@ -77,13 +77,6 @@
                 android:layout_marginBottom="10dp"
                 android:hint="Student Number" />
 
-            <EditText
-                android:id="@+id/etPurchaseAmount"
-                style="@style/EditTextStyleOutline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="Purchase Amount" />
 
             <EditText
                 android:id="@+id/etPointsAmount"

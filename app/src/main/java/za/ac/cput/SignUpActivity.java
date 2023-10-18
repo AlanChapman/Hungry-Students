@@ -48,15 +48,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         setContentView(R.layout.activity_sign_up);
 
-        fullNameEditText = (EditText) findViewById(R.id.etPurchaseAmount);
-        emailEditText = (EditText) findViewById(R.id.etPointsAmount);
-        DOBEditText = (EditText) findViewById(R.id.etAmount);
+        fullNameEditText = (EditText) findViewById(R.id.fullNameEditText);
+        emailEditText = (EditText) findViewById(R.id.emailEditText);
+        DOBEditText = (EditText) findViewById(R.id.DOBEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         confirmPasswordEditText = (EditText) findViewById(R.id.confirmPasswordEditText);
 
-        signUpButton = (Button) findViewById(R.id.btnBuy);
+        signUpButton = (Button) findViewById(R.id.signUpBtn);
 
-        existingUserButton = (Button) findViewById(R.id.btnBack);
+        existingUserButton = (Button) findViewById(R.id.existingUserBtn);
 
         studentRepository = new StudentRepositoryImpl(this);
 

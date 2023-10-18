@@ -34,6 +34,12 @@
                     android:id="@+id/donatePointsNavMenu"
                     android:icon="@drawable/ic_donate_points"
                     android:title="Donate points" />
+
+                <item
+                    android:id="@+id/loadPointsNavMenu"
+                    android:icon="@drawable/ic_points_balance"
+                    android:title="Load points" />
+
             </group>
         </menu>
     </item>
