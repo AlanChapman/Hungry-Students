@@ -13,6 +13,13 @@
                     android:icon="@drawable/ic_baseline_home_24"
                     android:title="Home" />
 
+                <item
+                    android:checkable="true"
+                    android:iconTint="@color/primary_blue"
+                    android:id="@+id/buySnacksNavMenu"
+                    android:icon="@drawable/ic_points_balance"
+                    android:title="Buy snacks" />
+
             </group>
         </menu>
     </item>

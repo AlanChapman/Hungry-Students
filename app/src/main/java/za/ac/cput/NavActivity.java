@@ -126,6 +126,10 @@ public class NavActivity extends AppCompatActivity {
                     case R.id.homeNavMenu:
                         replaceFragment(new HomeFragment());
                         break;
+                    case R.id.buySnacksNavMenu:
+                        replaceFragment(new BuySnacksFragment());
+                        break;
+
                     case R.id.logoutNavMenu:
                         startActivity(new Intent(NavActivity.this, SignUpActivity.class));
                         break;
@@ -143,7 +147,7 @@ public class NavActivity extends AppCompatActivity {
                         break;
 
                     case R.id.viewAccountDetailsNavMenu:
-                         replaceFragment(new StudentDetailsFragment());
+                        replaceFragment(new StudentDetailsFragment());
                         break;
 
                     case R.id.loadPointsNavMenu:
@@ -176,7 +180,19 @@ public class NavActivity extends AppCompatActivity {
         }
         return false;
     }
+    @Override
+    public void onBackPressed() {
 
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+
+    }
 
 
     private void replaceFragment(Fragment fragment) {

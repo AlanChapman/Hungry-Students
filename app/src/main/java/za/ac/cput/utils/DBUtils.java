@@ -56,8 +56,9 @@ public class DBUtils {
 
     public static final String COLUMN_STUDENT_OBJECTIVE_DATE_ACHIEVED = "date_achieved";
 
+
     public static final String CREATE_STUDENT_OBJECTIVE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS " + STUDENT_OBJECTIVE_TABLE
-        + "(" + COLUMN_STUDENT_OBJECTIVE_STUDENT_ID + " INTEGER REFERENCES " + STUDENT_TABLE + " (" + COLUMN_STUDENT_ID + "), "
+            + "(" + COLUMN_STUDENT_OBJECTIVE_STUDENT_ID + " INTEGER REFERENCES " + STUDENT_TABLE + " (" + COLUMN_STUDENT_ID + "), "
             + COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID + " INTEGER REFERENCES " + OBJECTIVE_TABLE + "( " + COLUMN_OBJECTIVE_ID + " ),"
             +  COLUMN_STUDENT_OBJECTIVE_DATE_ACHIEVED + " TEXT ," + COLUMN_STUDENT_OBJECTIVE_TITLE + " TEXT, PRIMARY KEY(" + COLUMN_STUDENT_OBJECTIVE_STUDENT_ID
             + ", " + COLUMN_STUDENT_OBJECTIVE_OBJECTIVE_ID + " ))";
@@ -65,8 +66,17 @@ public class DBUtils {
 
 
     // SNACK TABLE
-    public static final String CREATE_SNACK_TABLE_QUERY = "";
-    public static final String DROP_SNACK_TABLE_QUERY = "";
+    public static final String SNACK_TABLE = "snack";
+    public static final String COLUMN_SNACK_ID = "snack_id";
+    public static final String COLUMN_SNACK_NAME = "name";
+    public static final String COLUMN_SNACK_PRICE = "price";
+    public static final String COLUMN_SNACK_CATEGORY = "category";
+    public static final String COLUMN_SNACK_CALORIES = "calories";
+
+    public static final String CREATE_SNACK_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS " + SNACK_TABLE
+            + "(" + COLUMN_SNACK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_SNACK_NAME + " TEXT," +
+            COLUMN_SNACK_PRICE + " DOUBLE," + COLUMN_SNACK_CATEGORY + " TEXT, " + COLUMN_SNACK_CALORIES + " INTEGER))";
+    public static final String DROP_SNACK_TABLE_QUERY = "DROP TABLE IF EXISTS " + SNACK_TABLE;
 
 
 
@@ -115,5 +125,7 @@ public class DBUtils {
 
     public static final String DROP_POINT_BALANCE_HISTORY_QUERY = "DROP TABLE IF EXISTS " + POINT_BALANCE_HISTORY_TABLE;
 
+
+    // POINTS HISTORY TABLE
 
 }
